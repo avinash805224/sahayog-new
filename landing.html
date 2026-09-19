@@ -1,0 +1,2047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sahayog — Find your scheme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Mukta:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal-dark:#0A4F4B;
+    --teal:#0F6B66;
+    --teal-soft:#E4F0EE;
+    --aqua:#4FB3A9;
+    --gold:#F7C948;
+    --gold-soft:#FCEBB6;
+    --coral:#EF7B45;
+    --cream:#FBF8F2;
+    --ink:#20302C;
+    --ink-soft:#4B5C57;
+    --white:#FFFFFF;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    font-family:'Mukta', sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.5;
+  }
+
+  h1,h2,h3, .display{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    color:var(--teal-dark);
+    line-height:1.15;
+  }
+
+  img,svg{display:block; max-width:100%;}
+
+  a{color:inherit;}
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{
+    outline:3px solid var(--coral);
+    outline-offset:3px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  /* ---------- TOP BAR ---------- */
+  .topbar{
+    background:var(--white);
+    border-bottom:1px solid #E7E1D3;
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+  .topbar-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:14px 24px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .brand-mark{width:42px; height:42px; flex:none;}
+  .brand-name{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:800;
+    font-size:22px;
+    color:var(--teal-dark);
+  }
+  .topbar-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .lang-switch{
+    display:flex;
+    align-items:center;
+    background:var(--teal-soft);
+    border-radius:999px;
+    padding:4px;
+    gap:2px;
+  }
+  .lang-switch button{
+    border:none;
+    background:transparent;
+    color:var(--teal-dark);
+    font-family:'Mukta', sans-serif;
+    font-weight:600;
+    font-size:14px;
+    padding:9px 16px;
+    border-radius:999px;
+    cursor:pointer;
+  }
+  .lang-switch button.active{
+    background:var(--teal);
+    color:var(--white);
+  }
+  .help-btn{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:var(--coral);
+    color:var(--white);
+    border:none;
+    border-radius:999px;
+    padding:10px 16px;
+    font-family:'Mukta', sans-serif;
+    font-weight:600;
+    font-size:15px;
+    cursor:pointer;
+  }
+  .help-btn svg{width:20px; height:20px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:56px 24px 72px;
+    text-align:center;
+    background:
+      radial-gradient(circle at 15% 20%, var(--gold-soft) 0%, transparent 38%),
+      radial-gradient(circle at 88% 12%, var(--teal-soft) 0%, transparent 42%);
+  }
+  .hero-badge{
+    width:96px; height:96px;
+    margin:0 auto 22px;
+  }
+  .hero h1{
+    font-size:clamp(30px, 5vw, 46px);
+    max-width:16ch;
+    margin:0 auto 14px;
+  }
+  .hero .sub-native{
+    font-family:'Mukta', sans-serif;
+    font-weight:600;
+    font-size:19px;
+    color:var(--teal);
+    margin-bottom:6px;
+  }
+
+  .return-banner{
+    display:none;
+    align-items:center;
+    gap:12px;
+    max-width:460px;
+    margin:0 auto 22px;
+    background:var(--teal-dark);
+    color:var(--white);
+    border-radius:16px;
+    padding:14px 18px;
+    text-align:left;
+  }
+  .return-banner.show{display:flex;}
+  .return-banner-icon{
+    width:38px; height:38px;
+    border-radius:50%;
+    background:var(--gold);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:none;
+  }
+  .return-banner-icon svg{width:20px; height:20px; color:var(--teal-dark);}
+  .return-banner-text{flex:1;}
+  .return-banner-text .line1{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:15px;
+  }
+  .return-banner-text .line2{
+    font-size:13px;
+    color:#CFE6E2;
+  }
+  .return-banner-play{
+    background:var(--coral);
+    border:none;
+    color:var(--white);
+    width:36px; height:36px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:none;
+    cursor:pointer;
+  }
+  .return-banner-play svg{width:16px; height:16px;}
+  .hero p.lede{
+    font-size:18px;
+    color:var(--ink-soft);
+    max-width:44ch;
+    margin:0 auto 34px;
+  }
+
+  .welcome-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--white);
+    color:var(--teal-dark);
+    border:2px solid var(--gold);
+    border-radius:999px;
+    padding:12px 22px;
+    font-family:'Mukta', sans-serif;
+    font-weight:600;
+    font-size:15px;
+    cursor:pointer;
+    margin-bottom:26px;
+  }
+  .welcome-btn-icon{
+    width:26px; height:26px;
+    border-radius:50%;
+    background:var(--gold-soft);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:none;
+  }
+  .welcome-btn-icon svg{width:15px; height:15px; color:var(--teal-dark);}
+  .welcome-btn.speaking .welcome-btn-icon{background:var(--coral);}
+  .welcome-btn.speaking .welcome-btn-icon svg{color:var(--white);}
+
+  .hero-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    justify-content:center;
+    align-items:stretch;
+    margin-bottom:18px;
+  }
+  .speak-btn{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:var(--coral);
+    color:var(--white);
+    border:none;
+    border-radius:18px;
+    padding:18px 30px;
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:19px;
+    cursor:pointer;
+    box-shadow:0 6px 0 #C25E2C;
+  }
+  .speak-btn:active{transform:translateY(3px); box-shadow:0 3px 0 #C25E2C;}
+  .speak-btn svg{width:26px; height:26px; flex:none;}
+
+  .type-field{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:var(--white);
+    border:2px solid var(--teal);
+    border-radius:18px;
+    padding:14px 20px;
+    min-width:260px;
+  }
+  .type-field input{
+    border:none;
+    outline:none;
+    font-family:'Mukta', sans-serif;
+    font-size:17px;
+    width:100%;
+    background:transparent;
+    color:var(--ink);
+  }
+  .type-field svg{width:22px; height:22px; flex:none; color:var(--teal);}
+
+  .hero-note{
+    font-size:14px;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- PATH SECTION ---------- */
+  .path-section{
+    padding:70px 24px 90px;
+  }
+  .path-section h2{
+    text-align:center;
+    font-size:clamp(24px, 3.4vw, 32px);
+    max-width:20ch;
+    margin:0 auto 8px;
+  }
+  .path-section .section-sub{
+    text-align:center;
+    color:var(--ink-soft);
+    font-size:16px;
+    margin-bottom:56px;
+  }
+
+  /* ---------- HOW WE HELP TIMELINE (6 steps) ---------- */
+  .howhelp-timeline{max-width:640px; margin:0 auto;}
+  .hh-step{display:flex; gap:20px;}
+  .hh-line{display:flex; flex-direction:column; align-items:center; flex:none;}
+  .hh-dot{width:40px; height:40px; border-radius:50%; background:var(--teal); color:var(--white); font-family:'Baloo 2'; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:center; flex:none;}
+  .hh-bar{width:2px; flex:1; background:var(--teal-soft); min-height:34px; margin:4px 0;}
+  .hh-body{padding-bottom:32px;}
+  .hh-body h3{font-size:18px; margin-bottom:6px;}
+  .hh-body p{font-size:14.5px; color:var(--ink-soft); max-width:48ch;}
+  .hh-step.last .hh-body{padding-bottom:0;}
+
+  /* ---------- CHALLENGES TO OPPORTUNITIES ---------- */
+  .c2o-section{padding:70px 24px; background:var(--white); border-top:1px solid #EEE7D8; border-bottom:1px solid #EEE7D8;}
+  .c2o-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; max-width:1080px; margin:0 auto;}
+  .c2o-card{background:var(--cream); border-radius:16px; padding:22px 18px; text-align:center;}
+  .c2o-card .c2o-icon{width:52px; height:52px; border-radius:14px; background:var(--teal-soft); display:flex; align-items:center; justify-content:center; margin:0 auto 14px;}
+  .c2o-card .c2o-icon svg{width:26px; height:26px; color:var(--teal-dark);}
+  .c2o-card h3{font-size:15.5px; margin-bottom:6px;}
+  .c2o-card p{font-size:13px; color:var(--ink-soft);}
+  @media (max-width:820px){.c2o-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:480px){.c2o-grid{grid-template-columns:1fr;}}
+
+  /* ---------- OUR AIM ---------- */
+  /* ---------- FUNDING DISCOVERY ---------- */
+  .funding-section{padding:70px 24px; background:var(--white); border-top:1px solid #EEE7D8; border-bottom:1px solid #EEE7D8;}
+  .funding-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:16px; max-width:1100px; margin:0 auto 20px;}
+  .funding-card{background:var(--cream); border-radius:16px; padding:20px 16px; text-align:center;}
+  .funding-card .fi{width:46px; height:46px; border-radius:12px; background:var(--teal-soft); display:flex; align-items:center; justify-content:center; margin:0 auto 12px;}
+  .funding-card .fi svg{width:22px; height:22px; color:var(--teal-dark);}
+  .funding-card h4{font-size:14px; margin-bottom:6px;}
+  .funding-card p{font-size:12.5px; color:var(--ink-soft);}
+  .funding-disclaimer{max-width:700px; margin:0 auto; text-align:center; font-size:13px; color:var(--ink-soft); background:var(--gold-soft); border-radius:10px; padding:12px 18px;}
+  @media (max-width:900px){.funding-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:480px){.funding-grid{grid-template-columns:1fr;}}
+
+  .aim-section{padding:70px 24px;}
+  .aim-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; max-width:1000px; margin:0 auto;}
+  .aim-card{text-align:center; padding:8px;}
+  .aim-card .emoji{font-size:30px; margin-bottom:10px; display:block;}
+  .aim-card h4{font-size:15.5px; margin-bottom:6px;}
+  .aim-card p{font-size:13px; color:var(--ink-soft);}
+  @media (max-width:760px){.aim-grid{grid-template-columns:1fr 1fr;}}
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta{padding:64px 24px; text-align:center; background:var(--teal-dark);}
+  .final-cta h2{color:var(--white); max-width:20ch; margin:0 auto 10px;}
+  .final-cta p{color:#CFE6E2; font-size:15.5px; max-width:44ch; margin:0 auto 26px;}
+  .final-cta .btn-row{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+  .final-cta-btn{background:var(--coral); color:var(--white); border:none; border-radius:14px; padding:14px 24px; font-family:'Baloo 2'; font-weight:700; font-size:15px; cursor:pointer;}
+  .final-cta-btn.outline{background:transparent; border:2px solid var(--white); color:var(--white);}
+
+  /* ---------- FOOTER LINKS + DISCLAIMER ---------- */
+  .footer-links{display:flex; flex-wrap:wrap; gap:14px; justify-content:center; font-size:13px; color:var(--ink-soft); margin:18px 0 10px;}
+  .sih-disclaimer{text-align:center; font-size:12px; color:var(--ink-soft); border-top:1px solid #EEE7D8; padding-top:16px; margin-top:6px;}
+
+  /* ---------- SUCCESS STORIES ---------- */
+  .stories-section{padding:64px 24px; background:var(--white); border-top:1px solid #EEE7D8; border-bottom:1px solid #EEE7D8;}
+  .stories-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:1000px; margin:0 auto;}
+  .story-card{background:var(--cream); border-radius:16px; padding:22px; text-align:center;}
+  .story-card svg{width:64px; height:64px; margin:0 auto 14px;}
+  .story-card .before{font-size:12.5px; color:var(--coral); font-weight:700; margin-bottom:4px;}
+  .story-card .after{font-size:12.5px; color:var(--teal); font-weight:700;}
+  .story-card p{font-size:13.5px; color:var(--ink-soft); margin:8px 0;}
+  @media (max-width:820px){.stories-grid{grid-template-columns:1fr;}}
+
+  /* ---------- FAQ ---------- */
+  .faq-section{padding:64px 24px;}
+  .faq-list{max-width:720px; margin:0 auto;}
+  .faq-item{border-bottom:1px solid var(--border);}
+  .faq-q{width:100%; text-align:left; background:none; border:none; padding:18px 4px; display:flex; justify-content:space-between; align-items:center; gap:12px; font-family:'Baloo 2'; font-weight:700; font-size:15.5px; color:var(--teal-dark); cursor:pointer;}
+  .faq-q svg{width:18px; height:18px; flex:none; transition:transform 0.15s;}
+  .faq-item.open .faq-q svg{transform:rotate(180deg);}
+  .faq-a{max-height:0; overflow:hidden; font-size:14.5px; color:var(--ink-soft); padding:0 4px;}
+  .faq-item.open .faq-a{max-height:220px; padding-bottom:16px;}
+  .faq-read{display:inline-flex; align-items:center; gap:6px; background:none; border:none; color:var(--teal); font-weight:700; font-size:12.5px; margin-top:8px; cursor:pointer;}
+  .faq-read svg{width:14px; height:14px;}
+
+  /* ---------- MENTOR CONNECT ---------- */
+  .mentor-section{padding:64px 24px; background:var(--teal-soft);}
+  .mentor-inner{max-width:600px; margin:0 auto; text-align:center;}
+  .mentor-form{background:var(--white); border-radius:18px; padding:26px 22px; margin-top:26px; text-align:left; box-shadow:var(--shadow);}
+  .mentor-form .field-row{margin-bottom:16px;}
+  .mentor-form label{display:block; font-size:13.5px; font-weight:700; color:var(--teal-dark); margin-bottom:6px;}
+  .mentor-form input, .mentor-form select{width:100%; border:1.5px solid #DDD3BC; border-radius:10px; padding:11px 14px; font-size:14px; font-family:'Mukta';}
+  .mentor-confirm{display:none; text-align:center; padding:20px; background:#E1F3EA; border-radius:14px; color:#1E7A4C; font-weight:600;}
+  .mentor-confirm.show{display:block;}
+
+  /* ---------- LOW DATA MODE ---------- */
+  body.low-data .hero-badge, body.low-data .landing-hero .netbg, body.low-data .illus-card svg.illustration,
+  body.low-data .story-card svg, body.low-data .stat-card, body.low-data .c2o-icon svg{display:none !important;}
+  body.low-data *{animation:none !important; transition:none !important;}
+  .low-data-toggle{position:fixed; left:12px; bottom:12px; z-index:120; background:var(--white); border:1.5px solid var(--border); border-radius:999px; padding:9px 16px; font-size:12.5px; font-weight:700; color:var(--teal-dark); cursor:pointer; box-shadow:var(--shadow); display:flex; align-items:center; gap:6px;}
+  .low-data-toggle.active{background:var(--teal); color:var(--white); border-color:var(--teal);}
+
+  /* ---------- AI CHAT ASSISTANT ---------- */
+  .chat-fab{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    width:64px; height:64px;
+    border-radius:50%;
+    background:var(--coral);
+    border:none;
+    box-shadow:0 8px 20px rgba(0,0,0,0.22);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    z-index:100;
+  }
+  .chat-fab svg{width:28px; height:28px; color:var(--white);}
+  .chat-fab .ping{
+    position:absolute;
+    top:-4px; right:-4px;
+    width:16px; height:16px;
+    border-radius:50%;
+    background:var(--gold);
+    border:2px solid var(--white);
+  }
+
+  .chat-panel{
+    position:fixed;
+    right:20px;
+    bottom:96px;
+    width:min(380px, calc(100vw - 40px));
+    height:min(520px, calc(100vh - 140px));
+    background:var(--white);
+    border-radius:20px;
+    box-shadow:0 16px 40px rgba(0,0,0,0.24);
+    display:none;
+    flex-direction:column;
+    overflow:hidden;
+    z-index:100;
+  }
+  .chat-panel.open{display:flex;}
+
+  .chat-header{
+    background:var(--teal-dark);
+    color:var(--white);
+    padding:16px 18px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .chat-header .chat-avatar{
+    width:36px; height:36px;
+    border-radius:50%;
+    background:var(--gold);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:none;
+  }
+  .chat-header .chat-avatar svg{width:19px; height:19px; color:var(--teal-dark);}
+  .chat-header-text{flex:1;}
+  .chat-header-text .name{font-family:'Baloo 2', sans-serif; font-weight:700; font-size:15px;}
+  .chat-header-text .status{font-size:12px; color:#CFE6E2;}
+  .chat-close{
+    background:transparent;
+    border:none;
+    color:var(--white);
+    cursor:pointer;
+    width:30px; height:30px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .chat-close svg{width:20px; height:20px;}
+
+  .chat-messages{
+    flex:1;
+    overflow-y:auto;
+    padding:16px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    background:var(--cream);
+  }
+  .msg{
+    max-width:82%;
+    padding:10px 14px;
+    border-radius:14px;
+    font-size:14.5px;
+    line-height:1.45;
+  }
+  .msg.bot{
+    align-self:flex-start;
+    background:var(--teal-soft);
+    color:var(--ink);
+    border-bottom-left-radius:4px;
+  }
+  .msg.user{
+    align-self:flex-end;
+    background:var(--teal);
+    color:var(--white);
+    border-bottom-right-radius:4px;
+  }
+  .chip-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:2px;
+  }
+  .chip{
+    background:var(--white);
+    border:1.5px solid var(--teal);
+    color:var(--teal-dark);
+    border-radius:999px;
+    padding:8px 14px;
+    font-size:13.5px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .chip:hover{background:var(--teal-soft);}
+
+  .chat-input-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:12px;
+    border-top:1px solid #EEE7D8;
+    background:var(--white);
+  }
+  .chat-input-row input{
+    flex:1;
+    border:1.5px solid #DDD3BC;
+    border-radius:999px;
+    padding:11px 16px;
+    font-family:'Mukta', sans-serif;
+    font-size:14.5px;
+    outline:none;
+  }
+  .chat-input-row input:focus{border-color:var(--teal);}
+  .chat-icon-btn{
+    width:40px; height:40px;
+    border-radius:50%;
+    border:none;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    flex:none;
+  }
+  .chat-mic{background:var(--teal-soft); color:var(--teal-dark);}
+  .chat-mic.listening{background:var(--coral); color:var(--white);}
+  .chat-send{background:var(--coral); color:var(--white);}
+  .chat-icon-btn svg{width:19px; height:19px;}
+
+  .chat-disclaimer{
+    font-size:11px;
+    color:var(--ink-soft);
+    text-align:center;
+    padding:6px 12px 10px;
+    background:var(--white);
+  }
+
+  @media (max-width:480px){
+    .chat-panel{right:10px; bottom:86px; width:calc(100vw - 20px);}
+    .chat-fab{right:14px; bottom:14px;}
+  }
+
+  .about-section{
+    padding:64px 24px;
+    background:var(--white);
+    border-top:1px solid #EEE7D8;
+    border-bottom:1px solid #EEE7D8;
+  }
+  .about-grid{
+    max-width:920px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+  }
+  .about-block .about-icon{
+    width:52px; height:52px;
+    border-radius:14px;
+    background:var(--teal-soft);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:16px;
+  }
+  .about-block .about-icon svg{width:26px; height:26px; color:var(--teal);}
+  .about-block h3{
+    font-size:20px;
+    margin-bottom:10px;
+  }
+  .about-block p{
+    font-size:16px;
+    color:var(--ink-soft);
+    max-width:42ch;
+  }
+  @media (max-width:720px){
+    .about-grid{grid-template-columns:1fr; gap:36px;}
+  }
+
+  /* ---------- ILLUSTRATED EXPLAINER ---------- */
+  .explain-section{
+    padding:70px 24px 20px;
+  }
+  .explain-section h2{
+    text-align:center;
+    font-size:clamp(24px, 3.4vw, 32px);
+    max-width:20ch;
+    margin:0 auto 8px;
+  }
+  .explain-section .section-sub{
+    text-align:center;
+    color:var(--ink-soft);
+    font-size:16px;
+    margin-bottom:48px;
+  }
+  .explain-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:28px;
+    max-width:920px;
+    margin:0 auto;
+    align-items:stretch;
+  }
+  .explain-card{
+    border-radius:20px;
+    padding:26px 24px 30px;
+    display:flex;
+    flex-direction:column;
+  }
+  .explain-card.problem{
+    background:#F4ECE3;
+    border:2px solid #E7D6BF;
+  }
+  .explain-card.solution{
+    background:var(--teal-soft);
+    border:2px solid #BFE0DA;
+  }
+  .explain-card .tag{
+    display:inline-flex;
+    align-self:flex-start;
+    font-family:'Mukta', sans-serif;
+    font-weight:700;
+    font-size:13px;
+    padding:5px 14px;
+    border-radius:999px;
+    margin-bottom:16px;
+  }
+  .explain-card.problem .tag{background:#E7D6BF; color:#7A5A2E;}
+  .explain-card.solution .tag{background:#BFE0DA; color:var(--teal-dark);}
+  .explain-card svg.illustration{
+    width:100%;
+    height:auto;
+    margin-bottom:18px;
+  }
+  .explain-card h3{
+    font-size:19px;
+    margin-bottom:10px;
+  }
+  .explain-card ul{
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .explain-card li{
+    font-size:15px;
+    color:var(--ink-soft);
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+  }
+  .explain-card li svg{width:18px; height:18px; flex:none; margin-top:2px;}
+  .explain-card.problem li svg{color:#C2703A;}
+  .explain-card.solution li svg{color:var(--teal);}
+
+  @media (max-width:720px){
+    .explain-grid{grid-template-columns:1fr;}
+  }
+
+
+  .path{
+    position:relative;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:36px;
+    max-width:960px;
+    margin:0 auto;
+  }
+  .path svg.road{
+    position:absolute;
+    top:44px;
+    left:0;
+    width:100%;
+    height:16px;
+    z-index:0;
+  }
+  .stop{
+    position:relative;
+    z-index:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+  }
+  .stop-icon{
+    width:90px; height:90px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--white);
+    border:4px solid var(--gold);
+    margin-bottom:18px;
+  }
+  .stop:nth-child(2) .stop-icon{border-color:var(--aqua);}
+  .stop:nth-child(3) .stop-icon{border-color:var(--coral);}
+  .stop-icon svg{width:42px; height:42px; color:var(--teal-dark);}
+  .stop h3{
+    font-size:19px;
+    margin-bottom:6px;
+  }
+  .stop p{
+    font-size:15px;
+    color:var(--ink-soft);
+    max-width:24ch;
+  }
+
+  @media (max-width:760px){
+    .path{grid-template-columns:1fr; gap:46px;}
+    .path svg.road{display:none;}
+  }
+
+  /* ---------- WHO THIS IS FOR ---------- */
+  .for-section{
+    background:var(--teal-dark);
+    padding:70px 24px;
+  }
+  .for-section h2{
+    color:var(--white);
+    text-align:center;
+    font-size:clamp(24px, 3.4vw, 32px);
+    max-width:18ch;
+    margin:0 auto 44px;
+  }
+  .for-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+    max-width:900px;
+    margin:0 auto;
+  }
+  .for-item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap:12px;
+    padding:18px 10px;
+  }
+  .for-icon{
+    width:64px; height:64px;
+    border-radius:50%;
+    background:var(--teal);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .for-icon svg{width:32px; height:32px; color:var(--gold);}
+  .for-item span{
+    color:var(--white);
+    font-weight:600;
+    font-size:16px;
+  }
+
+  @media (max-width:640px){
+    .for-grid{grid-template-columns:repeat(2, 1fr);}
+  }
+
+  /* ---------- TRUST STRIP ---------- */
+  .trust{
+    padding:52px 24px;
+  }
+  .trust-inner{
+    max-width:960px;
+    margin:0 auto;
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    justify-content:center;
+  }
+  .trust-pill{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:var(--white);
+    border:1px solid #E7E1D3;
+    border-radius:999px;
+    padding:12px 20px;
+    font-size:15px;
+    font-weight:600;
+    color:var(--teal-dark);
+  }
+  .trust-pill svg{width:20px; height:20px; color:var(--coral); flex:none;}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--white);
+    border-top:1px solid #E7E1D3;
+    padding:44px 24px;
+  }
+  .footer-inner{
+    max-width:1080px;
+    margin:0 auto;
+    display:flex;
+    flex-wrap:wrap;
+    gap:24px;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .footer-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .footer-btn{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    border-radius:14px;
+    padding:14px 20px;
+    font-weight:600;
+    font-size:15px;
+    text-decoration:none;
+    border:2px solid var(--teal);
+    color:var(--teal-dark);
+  }
+  .footer-btn svg{width:20px; height:20px;}
+  .footer-btn.solid{
+    background:var(--teal);
+    color:var(--white);
+    border-color:var(--teal);
+  }
+  .footer-note{
+    font-size:14px;
+    color:var(--ink-soft);
+  }
+</style>
+<style>
+.site-nav{background:#0A4F4B;color:#fff;padding:10px 20px;display:flex;gap:16px;align-items:center;font-family:'Mukta',Arial,sans-serif;font-size:13px;flex-wrap:wrap;}
+.site-nav a{color:#fff;text-decoration:none;opacity:0.85;font-weight:600;}
+.site-nav a.current{opacity:1;text-decoration:underline;}
+.site-nav .brand{font-weight:800;margin-right:8px;opacity:1;}
+</style>
+</head>
+<body>
+<div class="site-nav"><span class="brand">🌱 Sahayog</span><a href="index.html">Overview</a><a href="landing.html" class="current">Landing</a><a href="app.html">App Flow</a><a href="admin.html">Admin</a></div>
+
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="200" cy="200" r="190" fill="#0F6B66"/>
+          <g stroke="#F7C948" stroke-width="10" stroke-linecap="round" opacity="0.9">
+            <line x1="200" y1="80" x2="200" y2="105"/>
+            <line x1="140" y1="98" x2="153" y2="118"/>
+            <line x1="260" y1="98" x2="247" y2="118"/>
+            <line x1="100" y1="140" x2="120" y2="153"/>
+            <line x1="300" y1="140" x2="280" y2="153"/>
+          </g>
+          <circle cx="200" cy="175" r="42" fill="#F7C948"/>
+          <path d="M105 300 C105 260, 130 245, 155 245 C170 245, 180 255, 185 268 L185 300 Z" fill="#FFFFFF"/>
+          <path d="M295 300 C295 260, 270 245, 245 245 C230 245, 220 255, 215 268 L215 300 Z" fill="#FFFFFF"/>
+          <line x1="200" y1="268" x2="200" y2="235" stroke="#EF7B45" stroke-width="9" stroke-linecap="round"/>
+          <path d="M200 245 C185 240, 178 225, 185 210 C195 218, 200 232, 200 245 Z" fill="#4FB3A9"/>
+          <path d="M200 245 C215 240, 222 225, 215 210 C205 218, 200 232, 200 245 Z" fill="#4FB3A9"/>
+        </svg>
+        <span class="brand-name">Sahayog</span>
+      </div>
+      <div class="topbar-actions">
+        <div class="lang-switch" role="group" aria-label="Choose language">
+          <button type="button" data-lang="hi" aria-label="हिंदी में देखें">हिंदी</button>
+          <button type="button" data-lang="en" aria-label="View in English">English</button>
+        </div>
+        <button class="help-btn" aria-label="Call for help">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span data-en="Call us" data-hi="कॉल करें">Call us</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="wrap">
+
+      <div class="return-banner" id="return-banner">
+        <span class="return-banner-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
+        </span>
+        <span class="return-banner-text">
+          <span class="line1" id="return-banner-line1">Welcome back!</span>
+          <span class="line2" id="return-banner-line2">Playing your welcome message…</span>
+        </span>
+        <button class="return-banner-play" id="return-banner-play" aria-label="Play welcome message again">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+      </div>
+
+      <svg class="hero-badge" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="200" cy="200" r="190" fill="#0F6B66"/>
+        <g stroke="#F7C948" stroke-width="8" stroke-linecap="round" opacity="0.9">
+          <line x1="200" y1="80" x2="200" y2="105"/>
+          <line x1="140" y1="98" x2="153" y2="118"/>
+          <line x1="260" y1="98" x2="247" y2="118"/>
+          <line x1="100" y1="140" x2="120" y2="153"/>
+          <line x1="300" y1="140" x2="280" y2="153"/>
+        </g>
+        <circle cx="200" cy="175" r="42" fill="#F7C948"/>
+        <path d="M105 300 C105 260, 130 245, 155 245 C170 245, 180 255, 185 268 L185 300 Z" fill="#FFFFFF"/>
+        <path d="M295 300 C295 260, 270 245, 245 245 C230 245, 220 255, 215 268 L215 300 Z" fill="#FFFFFF"/>
+        <line x1="200" y1="268" x2="200" y2="235" stroke="#EF7B45" stroke-width="7" stroke-linecap="round"/>
+        <path d="M200 245 C185 240, 178 225, 185 210 C195 218, 200 232, 200 245 Z" fill="#4FB3A9"/>
+        <path d="M200 245 C215 240, 222 225, 215 210 C205 218, 200 232, 200 245 Z" fill="#4FB3A9"/>
+      </svg>
+
+      <div class="sub-native" id="sub-native">आपके काम के लिए, सही सरकारी योजना</div>
+      <h1 data-en="Tell us about your work. We'll find your scheme." data-hi="अपने काम के बारे में बताइए। हम आपकी योजना ढूंढ देंगे।">Tell us about your work. We'll find your scheme.</h1>
+      <p class="lede" data-en="No forms to fill first. No reading required. Speak in your own language, or type a few words — we do the rest." data-hi="पहले कोई फॉर्म नहीं भरना है। पढ़ने की जरूरत नहीं। अपनी भाषा में बोलिए, या कुछ शब्द टाइप कीजिए — बाकी काम हम करेंगे।">No forms to fill first. No reading required. Speak in your own language, or type a few words — we do the rest.</p>
+
+      <button class="welcome-btn" id="welcome-btn" aria-live="polite">
+        <span class="welcome-btn-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+        </span>
+        <span id="welcome-btn-label">Hear a welcome message</span>
+      </button>
+
+      <div class="hero-actions">
+        <button class="speak-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg>
+          <span data-en="Speak now" data-hi="अभी बोलिए">Speak now</span>
+        </button>
+        <label class="type-field">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          <input type="text" id="type-input" placeholder="Or type: e.g. I stitch clothes at home" data-placeholder-en="Or type: e.g. I stitch clothes at home" data-placeholder-hi="या लिखिए: जैसे मैं घर पर कपड़े सिलती हूँ">
+        </label>
+      </div>
+      <div class="hero-note" data-en="Free, always. Your details stay private." data-hi="हमेशा मुफ्त। आपकी जानकारी सुरक्षित रहेगी।">Free, always. Your details stay private.</div>
+
+      <div style="margin-top:22px;">
+        <a href="app.html" class="footer-btn solid" style="display:inline-flex;" data-en="Continue to find your scheme →" data-hi="अपनी योजना ढूंढने के लिए आगे बढ़ें →">Continue to find your scheme →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="c2o-section">
+    <div class="wrap">
+      <h2 style="text-align:center; margin-bottom:8px;" data-en="From Challenges to Opportunities" data-hi="चुनौतियों से अवसरों तक">From Challenges to Opportunities</h2>
+      <p class="section-sub" style="margin-bottom:40px;" data-en="How Sahayog turns a confusing search into a clear next step." data-hi="सहयोग एक उलझी खोज को स्पष्ट अगले कदम में कैसे बदलता है।">How Sahayog turns a confusing search into a clear next step.</p>
+      <div class="c2o-grid">
+        <div class="c2o-card">
+          <div class="c2o-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2 2-2 3.5M12 17h.01"/></svg></div>
+          <h3 data-en="Too Many Schemes, Too Much Confusion" data-hi="बहुत सारी योजनाएँ, बहुत उलझन">Too Many Schemes, Too Much Confusion</h3>
+          <p data-en="Entrepreneurs struggle to identify which government support program is actually relevant to them." data-hi="उद्यमियों को यह समझना मुश्किल होता है कि कौन सी सरकारी योजना वाकई उनके लिए है।">Entrepreneurs struggle to identify which government support program is actually relevant to them.</p>
+        </div>
+        <div class="c2o-card">
+          <div class="c2o-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M12 10c-3 0-5-2-5-5 3 0 5 2 5 5zM12 10c3 0 5-2 5-5-3 0-5 2-5 5z"/></svg></div>
+          <h3 data-en="AI Understands Your Needs" data-hi="AI आपकी ज़रूरतें समझता है">AI Understands Your Needs</h3>
+          <p data-en="Our platform understands your business idea, location, requirements, stage, and profile." data-hi="हमारा प्लेटफ़ॉर्म आपके व्यापार, स्थान, ज़रूरत और चरण को समझता है।">Our platform understands your business idea, location, requirements, stage, and profile.</p>
+        </div>
+        <div class="c2o-card">
+          <div class="c2o-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 21V9M10 21V3M16 21v-7M22 21v-4"/></svg></div>
+          <h3 data-en="Get Personalized Matches" data-hi="व्यक्तिगत मेल पाएँ">Get Personalized Matches</h3>
+          <p data-en="AI and eligibility rules rank schemes according to your profile." data-hi="AI और पात्रता नियम आपकी प्रोफ़ाइल के अनुसार योजनाओं को क्रमबद्ध करते हैं।">AI and eligibility rules rank schemes according to your profile.</p>
+        </div>
+        <div class="c2o-card">
+          <div class="c2o-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+          <h3 data-en="Know What To Do Next" data-hi="अगला कदम जानिए">Know What To Do Next</h3>
+          <p data-en="Get eligibility information, document checklists, application guidance, and official sources." data-hi="पात्रता जानकारी, दस्तावेज़ सूची, आवेदन मार्गदर्शन और आधिकारिक स्रोत पाएँ।">Get eligibility information, document checklists, application guidance, and official sources.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-section">
+    <div class="wrap">
+      <div class="about-grid">
+        <div class="about-block">
+          <div class="about-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M12 10c-3 0-5-2-5-5 3 0 5 2 5 5zM12 10c3 0 5-2 5-5-3 0-5 2-5 5z"/><path d="M6 20h12"/></svg>
+          </div>
+          <h3 data-en="Who we are" data-hi="हम कौन हैं">Who we are</h3>
+          <p data-en="Sahayog is an AI-based support platform built for entrepreneurs from marginalized backgrounds — women, rural communities, persons with disabilities, low-income families, and minority and tribal groups. We help you discover government and private schemes you actually qualify for, in your own language." data-hi="सहयोग एक AI-आधारित सहायता मंच है, जो हाशिए पर खड़े उद्यमियों — महिलाओं, ग्रामीण समुदायों, दिव्यांगजनों, कम आय वाले परिवारों, और अल्पसंख्यक व आदिवासी समूहों — के लिए बनाया गया है। हम आपको आपकी अपनी भाषा में वे सरकारी और निजी योजनाएँ ढूंढने में मदद करते हैं, जिनके आप सच में हकदार हैं।">
+            Sahayog is an AI-based support platform built for entrepreneurs from marginalized backgrounds — women, rural communities, persons with disabilities, low-income families, and minority and tribal groups. We help you discover government and private schemes you actually qualify for, in your own language.
+          </p>
+        </div>
+
+        <div class="about-block">
+          <div class="about-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
+          </div>
+          <h3 data-en="How we help" data-hi="हम कैसे मदद करते हैं">How we help</h3>
+          <p data-en="We listen to what you do — by voice or by typing — and use AI to match you with the right schemes. Then we guide you step by step through the application, in plain language, so you're never left to figure it out alone." data-hi="हम आपके काम को सुनते हैं — बोलकर या लिखकर — और AI की मदद से आपको सही योजनाओं से जोड़ते हैं। फिर हम आवेदन की पूरी प्रक्रिया में आसान भाषा में आपका साथ देते हैं, ताकि आपको अकेले कुछ भी समझने की जरूरत न पड़े।">
+            We listen to what you do — by voice or by typing — and use AI to match you with the right schemes. Then we guide you step by step through the application, in plain language, so you're never left to figure it out alone.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="explain-section">
+    <div class="wrap">
+      <h2 data-en="The barrier isn't ability. It's access." data-hi="कमी काबिलियत की नहीं, मौके तक पहुँच की है।">The barrier isn't ability. It's access.</h2>
+      <p class="section-sub" data-en="Many capable entrepreneurs never reach the support they qualify for — not because they aren't ready, but because the system wasn't built for them." data-hi="कई काबिल उद्यमी उस मदद तक कभी नहीं पहुँच पाते जिसके वे हकदार हैं — क्योंकि वे तैयार नहीं थे, बल्कि इसलिए क्योंकि सिस्टम उनके लिए बना ही नहीं था।">Many capable entrepreneurs never reach the support they qualify for — not because they aren't ready, but because the system wasn't built for them.</p>
+
+      <div class="explain-grid">
+
+        <div class="explain-card problem">
+          <span class="tag">Today, without help</span>
+          <svg class="illustration" viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A rural entrepreneur cut off from finance, forms, networks and roads">
+            <ellipse cx="160" cy="205" rx="120" ry="8" fill="#E7D6BF"/>
+            <rect x="15" y="150" width="46" height="40" rx="3" fill="#D9C3A3"/>
+            <path d="M12 150 L38 128 L64 150 Z" fill="#C2703A"/>
+            <path d="M255 190 Q260 150 300 150" stroke="#C9B89B" stroke-width="6" fill="none" stroke-dasharray="1 14" stroke-linecap="round"/>
+            <circle cx="150" cy="120" r="22" fill="#8A6A3E"/>
+            <path d="M128 150 Q150 132 172 150 L172 190 L128 190 Z" fill="#C2703A"/>
+            <rect x="118" y="150" width="64" height="14" rx="4" fill="#7A5A2E"/>
+            <circle cx="118" cy="157" r="10" fill="#7A5A2E"/>
+            <circle cx="182" cy="157" r="10" fill="#7A5A2E"/>
+            <g transform="translate(210,95)">
+              <circle r="19" fill="#F4ECE3" stroke="#C2703A" stroke-width="3"/>
+              <text x="0" y="7" text-anchor="middle" font-family="Baloo 2" font-weight="700" font-size="20" fill="#C2703A">₹</text>
+              <line x1="-13" y1="-13" x2="13" y2="13" stroke="#C2703A" stroke-width="3"/>
+            </g>
+            <g transform="translate(80,80)">
+              <rect x="-16" y="-20" width="32" height="40" rx="2" fill="#F4ECE3" stroke="#C2703A" stroke-width="2.5"/>
+              <line x1="-9" y1="-9" x2="9" y2="-9" stroke="#C2703A" stroke-width="2"/>
+              <line x1="-9" y1="-1" x2="9" y2="-1" stroke="#C2703A" stroke-width="2"/>
+              <line x1="-9" y1="7" x2="4" y2="7" stroke="#C2703A" stroke-width="2"/>
+              <line x1="-16" y1="-20" x2="16" y2="20" stroke="#C2703A" stroke-width="3"/>
+            </g>
+            <g transform="translate(255,150)" opacity="0.9">
+              <circle r="5" fill="#C2703A"/>
+              <circle cx="22" cy="-6" r="5" fill="#D9C3A3"/>
+              <circle cx="-20" cy="-10" r="5" fill="#D9C3A3"/>
+              <line x1="0" y1="0" x2="22" y2="-6" stroke="#D9C3A3" stroke-width="2" stroke-dasharray="2 4"/>
+              <line x1="0" y1="0" x2="-20" y2="-10" stroke="#D9C3A3" stroke-width="2" stroke-dasharray="2 4"/>
+            </g>
+          </svg>
+          <h3 data-en="Real, everyday barriers" data-hi="रोज़मर्रा की असली रुकावटें">Real, everyday barriers</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>No bank or lender wants to take a chance</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>Forms are long, in English, hard to read</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>No one nearby to explain what's available</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>Village is far from any office or market</li>
+          </ul>
+        </div>
+
+        <div class="explain-card solution">
+          <span class="tag">With Sahayog</span>
+          <svg class="illustration" viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The same entrepreneur now connected by voice to matched schemes and application help">
+            <ellipse cx="160" cy="205" rx="120" ry="8" fill="#BFE0DA"/>
+            <circle cx="150" cy="120" r="22" fill="#0F6B66"/>
+            <path d="M128 150 Q150 132 172 150 L172 190 L128 190 Z" fill="#4FB3A9"/>
+            <rect x="118" y="150" width="64" height="14" rx="4" fill="#0A4F4B"/>
+            <circle cx="118" cy="157" r="10" fill="#0A4F4B"/>
+            <circle cx="182" cy="157" r="10" fill="#0A4F4B"/>
+            <g transform="translate(150,90)">
+              <path d="M0 -6a6 6 0 0 1 6 6v10a6 6 0 0 1-12 0v-10a6 6 0 0 1 6-6z" fill="#F7C948"/>
+              <path d="M-9 8v2a9 9 0 0 0 18 0v-2" stroke="#F7C948" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M-16 2a16 16 0 0 0 32 0" stroke="#F7C948" stroke-width="1.6" fill="none" opacity="0.6"/>
+            </g>
+            <g transform="translate(240,80)">
+              <rect x="-30" y="-24" width="60" height="48" rx="10" fill="#FFFFFF" stroke="#0F6B66" stroke-width="2.5"/>
+              <path d="M-15 -4l9 9 18-18" stroke="#0F6B66" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <path d="M172 108 C200 100, 220 92, 236 68" stroke="#F7C948" stroke-width="3" fill="none" stroke-dasharray="1 8" stroke-linecap="round"/>
+            <g transform="translate(65,150)">
+              <path d="M-18 20 C-18 4, -8 -4, 4 -4 C10 -4, 15 0, 17 6 L17 20 Z" fill="#FFFFFF"/>
+              <path d="M40 20 C40 4, 30 -4, 18 -4 C12 -4, 7 0, 5 6 L5 20 Z" fill="#FFFFFF"/>
+              <line x1="11" y1="6" x2="11" y2="-8" stroke="#EF7B45" stroke-width="4" stroke-linecap="round"/>
+              <path d="M11 -4 C6 -6, 4 -12, 8 -18 C13 -14, 11 -8, 11 -4Z" fill="#4FB3A9"/>
+            </g>
+            <path d="M100 108 C88 100, 78 90, 78 76" stroke="#0F6B66" stroke-width="2" fill="none" stroke-dasharray="1 6" stroke-linecap="round" opacity="0.7"/>
+          </svg>
+          <h3 data-en="Support that meets you where you are" data-hi="मदद, जहाँ आप हैं वहीं तक पहुँचेगी">Support that meets you where you are</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Speak in your language — no forms first</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>AI checks every scheme you qualify for</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Guided help filling the hard parts</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Works over a basic phone, anywhere</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="path-section">
+    <div class="wrap">
+      <h2 data-en="How we help, step by step" data-hi="हम कैसे मदद करते हैं, कदम दर कदम">How we help, step by step</h2>
+      <p class="section-sub" data-en="No paperwork until you're ready. We guide you at every step." data-hi="जब तक आप तैयार न हों, कोई कागज़ी काम नहीं। हर कदम पर हम आपके साथ हैं।">No paperwork until you're ready. We guide you at every step.</p>
+
+      <div class="howhelp-timeline">
+        <div class="hh-step">
+          <div class="hh-line"><div class="hh-dot">01</div><div class="hh-bar"></div></div>
+          <div class="hh-body">
+            <h3 data-en="Tell us about you" data-hi="अपने बारे में बताइए">Tell us about you</h3>
+            <p data-en="Speak or type a little about your work, your village or town, and who you are." data-hi="अपने काम, गाँव या शहर, और अपने बारे में थोड़ा बोलिए या लिखिए।">Speak or type a little about your work, your village or town, and who you are.</p>
+          </div>
+        </div>
+        <div class="hh-step">
+          <div class="hh-line"><div class="hh-dot">02</div><div class="hh-bar"></div></div>
+          <div class="hh-body">
+            <h3 data-en="Understand your needs" data-hi="आपकी ज़रूरतें समझना">Understand your needs</h3>
+            <p data-en="Our AI reads what you told us and works out what kind of support would actually help." data-hi="हमारा AI आपकी बताई बातें पढ़ता है और समझता है कि आपको किस तरह की मदद चाहिए।">Our AI reads what you told us and works out what kind of support would actually help.</p>
+          </div>
+        </div>
+        <div class="hh-step">
+          <div class="hh-line"><div class="hh-dot">03</div><div class="hh-bar"></div></div>
+          <div class="hh-body">
+            <h3 data-en="Match you with schemes" data-hi="योजनाओं से मिलान">Match you with schemes</h3>
+            <p data-en="We check every scheme you could qualify for and show you the ones that fit — nothing else." data-hi="हम हर उस योजना की जाँच करते हैं जिसके आप हकदार हैं, और सिर्फ वही आपको दिखाते हैं।">We check every scheme you could qualify for and show you the ones that fit — nothing else.</p>
+          </div>
+        </div>
+        <div class="hh-step">
+          <div class="hh-line"><div class="hh-dot">04</div><div class="hh-bar"></div></div>
+          <div class="hh-body">
+            <h3 data-en="Explain the match" data-hi="मेल क्यों हुआ, यह बताना">Explain the match</h3>
+            <p data-en="We show exactly why a scheme was suggested — never just a number with no reason." data-hi="हम सटीक बताते हैं कि योजना क्यों सुझाई गई — कभी भी बिना कारण के सिर्फ एक अंक नहीं।">We show exactly why a scheme was suggested — never just a number with no reason.</p>
+          </div>
+        </div>
+        <div class="hh-step">
+          <div class="hh-line"><div class="hh-dot">05</div><div class="hh-bar"></div></div>
+          <div class="hh-body">
+            <h3 data-en="Prepare to apply" data-hi="आवेदन की तैयारी">Prepare to apply</h3>
+            <p data-en="We build your personal document checklist and fill the hard parts with you, in your language." data-hi="हम आपकी अपनी दस्तावेज़ सूची बनाते हैं और मुश्किल हिस्सों में आपकी भाषा में साथ देते हैं।">We build your personal document checklist and fill the hard parts with you, in your language.</p>
+          </div>
+        </div>
+        <div class="hh-step last">
+          <div class="hh-line"><div class="hh-dot">06</div></div>
+          <div class="hh-body">
+            <h3 data-en="Track your journey" data-hi="अपनी यात्रा को ट्रैक करें">Track your journey</h3>
+            <p data-en="Save schemes, follow your application status, and come back anytime — we remember where you left off." data-hi="योजनाएँ सहेजें, आवेदन की स्थिति देखें, और कभी भी वापस आएँ — हम याद रखते हैं आप कहाँ तक पहुँचे थे।">Save schemes, follow your application status, and come back anytime — we remember where you left off.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="for-section">
+    <div class="wrap">
+      <h2 data-en="Built for people who are often left out" data-hi="उन लोगों के लिए, जिन्हें अक्सर नज़रअंदाज़ किया जाता है">Built for people who are often left out</h2>
+      <div class="for-grid">
+        <div class="for-item">
+          <div class="for-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5 21c0-4.5 3-7 7-7s7 2.5 7 7"/></svg></div>
+          <span data-en="Women entrepreneurs" data-hi="महिला उद्यमी">Women entrepreneurs</span>
+        </div>
+        <div class="for-item">
+          <div class="for-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21l4-11 4 6 3-4 7 9H3z"/></svg></div>
+          <span data-en="Rural &amp; village businesses" data-hi="ग्रामीण व्यापार">Rural &amp; village businesses</span>
+        </div>
+        <div class="for-item">
+          <div class="for-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12h4M12 12v-4"/></svg></div>
+          <span data-en="Persons with disabilities" data-hi="दिव्यांग जन">Persons with disabilities</span>
+        </div>
+        <div class="for-item">
+          <div class="for-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M5 8l7-6 7 6M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8"/></svg></div>
+          <span data-en="Low-income households" data-hi="कम आय वाले परिवार">Low-income households</span>
+        </div>
+        <div class="for-item">
+          <div class="for-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.5 5 5.5.8-4 4 1 5.5-5-2.6-5 2.6 1-5.5-4-4 5.5-.8z"/></svg></div>
+          <span data-en="Minority communities" data-hi="अल्पसंख्यक समुदाय">Minority communities</span>
+        </div>
+        <div class="for-item">
+          <div class="for-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c-4 3-6 6-6 10a6 6 0 0 0 12 0c0-4-2-7-6-10z"/></svg></div>
+          <span data-en="Tribal entrepreneurs" data-hi="आदिवासी उद्यमी">Tribal entrepreneurs</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="funding-section">
+    <div class="wrap">
+      <h2 style="text-align:center; margin-bottom:8px;" data-en="How can I fund my business?" data-hi="मैं अपने व्यापार को कैसे फंड करूँ?">How can I fund my business?</h2>
+      <p class="section-sub" style="margin-bottom:32px;" data-en="A plain overview of where support could come from — not a promise of any of it." data-hi="सहायता कहाँ से मिल सकती है, इसका एक सीधा अवलोकन — किसी भी चीज़ की गारंटी नहीं।">A plain overview of where support could come from — not a promise of any of it.</p>
+      <div class="funding-grid">
+        <div class="funding-card">
+          <div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M4 21V9l8-5 8 5v12M9 21v-6h6v6"/></svg></div>
+          <h4 data-en="Government schemes" data-hi="सरकारी योजनाएँ">Government schemes</h4>
+          <p data-en="Subsidies, grants and low-interest loans matched to your profile." data-hi="आपकी प्रोफ़ाइल के अनुसार सब्सिडी, अनुदान और कम ब्याज़ के कर्ज़।">Subsidies, grants and low-interest loans matched to your profile.</p>
+        </div>
+        <div class="funding-card">
+          <div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="10" width="18" height="8" rx="1"/><path d="M12 3l9 7H3z"/></svg></div>
+          <h4 data-en="Formal financing" data-hi="औपचारिक वित्तपोषण">Formal financing</h4>
+          <p data-en="General bank loans and institutional lending — eligibility set by the lender." data-hi="सामान्य बैंक कर्ज़ और संस्थागत ऋण — पात्रता ऋणदाता तय करता है।">General bank loans and institutional lending — eligibility set by the lender.</p>
+        </div>
+        <div class="funding-card">
+          <div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6M14 14.5c2.7 0 5 2 5 5.5"/></svg></div>
+          <h4 data-en="Entrepreneurship programs" data-hi="उद्यमिता कार्यक्रम">Entrepreneurship programs</h4>
+          <p data-en="Training, incubation and mentorship support alongside any funding." data-hi="फंडिंग के साथ-साथ प्रशिक्षण, इनक्यूबेशन और मार्गदर्शन सहायता।">Training, incubation and mentorship support alongside any funding.</p>
+        </div>
+        <div class="funding-card">
+          <div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <h4 data-en="Self-funding" data-hi="स्व-वित्तपोषण">Self-funding</h4>
+          <p data-en="Starting small with personal savings, at a general educational level." data-hi="अपनी बचत से छोटे स्तर पर शुरुआत, एक सामान्य समझ के तौर पर।">Starting small with personal savings, at a general educational level.</p>
+        </div>
+        <div class="funding-card">
+          <div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c-4 3-6 6-6 10a6 6 0 0 0 12 0c0-4-2-7-6-10z"/></svg></div>
+          <h4 data-en="Other support" data-hi="अन्य सहायता">Other support</h4>
+          <p data-en="Anything else in the verified scheme dataset that applies to you." data-hi="सत्यापित योजना डेटा में जो कुछ और आप पर लागू हो।">Anything else in the verified scheme dataset that applies to you.</p>
+        </div>
+      </div>
+      <p class="funding-disclaimer" data-en="Funding availability and eligibility depend on the relevant institution's own criteria and approval process — Sahayog helps you discover options, it does not guarantee funding." data-hi="फंडिंग की उपलब्धता और पात्रता संबंधित संस्था के अपने मानदंडों और स्वीकृति प्रक्रिया पर निर्भर करती है — सहयोग विकल्प ढूंढने में मदद करता है, फंडिंग की गारंटी नहीं देता।">Funding availability and eligibility depend on the relevant institution's own criteria and approval process — Sahayog helps you discover options, it does not guarantee funding.</p>
+    </div>
+  </section>
+
+  <section class="aim-section">
+    <div class="wrap">
+      <h2 style="text-align:center; margin-bottom:8px;" data-en="Our Aim" data-hi="हमारा उद्देश्य">Our Aim</h2>
+      <p class="section-sub" style="margin-bottom:36px;" data-en="To simplify access to government support by connecting every eligible entrepreneur with the opportunities that best match their needs." data-hi="हर पात्र उद्यमी को उनकी ज़रूरत के अनुसार सबसे उपयुक्त अवसरों से जोड़कर सरकारी सहायता तक पहुँच को आसान बनाना।">To simplify access to government support by connecting every eligible entrepreneur with the opportunities that best match their needs.</p>
+      <div class="aim-grid">
+        <div class="aim-card"><span class="emoji">🎯</span><h4 data-en="Discover" data-hi="खोजें">Discover</h4><p data-en="Find relevant schemes quickly." data-hi="प्रासंगिक योजनाएँ जल्दी ढूंढें।">Find relevant schemes quickly.</p></div>
+        <div class="aim-card"><span class="emoji">🤖</span><h4 data-en="Understand" data-hi="समझें">Understand</h4><p data-en="Convert complex eligibility criteria into simple language." data-hi="जटिल पात्रता शर्तों को आसान भाषा में बदलें।">Convert complex eligibility criteria into simple language.</p></div>
+        <div class="aim-card"><span class="emoji">🧠</span><h4 data-en="Match" data-hi="मेल">Match</h4><p data-en="Get intelligent, personalized recommendations." data-hi="बुद्धिमान, व्यक्तिगत सुझाव पाएँ।">Get intelligent, personalized recommendations.</p></div>
+        <div class="aim-card"><span class="emoji">🚀</span><h4 data-en="Act" data-hi="कार्रवाई">Act</h4><p data-en="Know exactly what documents and steps are required." data-hi="जानिए बिल्कुल किन दस्तावेज़ों और कदमों की ज़रूरत है।">Know exactly what documents and steps are required.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="trust">
+    <div class="wrap trust-inner">
+      <div class="trust-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span data-en="Free to use" data-hi="इस्तेमाल करना मुफ्त है">Free to use</span>
+      </div>
+      <div class="trust-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg>
+        <span data-en="Works with your voice" data-hi="आपकी आवाज़ से काम करता है">Works with your voice</span>
+      </div>
+      <div class="trust-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-5.5-3.5-9s1-6.5 3.5-9z"/></svg>
+        <span data-en="Speaks your language" data-hi="आपकी भाषा में">Speaks your language</span>
+      </div>
+      <div class="trust-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span data-en="A real person to call" data-hi="बात करने के लिए एक असली इंसान">A real person to call</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="stories-section">
+    <div class="wrap">
+      <h2 style="text-align:center; margin-bottom:8px;" data-en="From other entrepreneurs like you" data-hi="आप जैसे अन्य उद्यमियों से">From other entrepreneurs like you</h2>
+      <p class="section-sub" style="margin-bottom:36px;" data-en="Illustrative stories showing the kind of change this journey can bring." data-hi="उदाहरण कहानियाँ, जो दिखाती हैं यह यात्रा किस तरह का बदलाव ला सकती है।">Illustrative stories showing the kind of change this journey can bring.</p>
+      <div class="stories-grid">
+        <div class="story-card">
+          <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#E4F0EE"/><circle cx="32" cy="24" r="10" fill="#0F6B66"/><path d="M14 54c0-11 8-18 18-18s18 7 18 18" fill="#0F6B66"/></svg>
+          <div class="before" data-en="Before: no idea where to start" data-hi="पहले: कहाँ से शुरू करें, पता नहीं था">Before: no idea where to start</div>
+          <p data-en="A tailor in a small town didn't know any support existed for home-based businesses." data-hi="एक छोटे शहर की दर्जी को नहीं पता था कि घर से चलने वाले व्यापार के लिए भी सहायता मौजूद है।">A tailor in a small town didn't know any support existed for home-based businesses.</p>
+          <div class="after" data-en="After: matched to 3 relevant schemes" data-hi="बाद में: 3 उपयुक्त योजनाओं से मेल हुआ">After: matched to 3 relevant schemes</div>
+        </div>
+        <div class="story-card">
+          <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#FCEBB6"/><circle cx="32" cy="24" r="10" fill="#EF7B45"/><path d="M14 54c0-11 8-18 18-18s18 7 18 18" fill="#EF7B45"/></svg>
+          <div class="before" data-en="Before: forms felt impossible" data-hi="पहले: फॉर्म भरना नामुमकिन लगता था">Before: forms felt impossible</div>
+          <p data-en="A farmer wanting to start food processing found the paperwork too confusing to attempt alone." data-hi="खाद्य प्रसंस्करण शुरू करने की चाहत रखने वाले एक किसान को कागज़ी काम अकेले करना मुश्किल लगता था।">A farmer wanting to start food processing found the paperwork too confusing to attempt alone.</p>
+          <div class="after" data-en="After: guided document checklist, step by step" data-hi="बाद में: कदम दर कदम दस्तावेज़ सूची में मार्गदर्शन मिला">After: guided document checklist, step by step</div>
+        </div>
+        <div class="story-card">
+          <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#BFE0DA"/><circle cx="32" cy="24" r="10" fill="#4FB3A9"/><path d="M14 54c0-11 8-18 18-18s18 7 18 18" fill="#4FB3A9"/></svg>
+          <div class="before" data-en="Before: unsure if eligible at all" data-hi="पहले: पात्रता को लेकर अनिश्चित था">Before: unsure if eligible at all</div>
+          <p data-en="A young entrepreneur with a disability assumed most schemes wouldn't apply to them." data-hi="एक युवा दिव्यांग उद्यमी को लगता था कि ज़्यादातर योजनाएँ उन पर लागू नहीं होंगी।">A young entrepreneur with a disability assumed most schemes wouldn't apply to them.</p>
+          <div class="after" data-en="After: found a scheme built specifically for them" data-hi="बाद में: खासतौर पर उनके लिए बनी एक योजना मिली">After: found a scheme built specifically for them</div>
+        </div>
+      </div>
+      <p class="fine" style="text-align:center; color:var(--ink-soft); margin-top:20px;" data-en="These are illustrative examples for this prototype, not real testimonials." data-hi="ये इस प्रोटोटाइप के लिए उदाहरण हैं, असली प्रतिक्रियाएँ नहीं।">These are illustrative examples for this prototype, not real testimonials.</p>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <div class="wrap">
+      <h2 style="text-align:center; margin-bottom:8px;" data-en="Common questions" data-hi="अक्सर पूछे जाने वाले सवाल">Common questions</h2>
+      <p class="section-sub" style="margin-bottom:30px;" data-en="Straight answers to what most people wonder before starting." data-hi="ज़्यादातर लोग शुरू करने से पहले जो सोचते हैं, उनके सीधे जवाब।">Straight answers to what most people wonder before starting.</p>
+      <div class="faq-list" id="faqList">
+        <div class="faq-item">
+          <button class="faq-q" data-faq="0"><span data-en="Is Sahayog really free?" data-hi="क्या सहयोग वाकई मुफ्त है?">Is Sahayog really free?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-a"><span data-en="Yes, always. There is no cost to search, get matched, or get guidance." data-hi="हाँ, हमेशा। खोजने, मेल पाने या मार्गदर्शन पाने का कोई शुल्क नहीं है।">Yes, always. There is no cost to search, get matched, or get guidance.</span><button class="faq-read" data-faqread="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/></svg><span data-en="Listen" data-hi="सुनिए">Listen</span></button></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" data-faq="1"><span data-en="Is my information safe?" data-hi="क्या मेरी जानकारी सुरक्षित है?">Is my information safe?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-a"><span data-en="Your details are used only to find schemes for you and are not sold or shared publicly." data-hi="आपकी जानकारी सिर्फ आपके लिए योजनाएँ ढूंढने में इस्तेमाल होती है, बेची या सार्वजनिक नहीं की जाती।">Your details are used only to find schemes for you and are not sold or shared publicly.</span><button class="faq-read" data-faqread="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/></svg><span data-en="Listen" data-hi="सुनिए">Listen</span></button></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" data-faq="2"><span data-en="What if I don't have a smartphone?" data-hi="अगर मेरे पास स्मार्टफोन नहीं है तो?">What if I don't have a smartphone?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-a"><span data-en="You can ask someone to open this with you, call the helpline, or visit a nearby common service centre for help." data-hi="आप किसी और के साथ इसे खोल सकते हैं, हेल्पलाइन पर कॉल कर सकते हैं, या नज़दीकी जन सेवा केंद्र जा सकते हैं।">You can ask someone to open this with you, call the helpline, or visit a nearby common service centre for help.</span><button class="faq-read" data-faqread="2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/></svg><span data-en="Listen" data-hi="सुनिए">Listen</span></button></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" data-faq="3"><span data-en="What if I don't have all the documents?" data-hi="अगर मेरे पास सारे दस्तावेज़ नहीं हैं तो?">What if I don't have all the documents?</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-a"><span data-en="That's okay — the Document Assistant tells you exactly how to get anything you're missing, one step at a time." data-hi="कोई बात नहीं — दस्तावेज़ सहायक आपको बताता है कि जो कमी है उसे कैसे पूरा करें, कदम दर कदम।">That's okay — the Document Assistant tells you exactly how to get anything you're missing, one step at a time.</span><button class="faq-read" data-faqread="3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/></svg><span data-en="Listen" data-hi="सुनिए">Listen</span></button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mentor-section">
+    <div class="wrap mentor-inner">
+      <h2 data-en="Prefer to talk to a real person?" data-hi="किसी असली इंसान से बात करना चाहते हैं?">Prefer to talk to a real person?</h2>
+      <p class="section-sub" style="margin-bottom:0;" data-en="Request a call from a volunteer or mentor — no need to rely on the AI alone." data-hi="किसी स्वयंसेवक या मार्गदर्शक से कॉल का अनुरोध करें — सिर्फ AI पर निर्भर रहने की ज़रूरत नहीं।">Request a call from a volunteer or mentor — no need to rely on the AI alone.</p>
+      <div class="mentor-form" id="mentorForm">
+        <div class="field-row"><label data-en="Your name" data-hi="आपका नाम">Your name</label><input type="text" id="mentorName"></div>
+        <div class="field-row"><label data-en="Phone number" data-hi="फ़ोन नंबर">Phone number</label><input type="text" id="mentorPhone" placeholder="98xxxxxxxx"></div>
+        <div class="field-row"><label data-en="Preferred time" data-hi="पसंदीदा समय">Preferred time</label>
+          <select id="mentorTime">
+            <option data-en="Morning" data-hi="सुबह">Morning</option>
+            <option data-en="Afternoon" data-hi="दोपहर">Afternoon</option>
+            <option data-en="Evening" data-hi="शाम">Evening</option>
+          </select>
+        </div>
+        <div class="field-row"><label data-en="Preferred language" data-hi="पसंदीदा भाषा">Preferred language</label>
+          <select id="mentorLang"><option>हिंदी</option><option>English</option></select>
+        </div>
+        <button class="footer-btn solid" style="width:100%; justify-content:center;" id="mentorSubmit" data-en="Request a call" data-hi="कॉल का अनुरोध करें">Request a call</button>
+        <div class="mentor-confirm" id="mentorConfirm" data-en="Request noted. In the real product, a volunteer would call you at your preferred time — this prototype does not place a real call." data-hi="अनुरोध दर्ज हो गया। असली उत्पाद में, एक स्वयंसेवक आपके पसंदीदा समय पर कॉल करेगा — यह प्रोटोटाइप असली कॉल नहीं करता।">Request noted. In the real product, a volunteer would call you at your preferred time — this prototype does not place a real call.</div>
+      </div>
+    </div>
+  </section>
+
+  <button class="low-data-toggle" id="lowDataToggle">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+    <span id="lowDataLabel" data-en="Low data mode" data-hi="कम डेटा मोड">Low data mode</span>
+  </button>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <h2 data-en="Your next opportunity could be one conversation away." data-hi="आपका अगला अवसर, बस एक बातचीत दूर है।">Your next opportunity could be one conversation away.</h2>
+      <p data-en="Tell Sahayog what you're building. We'll help you discover where to start." data-hi="सहयोग को बताइए आप क्या बना रहे हैं। हम आपको बताएँगे कहाँ से शुरू करें।">Tell Sahayog what you're building. We'll help you discover where to start.</p>
+      <div class="btn-row">
+        <a href="app.html" class="final-cta-btn" data-en="Start AI Assessment" data-hi="AI आकलन शुरू करें">Start AI Assessment</a>
+        <button class="final-cta-btn outline" id="ctaTalkBtn" data-en="Talk to Sahayog" data-hi="सहयोग से बात करें">Talk to Sahayog</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-actions">
+        <a href="#" class="footer-btn solid">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span data-en="Call helpline" data-hi="हेल्पलाइन पर कॉल करें">Call helpline</span>
+        </a>
+        <a href="#" class="footer-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4-1L3 20l1-4.4A8.4 8.4 0 0 1 3 11.5 8.5 8.5 0 0 1 11.5 3 8.5 8.5 0 0 1 21 11.5z"/></svg>
+          <span data-en="Message us" data-hi="हमें मैसेज करें">Message us</span>
+        </a>
+        <a href="#" class="footer-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-5.5-3.5-9s1-6.5 3.5-9z"/></svg>
+          <span data-en="Change language" data-hi="भाषा बदलें">Change language</span>
+        </a>
+      </div>
+      <div class="footer-note"><span data-en="Sahayog — a companion for every entrepreneur, everywhere." data-hi="सहयोग — हर जगह, हर उद्यमी का साथी।">Sahayog — a companion for every entrepreneur, everywhere.</span></div>
+      <div class="footer-links">
+        <a href="#" data-en="About" data-hi="परिचय">About</a>
+        <a href="#" data-en="How It Works" data-hi="यह कैसे काम करता है">How It Works</a>
+        <a href="#" data-en="Accessibility" data-hi="सुगमता">Accessibility</a>
+        <a href="#" data-en="Privacy" data-hi="गोपनीयता">Privacy</a>
+        <a href="#" data-en="Terms" data-hi="नियम">Terms</a>
+        <a href="#" data-en="Contact" data-hi="संपर्क">Contact</a>
+        <a href="#" data-en="Official Sources" data-hi="आधिकारिक स्रोत">Official Sources</a>
+      </div>
+      <div class="sih-disclaimer" data-en="This is a prototype built for Smart India Hackathon 2026 — Problem Statement SIH26092 (Ministry of Social Justice and Empowerment). Scheme data shown is illustrative demo data, not a live government database." data-hi="यह प्रोटोटाइप Smart India Hackathon 2026 के लिए बनाया गया है — समस्या विवरण SIH26092 (सामाजिक न्याय और अधिकारिता मंत्रालय)। दिखाया गया योजना डेटा उदाहरण है, लाइव सरकारी डेटाबेस नहीं।">This is a prototype built for Smart India Hackathon 2026 — Problem Statement SIH26092 (Ministry of Social Justice and Empowerment). Scheme data shown is illustrative demo data, not a live government database.</div>
+    </div>
+  </footer>
+
+  <button class="chat-fab" id="chat-fab" aria-label="Open help assistant">
+    <span class="ping"></span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4-1L3 20l1-4.4A8.4 8.4 0 0 1 3 11.5 8.5 8.5 0 0 1 11.5 3 8.5 8.5 0 0 1 21 11.5z"/></svg>
+  </button>
+
+  <div class="chat-panel" id="chat-panel" role="dialog" aria-label="Help assistant">
+    <div class="chat-header">
+      <span class="chat-avatar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M12 10c-3 0-5-2-5-5 3 0 5 2 5 5zM12 10c3 0 5-2 5-5-3 0-5 2-5 5z"/><path d="M6 20h12"/></svg>
+      </span>
+      <span class="chat-header-text">
+        <span class="name" id="chat-name">Sahayog Sahayak</span>
+        <span class="status" id="chat-status">Here to help you search</span>
+      </span>
+      <button class="chat-close" id="chat-close" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="chat-messages" id="chat-messages"></div>
+    <div class="chat-disclaimer" id="chat-disclaimer">Demo assistant — guidance shown here is for preview only.</div>
+    <div class="chat-input-row">
+      <button class="chat-icon-btn chat-mic" id="chat-mic" aria-label="Speak your question">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg>
+      </button>
+      <input type="text" id="chat-input" placeholder="Type what you need...">
+      <button class="chat-icon-btn chat-send" id="chat-send" aria-label="Send">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    var messages = {
+      hi: {
+        text: "नमस्ते! मैं आपकी सहायक हूँ। मुझे बताइए आप क्या काम करते हैं, मैं आपके लिए सही सरकारी योजना ढूंढ दूँगी। आप बोलकर भी बता सकते हैं।",
+        lang: "hi-IN",
+        label: "स्वागत संदेश सुनिए",
+        langBtnLabel: "हिंदी",
+        returnLine1: "फिर से स्वागत है!",
+        returnLine2: "आपका स्वागत संदेश चल रहा है…",
+        returnLine2Blocked: "स्वागत संदेश सुनने के लिए दबाएँ"
+      },
+      en: {
+        text: "Hello! I'm your assistant. Tell me what work you do, and I'll find the right government scheme for you. You can speak, too — no typing needed.",
+        lang: "en-IN",
+        label: "Hear a welcome message",
+        langBtnLabel: "English",
+        returnLine1: "Welcome back!",
+        returnLine2: "Playing your welcome message…",
+        returnLine2Blocked: "Tap to hear your welcome message"
+      }
+    };
+
+    // Wrapped in try/catch: storage may be blocked in sandboxed previews,
+    // but works normally once this page is hosted as a real site.
+    function safeGet(key) {
+      try { return window.localStorage.getItem(key); } catch (e) { return null; }
+    }
+    function safeSet(key, value) {
+      try { window.localStorage.setItem(key, value); } catch (e) { /* ignore */ }
+    }
+
+    var currentLang = safeGet("sahayog_lang") || "en";
+    var langSwitchBtns = document.querySelectorAll(".lang-switch button");
+    var welcomeBtn = document.getElementById("welcome-btn");
+    var welcomeLabel = document.getElementById("welcome-btn-label");
+    var returnBanner = document.getElementById("return-banner");
+    var returnLine1 = document.getElementById("return-banner-line1");
+    var returnLine2 = document.getElementById("return-banner-line2");
+    var returnPlayBtn = document.getElementById("return-banner-play");
+
+    var i18nEls = document.querySelectorAll("[data-en]");
+    var placeholderEl = document.getElementById("type-input");
+
+    function applyLang() {
+      var m = messages[currentLang];
+      welcomeLabel.textContent = m.label;
+      returnLine1.textContent = m.returnLine1;
+      langSwitchBtns.forEach(function (btn) {
+        btn.classList.toggle("active", btn.getAttribute("data-lang") === currentLang);
+      });
+      i18nEls.forEach(function (el) {
+        var text = currentLang === "hi" ? el.getAttribute("data-hi") : el.getAttribute("data-en");
+        if (text) el.textContent = text;
+      });
+      if (placeholderEl) {
+        placeholderEl.placeholder = currentLang === "hi"
+          ? placeholderEl.getAttribute("data-placeholder-hi")
+          : placeholderEl.getAttribute("data-placeholder-en");
+      }
+      document.documentElement.lang = currentLang;
+      var subNative = document.getElementById("sub-native");
+      if (subNative) subNative.style.display = currentLang === "hi" ? "none" : "block";
+      if (typeof chatOpened !== "undefined" && chatOpened) renderChatStatic();
+    }
+
+    function speakWelcome(onBlocked) {
+      if (!("speechSynthesis" in window)) {
+        if (onBlocked) onBlocked();
+        return;
+      }
+      var m = messages[currentLang];
+      window.speechSynthesis.cancel();
+      var utter = new SpeechSynthesisUtterance(m.text);
+      utter.lang = m.lang;
+      utter.rate = 0.95;
+      welcomeBtn.classList.add("speaking");
+      utter.onstart = function () {
+        returnLine2.textContent = messages[currentLang].returnLine2;
+      };
+      utter.onend = function () { welcomeBtn.classList.remove("speaking"); };
+      utter.onerror = function () {
+        welcomeBtn.classList.remove("speaking");
+        if (onBlocked) onBlocked();
+      };
+      window.speechSynthesis.speak(utter);
+    }
+
+    langSwitchBtns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        currentLang = btn.getAttribute("data-lang");
+        safeSet("sahayog_lang", currentLang);
+        applyLang();
+      });
+    });
+
+    welcomeBtn.addEventListener("click", function () {
+      if (!("speechSynthesis" in window)) {
+        welcomeLabel.textContent = "Voice is not supported on this device";
+        return;
+      }
+      speakWelcome();
+    });
+
+    returnPlayBtn.addEventListener("click", function () {
+      speakWelcome();
+    });
+
+    applyLang();
+
+    // Second-visit welcome: a flag is set the first time someone opens the
+    // site. On every visit after that, we show the "welcome back" banner
+    // and try to speak the message automatically.
+    var hasVisitedBefore = safeGet("sahayog_visited") === "true";
+    safeSet("sahayog_visited", "true");
+
+    if (hasVisitedBefore) {
+      returnBanner.classList.add("show");
+      returnLine2.textContent = messages[currentLang].returnLine2;
+      // Most browsers block audio that plays without a user gesture,
+      // so we attempt it, and fall back to a visible tap-to-play prompt
+      // if the browser blocks the automatic attempt.
+      setTimeout(function () {
+        try {
+          speakWelcome(function () {
+            returnLine2.textContent = messages[currentLang].returnLine2Blocked;
+          });
+          // If nothing actually started speaking shortly after, assume it was blocked.
+          setTimeout(function () {
+            if (!window.speechSynthesis.speaking) {
+              returnLine2.textContent = messages[currentLang].returnLine2Blocked;
+            }
+          }, 600);
+        } catch (e) {
+          returnLine2.textContent = messages[currentLang].returnLine2Blocked;
+        }
+      }, 700);
+    }
+
+    // ---------- AI SEARCH ASSISTANT ----------
+    var chatStrings = {
+      en: {
+        status: "Here to help you search",
+        welcome: "Hello! I'm here to help you search for anything you need — money, training, customers, or support. What are you looking for today?",
+        placeholder: "Type what you need...",
+        disclaimer: "Demo assistant — guidance shown here is for preview only.",
+        chips: [
+          { key: "start", label: "Start a Business" },
+          { key: "finance", label: "Find Funding" },
+          { key: "training", label: "Find Training" },
+          { key: "eligibility", label: "Check Eligibility" },
+          { key: "women", label: "Women schemes" },
+          { key: "other", label: "I'm not sure" }
+        ],
+        responses: {
+          start: "Starting out? There are schemes to help with registration, initial setup costs, and mentorship for new entrepreneurs. What kind of business are you planning?",
+          finance: "For money, there are usually schemes with low-interest loans, subsidies, or seed funding for small businesses — especially for women, rural, and first-time entrepreneurs. Tell me your kind of work and I can narrow this down.",
+          training: "There are free skill-training and mentorship programs near you — for learning a trade, running a business, or using a phone/computer for work. What would you like to learn?",
+          eligibility: "I can help you check what you likely qualify for. Tell me a bit about your business, location, and stage, and I'll point you toward relevant schemes.",
+          women: "There are several schemes made specifically for women entrepreneurs — loans, training, and market access. What kind of work do you do?",
+          other: "That's okay. Just tell me a little about your work, or what's been hard for you, and I'll guide you from there.",
+          fallback: "Thank you for sharing that. I can guide you toward the right kind of scheme — could you tell me a bit more about your work, your area, or what help you need most?"
+        }
+      },
+      hi: {
+        status: "आपकी खोज में मदद के लिए यहाँ हूँ",
+        welcome: "नमस्ते! मैं आपकी हर तरह की खोज में मदद के लिए यहाँ हूँ — पैसा, प्रशिक्षण, ग्राहक या कोई और सहायता। आज आपको क्या चाहिए?",
+        placeholder: "जो चाहिए वह लिखिए...",
+        disclaimer: "यह एक डेमो सहायक है — यहाँ दी गई जानकारी केवल पूर्वावलोकन के लिए है।",
+        chips: [
+          { key: "start", label: "व्यापार शुरू करें" },
+          { key: "finance", label: "धन ढूंढें" },
+          { key: "training", label: "प्रशिक्षण ढूंढें" },
+          { key: "eligibility", label: "पात्रता जाँचें" },
+          { key: "women", label: "महिला योजनाएँ" },
+          { key: "other", label: "पता नहीं" }
+        ],
+        responses: {
+          start: "व्यापार शुरू कर रहे हैं? पंजीकरण, शुरुआती लागत और मार्गदर्शन में मदद करने वाली योजनाएँ हैं। आप किस तरह का व्यापार शुरू करना चाहते हैं?",
+          finance: "पैसे के लिए आमतौर पर कम ब्याज़ पर कर्ज़, सब्सिडी या शुरुआती पूंजी जैसी योजनाएँ होती हैं — खासकर महिलाओं, ग्रामीण और नए उद्यमियों के लिए। अपना काम बताइए, मैं और सटीक बताऊँगी।",
+          training: "आपके पास मुफ्त प्रशिक्षण और मार्गदर्शन कार्यक्रम हैं — हुनर सीखने, व्यापार चलाने या फोन/कंप्यूटर इस्तेमाल करने के लिए। आप क्या सीखना चाहेंगे?",
+          eligibility: "मैं आपकी पात्रता जाँचने में मदद कर सकती हूँ। अपने व्यापार, स्थान और चरण के बारे में बताइए, मैं उपयुक्त योजनाएँ बताऊँगी।",
+          women: "महिला उद्यमियों के लिए खास तौर पर बनी कई योजनाएँ हैं — कर्ज़, प्रशिक्षण और बाज़ार तक पहुँच। आप किस तरह का काम करती हैं?",
+          other: "कोई बात नहीं। बस अपने काम के बारे में या जो मुश्किल आ रही है, थोड़ा बताइए — मैं वहीं से आपकी मदद करूँगी।",
+          fallback: "बताने के लिए धन्यवाद। मैं आपको सही योजना की ओर मार्गदर्शन कर सकती हूँ — कृपया अपने काम, इलाके, या ज़रूरत के बारे में थोड़ा और बताइए।"
+        }
+      }
+    };
+
+    var keywordMap = {
+      start: ["start", "new business", "registration", "शुरू", "पंजीकरण"],
+      finance: ["loan", "money", "fund", "finance", "पैसा", "कर्ज", "ऋण", "रुपये", "सब्सिडी"],
+      eligibility: ["eligible", "eligibility", "qualify", "पात्र", "पात्रता"],
+      training: ["train", "skill", "learn", "course", "सीख", "प्रशिक्षण", "हुनर"],
+      start: ["start", "new business", "registration", "शुरू", "पंजीकरण"],
+      women: ["women", "woman", "महिला", "औरत"]
+    };
+
+    var chatFab = document.getElementById("chat-fab");
+    var chatPanel = document.getElementById("chat-panel");
+    var chatCloseBtn = document.getElementById("chat-close");
+    var chatMessagesEl = document.getElementById("chat-messages");
+    var chatStatusEl = document.getElementById("chat-status");
+    var chatInputEl = document.getElementById("chat-input");
+    var chatSendBtn = document.getElementById("chat-send");
+    var chatMicBtn = document.getElementById("chat-mic");
+    var chatDisclaimerEl = document.getElementById("chat-disclaimer");
+
+    var chatOpened = false;
+    var currentChipRow = null;
+
+    function speakText(text) {
+      if (!("speechSynthesis" in window)) return;
+      window.speechSynthesis.cancel();
+      var utter = new SpeechSynthesisUtterance(text);
+      utter.lang = messages[currentLang].lang;
+      utter.rate = 0.95;
+      window.speechSynthesis.speak(utter);
+    }
+
+    function addMsg(text, sender) {
+      var div = document.createElement("div");
+      div.className = "msg " + sender;
+      div.textContent = text;
+      chatMessagesEl.appendChild(div);
+      chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+      return div;
+    }
+
+    function addChips(list) {
+      var row = document.createElement("div");
+      row.className = "chip-row";
+      list.forEach(function (chip) {
+        var btn = document.createElement("button");
+        btn.className = "chip";
+        btn.type = "button";
+        btn.textContent = chip.label;
+        btn.addEventListener("click", function () {
+          addMsg(chip.label, "user");
+          if (row.parentNode) row.parentNode.removeChild(row);
+          sendToAssistant(chip.label, chip.key);
+        });
+        row.appendChild(btn);
+      });
+      chatMessagesEl.appendChild(row);
+      chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+      currentChipRow = row;
+    }
+
+    // ---------- REAL AI (Sahayog Sahayak) via Anthropic API, with safe fallback ----------
+    var SAHAYOG_SYSTEM_PROMPT = [
+"You are Sahayog Sahayak, the AI guide inside Sahayog — an AI-driven scheme-matching",
+"platform that helps marginalized entrepreneurs (women, rural, disabled, low-income,",
+"minority, and tribal entrepreneurs) discover, understand, and access government",
+"schemes relevant to their business.",
+"",
+"You are built for Smart India Hackathon 2026, Problem Statement SIH26092",
+"(Ministry of Social Justice and Empowerment). Stay in character as Sahayog Sahayak;",
+"do not refer to yourself as a generic AI assistant or mention the underlying model.",
+"",
+"## WHO YOU ARE TALKING TO",
+"Assume the person you're talking to may:",
+"- have limited formal education or low literacy",
+"- be more comfortable speaking than typing",
+"- be a first-time user of any digital scheme-discovery tool",
+"- be anxious about cost, complexity, or being turned away",
+"- prefer Hindi, English, or a mix of both (Hinglish)",
+"Never assume advanced digital literacy. Never use bureaucratic or legal jargon",
+"without immediately explaining it in plain words.",
+"",
+"## YOU ARE A GUIDE, NOT A SEARCH BOX — THIS IS YOUR MOST IMPORTANT RULE",
+"Many of the people you talk to have little or no formal education and have",
+"never used an app like this before. Do not wait passively for them to ask the",
+"right question or know the right words. YOU lead the conversation:",
+"- Always end your turn with either one simple question or one clear next",
+"  action — never leave the person unsure what to do or say next.",
+"- Never make them read or choose from more than 2-3 options at once, and",
+"  always say the options out loud in the sentence itself (don't rely only on",
+"  buttons/chips existing on screen — assume they may not notice or trust them).",
+"- Use everyday comparisons instead of abstract terms — e.g. explain \"subsidy\"",
+"  as \"sarkar aapke paise ka kuch hissa khud degi\", not a dictionary definition.",
+"- Check understanding often, in plain words: \"Thik hai? Aage badhein?\" /",
+"  \"Does that make sense? Should we continue?\" — and if they seem confused or",
+"  reply with something unrelated, slow down, re-explain more simply, and",
+"  don't move forward until they seem ready.",
+"- Never assume they know what 'eligibility', 'documents required', or",
+"  'application process' means the first time you use those words — explain",
+"  each the first time, briefly.",
+"- If they go quiet, give a very short or one-word reply, or seem unsure, offer",
+"  a concrete way forward rather than repeating the same question — e.g.",
+"  suggest speaking instead of typing, or offer a specific example ('for",
+"  example, do you make or sell something, or drive, or farm?').",
+"- Celebrate small steps ('Bahut badhiya, ab bas ek aur baat...') to keep them",
+"  encouraged — this may be their first time trying something like this.",
+"",
+"## YOUR JOB",
+"Guide the person through five things, in this order, conversationally — never as",
+"a long form or a wall of questions at once:",
+"1. UNDERSTAND — business type, location, stage (idea/starting/existing/expansion),",
+"   and what kind of support they need (funding, training, equipment, market",
+"   access, skill development).",
+"2. MATCH — point them toward relevant categories of government schemes.",
+"3. EXPLAIN — always say why a scheme fits them, referencing what they told you.",
+"   Never give a bare percentage or recommendation with no reasoning.",
+"4. GUIDE — explain eligibility, required documents, and application process",
+"   in simple, sequential steps.",
+"5. REASSURE — remind them this is free, a real person is available, and their",
+"   information stays private.",
+"",
+"## CONVERSATION STYLE",
+"- Ask ONE question at a time. Never list more than 2-3 quick-reply options at once.",
+"- Keep responses short: 2-4 sentences per turn, plus bullets where useful.",
+"- Mirror the language the person uses (Hindi, English, or mixed).",
+"- Use warm, respectful language (\"aap\", never \"tum\").",
+"- Prefer everyday words over government terminology; explain any official term",
+"  you must use in one plain sentence.",
+"",
+"## GUIDING SOMEONE WITH LOW OR NO FORMAL LITERACY — CORE BEHAVIOR",
+"Treat this as your default audience, not an edge case. Many people you talk to",
+"may not read comfortably, may never have used an app like this, and may feel",
+"unsure or embarrassed about that. Your job is to make this feel as easy as a",
+"conversation with a patient neighbour, not like using a form.",
+"- Use very short, simple sentences (roughly 5-12 words each). One idea per",
+"  sentence. Avoid joining many clauses together with commas.",
+"- Never use a word you would not use talking to someone out loud in daily",
+"  life. Avoid abstract or written-register words even in Hindi (e.g. avoid",
+"  heavily Sanskritized or bureaucratic phrasing) — use the words people",
+"  actually speak at home or in the market.",
+"- Never assume the person can read a long message, a table, or a list with",
+"  many items. If you must give more than 3 items, give them one at a time",
+"  across turns instead of all at once.",
+"- Do not use percentages, scores, or numeric rankings when talking with",
+"  someone who may not read numbers comfortably — describe fit in words",
+"  instead (\"this one fits you well because...\") unless they ask for a number.",
+"- Proactively remind them at natural points that they can speak instead of",
+"  type: \"Aap bol kar bhi bata sakte hain.\" Do this especially if a message",
+"  looks like a voice-to-text transcript (informal spelling, run-on phrasing,",
+"  code-mixed Hindi/English) or if their replies seem short, hesitant, or",
+"  confused.",
+"- After explaining anything even slightly complex (eligibility, documents,",
+"  steps), check understanding gently and without condescension: \"Kya yeh",
+"  samajh aaya, ya main aasan tareeke se dobara bataun?\" / \"Did that make",
+"  sense, or should I explain it a simpler way?\"",
+"- Never make someone feel slow, wrong, or judged for not knowing a term, not",
+"  having a document, or asking the same thing twice. Repeat explanations",
+"  patiently and without sighing, hedging, or implying they should already know.",
+"- If they seem confused or give an unrelated/garbled answer, do not push",
+"  forward — gently ask the one thing you most need to know next, in the",
+"  simplest possible words, rather than repeating your previous message.",
+"- Use small, concrete, local-life comparisons instead of abstract concepts",
+"  when helpful (e.g. explain 'collateral-free loan' as \"aapko iske liye kuch",
+"  girvi/jamanat nahi rakhna padega\" rather than a dictionary definition).",
+"",
+"## EXPLAINABILITY — NON-NEGOTIABLE",
+"Every time you recommend or reference a scheme, be ready to justify it factor by",
+"factor (business type, location, stage, category, support needed). Never present",
+"a score or recommendation with no reasoning.",
+"",
+"## TRUST AND ACCURACY — NON-NEGOTIABLE",
+"Ground every scheme fact ONLY in the DEMO_SCHEMES list provided below — never",
+"invent, guess, or extrapolate real government scheme details from general",
+"knowledge. If asked about something not in DEMO_SCHEMES, say plainly that you",
+"can't verify it and to check the official government source.",
+"- Never state or imply that using Sahayog guarantees approval, funding, or eligibility.",
+"- Never ask for or store sensitive identity documents (Aadhaar numbers, bank",
+"  account numbers) in chat.",
+"",
+"## WHEN SOMEONE ISN'T A CLEAR MATCH",
+"Never simply say \"You are not eligible.\" Name the specific missing condition,",
+"say what completing it could plausibly unlock (in general terms, don't invent an",
+"exact number), and offer a concrete next step. Label this as potential eligibility.",
+"",
+"## OUT OF SCOPE",
+"Politely redirect (do not answer in depth) specific legal guarantees, medical/tax/",
+"immigration matters, or anything requiring fabricated government data. Suggest the",
+"official channel or the platform's Call helpline / Message us option instead.",
+"",
+"## DEMO_SCHEMES (illustrative demo dataset — not a live government database)",
+"- Women Entrepreneurship Support Scheme: low-interest loans + mentorship for women-led businesses under 5 years old.",
+"- Rural Business Growth Fund: seed funding + market linkage for rural/village businesses operating 6+ months.",
+"- Disability-Inclusive Enterprise Scheme: higher subsidy + accessible equipment support for entrepreneurs with a disability certificate.",
+"- Minority Business Development Program: concessional loan + training for notified minority communities.",
+"- Tribal Enterprise Support Scheme: raw material grant + craft market access for Scheduled Tribe, village-based businesses.",
+"- General Small Business Loan Scheme: low-documentation loan for low-income households, open to all business types.",
+"",
+"Keep replies short and end with either a clarifying question or a clear next step."
+].join("\n");
+
+    var aiConversationHistory = [];
+    var aiAvailable = true; // flips to false after the first failed call, so we stop retrying pointlessly
+
+    async function askSahayogAI(userText) {
+      var langHint = currentLang === "hi"
+        ? "\n\n(The user's interface language is currently set to Hindi — prefer replying in Hindi unless they write in English.)"
+        : "\n\n(The user's interface language is currently set to English — prefer replying in English unless they write in Hindi.)";
+
+      aiConversationHistory.push({ role: "user", content: userText });
+
+      // Calls OUR OWN backend endpoint (/api/chat) — not Anthropic directly.
+      // The API key lives only on the server; see /api/chat.js and the README.
+      var response = await fetch("/api/gemini", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          system: SAHAYOG_SYSTEM_PROMPT + langHint,
+          messages: aiConversationHistory
+        })
+      });
+
+      if (!response.ok) throw new Error("AI request failed: " + response.status);
+      var data = await response.json();
+      var textBlock = (data.content || []).filter(function (b) { return b.type === "text"; })[0];
+      var reply = textBlock ? textBlock.text : "";
+      if (!reply) throw new Error("Empty AI response");
+
+      aiConversationHistory.push({ role: "assistant", content: reply });
+      return reply;
+    }
+
+    function addTypingIndicator() {
+      var div = document.createElement("div");
+      div.className = "msg bot";
+      div.id = "typing-indicator";
+      div.textContent = currentLang === "hi" ? "लिख रही हूँ…" : "Typing…";
+      chatMessagesEl.appendChild(div);
+      chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+    }
+    function removeTypingIndicator() {
+      var el = document.getElementById("typing-indicator");
+      if (el && el.parentNode) el.parentNode.removeChild(el);
+    }
+
+    function replyWith(key) {
+      var s = chatStrings[currentLang];
+      var text = s.responses[key] || s.responses.fallback;
+      addMsg(text, "bot");
+      speakText(text);
+    }
+
+    function categoryFor(text) {
+      var lower = text.toLowerCase();
+      for (var key in keywordMap) {
+        for (var i = 0; i < keywordMap[key].length; i++) {
+          if (lower.indexOf(keywordMap[key][i].toLowerCase()) !== -1) return key;
+        }
+      }
+      return "fallback";
+    }
+
+    // Every message the person sends — typed, spoken, or a tapped quick-reply
+    // — goes through the real AI first. The rule-based reply is only ever
+    // used silently, as a last resort, if the live AI call fails outright.
+    function sendToAssistant(userVisibleText, fallbackKey) {
+      if (aiAvailable) {
+        addTypingIndicator();
+        chatSendBtn.disabled = true;
+        askSahayogAI(userVisibleText)
+          .then(function (reply) {
+            removeTypingIndicator();
+            chatSendBtn.disabled = false;
+            addMsg(reply, "bot");
+            speakText(reply);
+          })
+          .catch(function () {
+            // No live API available (e.g. opened outside Claude.ai as a plain
+            // downloaded file) — fall back to the built-in demo responses.
+            aiAvailable = false;
+            removeTypingIndicator();
+            chatSendBtn.disabled = false;
+            replyWith(fallbackKey);
+          });
+      } else {
+        replyWith(fallbackKey);
+      }
+    }
+
+    function renderChatStatic() {
+      var s = chatStrings[currentLang];
+      chatStatusEl.textContent = s.status;
+      chatInputEl.placeholder = s.placeholder;
+      chatDisclaimerEl.textContent = s.disclaimer;
+    }
+
+    function openChat() {
+      chatPanel.classList.add("open");
+      renderChatStatic();
+      if (!chatOpened) {
+        chatOpened = true;
+        var s = chatStrings[currentLang];
+        addMsg(s.welcome, "bot");
+        speakText(s.welcome);
+        addChips(s.chips);
+      }
+      chatInputEl.focus();
+    }
+
+    function closeChat() {
+      chatPanel.classList.remove("open");
+      window.speechSynthesis && window.speechSynthesis.cancel();
+    }
+
+    chatFab.addEventListener("click", openChat);
+    var ctaTalkBtn = document.getElementById("ctaTalkBtn");
+    if (ctaTalkBtn) ctaTalkBtn.addEventListener("click", openChat);
+    chatCloseBtn.addEventListener("click", closeChat);
+
+    function handleSend() {
+      var text = chatInputEl.value.trim();
+      if (!text) return;
+      addMsg(text, "user");
+      chatInputEl.value = "";
+      if (currentChipRow && currentChipRow.parentNode) {
+        currentChipRow.parentNode.removeChild(currentChipRow);
+      }
+      sendToAssistant(text, categoryFor(text));
+    }
+
+    chatSendBtn.addEventListener("click", handleSend);
+    chatInputEl.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") handleSend();
+    });
+
+    // Voice input inside the chat, where supported.
+    var Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    var recognizer = null;
+    if (Recognition) {
+      recognizer = new Recognition();
+      recognizer.interimResults = false;
+      recognizer.maxAlternatives = 1;
+      recognizer.onresult = function (e) {
+        chatInputEl.value = e.results[0][0].transcript;
+        chatMicBtn.classList.remove("listening");
+        handleSend();
+      };
+      recognizer.onerror = function () { chatMicBtn.classList.remove("listening"); };
+      recognizer.onend = function () { chatMicBtn.classList.remove("listening"); };
+    }
+
+    function startListening() {
+      if (!recognizer) return false;
+      recognizer.lang = messages[currentLang].lang;
+      chatMicBtn.classList.add("listening");
+      try { recognizer.start(); } catch (e) { chatMicBtn.classList.remove("listening"); }
+      return true;
+    }
+
+    chatMicBtn.addEventListener("click", function () {
+      if (!startListening()) {
+        addMsg(currentLang === "hi" ? "इस डिवाइस पर आवाज़ से इनपुट उपलब्ध नहीं है।" : "Voice input isn't supported on this device.", "bot");
+      }
+    });
+
+    // Hero "Speak now" opens the assistant and starts listening right away.
+    var heroSpeakBtn = document.querySelector(".speak-btn");
+    if (heroSpeakBtn) {
+      heroSpeakBtn.addEventListener("click", function () {
+        openChat();
+        setTimeout(startListening, 300);
+      });
+    }
+
+    // Hero type field: pressing Enter opens the assistant with that message sent.
+    var heroTypeInput = document.getElementById("type-input");
+    if (heroTypeInput) {
+      heroTypeInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" && heroTypeInput.value.trim()) {
+          openChat();
+          chatInputEl.value = heroTypeInput.value;
+          heroTypeInput.value = "";
+          handleSend();
+        }
+      });
+    }
+
+    // Greet automatically the moment the prototype opens, so the AI guide
+    // is the first thing a new visitor meets, not something they have to
+    // discover and tap themselves.
+    setTimeout(function () { openChat(); }, 900);
+
+    // ---------- FAQ accordion ----------
+    document.querySelectorAll(".faq-q").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        btn.parentElement.classList.toggle("open");
+      });
+    });
+    document.querySelectorAll("[data-faqread]").forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var item = btn.closest(".faq-item");
+        var q = item.querySelector(".faq-q span").textContent;
+        var a = item.querySelector(".faq-a span:first-child").textContent;
+        speakText(q + ". " + a);
+      });
+    });
+
+    // ---------- Mentor connect (simulated — no real call is placed) ----------
+    var mentorSubmit = document.getElementById("mentorSubmit");
+    if (mentorSubmit) {
+      mentorSubmit.addEventListener("click", function () {
+        var name = document.getElementById("mentorName").value.trim();
+        if (!name) { document.getElementById("mentorName").focus(); return; }
+        document.getElementById("mentorConfirm").classList.add("show");
+      });
+    }
+
+    // ---------- Low data mode ----------
+    var lowDataToggle = document.getElementById("lowDataToggle");
+    if (lowDataToggle) {
+      lowDataToggle.addEventListener("click", function () {
+        document.body.classList.toggle("low-data");
+        lowDataToggle.classList.toggle("active");
+      });
+    }
+
+    // ---------- Multilingual roadmap: 4 additional languages, stubbed ----------
+    // Hindi and English are fully translated throughout. Bengali, Marathi, Tamil
+    // and Telugu are shown in the switcher (so the mechanism is visibly ready
+    // to extend), but full-page translation for these has not been done yet —
+    // we say so honestly instead of silently falling back to English.
+    var STUB_LANG_NAMES = { bn: "বাংলা", mr: "मराठी", ta: "தமிழ்", te: "తెలుగు" };
+    var STUB_NOTICE = {
+      bn: "এই ভাষায় সম্পূর্ণ অনুবাদ শীঘ্রই আসছে। এখন ইংরেজি দেখানো হচ্ছে। / Full translation in this language is coming soon. Showing English for now.",
+      mr: "या भाषेत पूर्ण भाषांतर लवकरच येत आहे. सध्या इंग्रजी दाखवले जात आहे. / Full translation in this language is coming soon. Showing English for now.",
+      ta: "இந்த மொழியில் முழு மொழிபெயர்ப்பு விரைவில் வரும். தற்போது ஆங்கிலம் காட்டப்படுகிறது. / Full translation in this language is coming soon. Showing English for now.",
+      te: "ఈ భాషలో పూర్తి అనువాదం త్వరలో వస్తుంది. ప్రస్తుతం ఇంగ్లీష్ చూపిస్తున్నాము. / Full translation in this language is coming soon. Showing English for now."
+    };
+    var langSwitchContainer = document.querySelector(".lang-switch");
+    if (langSwitchContainer) {
+      Object.keys(STUB_LANG_NAMES).forEach(function (code) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.textContent = STUB_LANG_NAMES[code];
+        b.addEventListener("click", function () {
+          currentLang = "en";
+          safeSet("sahayog_lang", currentLang);
+          applyLang();
+          alert(STUB_NOTICE[code]);
+        });
+        langSwitchContainer.appendChild(b);
+      });
+    }
+  </script>
+</body>
+</html>

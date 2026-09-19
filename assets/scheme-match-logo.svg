@@ -1,0 +1,42 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F6B66"/>
+      <stop offset="100%" stop-color="#0A4F4B"/>
+    </linearGradient>
+    <linearGradient id="sproutGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#F2A73B"/>
+      <stop offset="100%" stop-color="#F7C948"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Badge circle -->
+  <circle cx="200" cy="200" r="190" fill="url(#bgGrad)"/>
+  <circle cx="200" cy="200" r="190" fill="none" stroke="#F7C948" stroke-width="4" opacity="0.35"/>
+
+  <!-- Growth arrow / stem -->
+  <path d="M200 300 L200 190" stroke="url(#sproutGrad)" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- Upward growth leaves made from network nodes (AI + growth) -->
+  <g stroke="url(#sproutGrad)" stroke-width="8" stroke-linecap="round">
+    <path d="M200 230 L155 190"/>
+    <path d="M200 230 L245 190"/>
+    <path d="M200 190 L165 140"/>
+    <path d="M200 190 L235 140"/>
+    <path d="M200 150 L200 105"/>
+  </g>
+
+  <!-- Network nodes (representing AI / diverse people connected) -->
+  <circle cx="200" cy="300" r="10" fill="#FFFFFF"/>
+  <circle cx="200" cy="230" r="8" fill="#F7C948"/>
+  <circle cx="155" cy="190" r="9" fill="#EF7B45"/>
+  <circle cx="245" cy="190" r="9" fill="#4FB3A9"/>
+  <circle cx="200" cy="190" r="8" fill="#F7C948"/>
+  <circle cx="165" cy="140" r="9" fill="#EF7B45"/>
+  <circle cx="235" cy="140" r="9" fill="#4FB3A9"/>
+  <circle cx="200" cy="150" r="8" fill="#F7C948"/>
+  <circle cx="200" cy="105" r="11" fill="#FFFFFF"/>
+
+  <!-- Base / ground line representing foundation and inclusion -->
+  <path d="M120 320 Q200 340 280 320" stroke="#FFFFFF" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.85"/>
+</svg>

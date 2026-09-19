@@ -1,0 +1,16 @@
+{
+  "name": "sahayog-prototype",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sahayog — AI-Driven Scheme Matching for Marginalized Entrepreneurs (SIH26092 prototype, static HTML/CSS/JS + Vercel serverless functions)",
+  "scripts": {
+    "start": "npx --yes serve .",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "vite": "^5.0.0"
+  }
+}

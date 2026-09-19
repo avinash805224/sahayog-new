@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sahayog — Admin Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Mukta:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--teal-dark:#0A4F4B; --teal:#0F6B66; --teal-soft:#E4F0EE; --coral:#EF7B45; --cream:#FBF8F2; --ink:#20302C; --ink-soft:#4B5C57; --white:#FFFFFF; --border:#E7E1D3;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Mukta',sans-serif; background:var(--cream); color:var(--ink);}
+  h1,h2,h3{font-family:'Baloo 2',sans-serif; font-weight:700; color:var(--teal-dark);}
+  .wrap{max-width:1080px; margin:0 auto; padding:24px;}
+  .topbar{background:var(--teal-dark); color:#fff; padding:16px 24px;}
+  .topbar h1{color:#fff; font-size:18px;}
+  .topbar .badge{display:inline-block; background:var(--coral); font-size:11px; padding:3px 10px; border-radius:999px; margin-left:10px; font-family:'Mukta'; font-weight:700;}
+  .stat-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin:24px 0;}
+  .stat-card{background:#fff; border:1px solid var(--border); border-radius:14px; padding:16px; text-align:center;}
+  .stat-card .n{font-family:'Baloo 2'; font-size:22px; color:var(--teal-dark); font-weight:800;}
+  .stat-card .l{font-size:11.5px; color:var(--ink-soft); font-weight:600;}
+  @media (max-width:820px){.stat-grid{grid-template-columns:repeat(2,1fr);}}
+
+  .panel{background:#fff; border:1px solid var(--border); border-radius:16px; padding:20px; margin-bottom:24px;}
+  .panel h2{font-size:17px; margin-bottom:14px;}
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  th, td{padding:10px 8px; border-bottom:1px solid var(--border); text-align:left;}
+  th{background:var(--teal-soft); color:var(--teal-dark); font-weight:700; font-size:12px;}
+  .pill{display:inline-block; border-radius:999px; padding:3px 10px; font-size:11px; font-weight:700;}
+  .pill.active{background:#E1F3EA; color:#1E7A4C;}
+  .pill.inactive{background:#FBE7E1; color:#C2703A;}
+  .pill.yellow{background:#FCEBB6; color:#7A5A2E;}
+  .row-actions button{border:none; background:none; color:var(--teal); font-weight:700; font-size:12px; cursor:pointer; margin-right:8px;}
+  .row-actions button.danger{color:#C2703A;}
+  .add-form{display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:10px; margin-bottom:16px;}
+  .add-form input{border:1.5px solid #DDD3BC; border-radius:8px; padding:9px 12px; font-size:13px; font-family:'Mukta';}
+  .add-form button{background:var(--teal); color:#fff; border:none; border-radius:8px; padding:9px 16px; font-weight:700; font-size:13px; cursor:pointer;}
+  .note{font-size:12px; color:var(--ink-soft); margin-top:10px;}
+  .sahayog-overview-pill{position:fixed;top:12px;left:12px;z-index:999;background:#EF7B45;color:#fff;border:none;border-radius:999px;padding:8px 14px;font-family:'Mukta',sans-serif;font-size:12px;font-weight:600;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,0.2);}
+</style>
+<style>
+.site-nav{background:#0A4F4B;color:#fff;padding:10px 20px;display:flex;gap:16px;align-items:center;font-family:'Mukta',Arial,sans-serif;font-size:13px;flex-wrap:wrap;}
+.site-nav a{color:#fff;text-decoration:none;opacity:0.85;font-weight:600;}
+.site-nav a.current{opacity:1;text-decoration:underline;}
+.site-nav .brand{font-weight:800;margin-right:8px;opacity:1;}
+</style>
+</head>
+<body>
+<div class="site-nav"><span class="brand">🌱 Sahayog</span><a href="index.html">Overview</a><a href="landing.html">Landing</a><a href="app.html">App Flow</a><a href="admin.html" class="current">Admin</a></div>
+
+<button class="sahayog-overview-pill" onclick="parent.postMessage({sahayogNav:'intro'},'*')">☰ Overview</button>
+
+  <div class="topbar"><h1>Sahayog Admin<span class="badge" id="dataModeBadge">CHECKING CONNECTION…</span></h1></div>
+
+  <div class="wrap">
+    <div class="panel" id="authPanel" style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+      <div style="flex:1; min-width:220px;">
+        <strong id="authStatusText" style="font-size:13.5px;">Checking backend connection…</strong>
+        <p class="note" id="authStatusNote" style="margin-top:4px;"></p>
+      </div>
+      <input type="password" id="adminSecretInput" placeholder="Admin password" style="border:1.5px solid #DDD3BC; border-radius:8px; padding:9px 12px; font-size:13px; max-width:200px;">
+      <button id="unlockBtn" style="background:var(--teal); color:#fff; border:none; border-radius:8px; padding:9px 16px; font-weight:700; font-size:13px; cursor:pointer;">Unlock editing</button>
+    </div>
+
+    <div class="stat-grid" id="statGrid"></div>
+
+    <div class="panel">
+      <h2>Scheme Management</h2>
+      <div class="add-form">
+        <input type="text" id="newSchemeName" placeholder="Scheme name">
+        <input type="text" id="newSchemeCategory" placeholder="Category (e.g. craft)">
+        <input type="text" id="newSchemeLocation" placeholder="Location (e.g. UP)">
+        <button id="addSchemeBtn">+ Add scheme</button>
+      </div>
+      <table>
+        <thead><tr><th>Name</th><th>Category</th><th>Location</th><th>Verified</th><th>Status</th><th></th></tr></thead>
+        <tbody id="schemeTableBody"></tbody>
+      </table>
+      <p class="note">This table is held in browser memory only for this demo — refreshing the page resets it to the original 6 illustrative schemes. A real admin panel would read/write a live database.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Channel Partner Management <span class="badge" style="margin-left:8px;">DEMO / FICTIONAL DATA</span></h2>
+      <div class="add-form">
+        <input type="text" id="newPartnerName" placeholder="Partner name">
+        <input type="text" id="newPartnerType" placeholder="Type (sca/psb/rrb/nbfc)">
+        <input type="text" id="newPartnerState" placeholder="State">
+        <button id="addPartnerBtn">+ Add partner</button>
+      </div>
+      <table>
+        <thead><tr><th>Name</th><th>Type</th><th>State</th><th>Capacity</th><th>Routing Status</th><th></th></tr></thead>
+        <tbody id="partnerTableBody"></tbody>
+      </table>
+      <p class="note">Fictional/demo partner data for the prototype. This does not reflect real operational, fund-utilization, or NPA/overdue status — a real deployment would connect this to an authorized live data source.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Recent Activity (illustrative)</h2>
+      <table>
+        <thead><tr><th>Event</th><th>When</th></tr></thead>
+        <tbody>
+          <tr><td>Scheme "Women Entrepreneurship Support Scheme" marked verified</td><td>2 days ago</td></tr>
+          <tr><td>New match generated for a rural craft business profile</td><td>6 hours ago</td></tr>
+          <tr><td>Document Assistant checklist completed by a user</td><td>1 day ago</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<script>
+  // ---------- Local fallback data (used until/unless Supabase responds) ----------
+  var demoSchemes = [
+    { id:"women", name:"Women Entrepreneurship Support Scheme", category:"craft", location:"UP", verified:"01/08/2026", active:true },
+    { id:"rural", name:"Rural Business Growth Fund", category:"agri", location:"All India", verified:"15/07/2026", active:true },
+    { id:"disability", name:"Disability-Inclusive Enterprise Scheme", category:"other", location:"All India", verified:"22/08/2026", active:true },
+    { id:"minority", name:"Minority Business Development Program", category:"retail", location:"UP", verified:"10/07/2026", active:true },
+    { id:"tribal", name:"Tribal Enterprise Support Scheme", category:"craft", location:"All India", verified:"05/08/2026", active:true },
+    { id:"general", name:"General Small Business Loan Scheme", category:"food", location:"All India", verified:"28/07/2026", active:true }
+  ];
+
+  var demoPartners = [
+    { id:"p1", name:"UP State Channelizing Agency", type:"sca", state:"Uttar Pradesh", capacity:90, routingStatus:"green" },
+    { id:"p2", name:"National Bank Lucknow Branch", type:"psb", state:"Uttar Pradesh", capacity:75, routingStatus:"green" },
+    { id:"p3", name:"Awadh Regional Rural Bank", type:"rrb", state:"Uttar Pradesh", capacity:45, routingStatus:"yellow" },
+    { id:"p4", name:"Bharat NBFC-MFI Services", type:"nbfc", state:"Uttar Pradesh", capacity:65, routingStatus:"green" },
+    { id:"p5", name:"Konkan Regional Rural Bank", type:"rrb", state:"Maharashtra", capacity:20, routingStatus:"red" },
+    { id:"p6", name:"Bengal State Channelizing Agency", type:"sca", state:"West Bengal", capacity:82, routingStatus:"green" }
+  ];
+
+  var backendConfigured = false;   // does Supabase respond at all?
+  var editingUnlocked = false;     // has a correct admin secret been entered this session?
+
+  function adminSecret(){ return sessionStorage.getItem("sahayog_admin_secret") || ""; }
+
+  function updateStatusUI(){
+    var badge = document.getElementById("dataModeBadge");
+    var text = document.getElementById("authStatusText");
+    var note = document.getElementById("authStatusNote");
+
+    if (!backendConfigured){
+      badge.textContent = "LOCAL DEMO — NOT CONNECTED";
+      text.textContent = "Running on built-in demo data only.";
+      note.textContent = "Add SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY and ADMIN_SECRET to connect a real database — see README.";
+    } else if (!editingUnlocked){
+      badge.textContent = "CONNECTED — VIEW ONLY";
+      text.textContent = "Connected to Supabase. Enter the admin password to enable saving changes.";
+      note.textContent = "Without it, edits here only change what you see in this browser tab.";
+    } else {
+      badge.textContent = "CONNECTED — EDITING LIVE";
+      text.textContent = "Changes you make below are saved to the real database.";
+      note.textContent = "";
+    }
+  }
+
+  async function apiRequest(path, method, body){
+    var headers = { "Content-Type": "application/json" };
+    if (adminSecret()) headers["x-admin-secret"] = adminSecret();
+    var res = await fetch(path + (method === "DELETE" && body && body.id ? "?id=" + encodeURIComponent(body.id) : ""), {
+      method: method,
+      headers: headers,
+      body: method === "GET" ? undefined : JSON.stringify(body || {})
+    });
+    var data = await res.json().catch(function(){ return {}; });
+    return { ok: res.ok, status: res.status, data: data };
+  }
+
+  document.getElementById("unlockBtn").addEventListener("click", function(){
+    var val = document.getElementById("adminSecretInput").value.trim();
+    if (!val) return;
+    sessionStorage.setItem("sahayog_admin_secret", val);
+    // Prove it works with a harmless no-op-ish check: try updating nothing real.
+    // Simpler: just trust it and let the next real write tell the admin if it was wrong.
+    editingUnlocked = true;
+    updateStatusUI();
+  });
+
+  function renderStats(){
+    var active = demoSchemes.filter(function(s){ return s.active; }).length;
+    var stats = [
+      { n: demoSchemes.length, l: "Total Schemes" },
+      { n: active, l: "Active Schemes" },
+      { n: demoPartners.length, l: "Channel Partners" },
+      { n: "1", l: "Users (this demo session)" },
+      { n: "—", l: "Matches Generated" }
+    ];
+    document.getElementById("statGrid").innerHTML = stats.map(function(s){
+      return '<div class="stat-card"><div class="n">'+s.n+'</div><div class="l">'+s.l+'</div></div>';
+    }).join("");
+  }
+
+  function slugify(name){
+    return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") + "-" + Date.now().toString(36);
+  }
+
+  function renderTable(){
+    var body = document.getElementById("schemeTableBody");
+    body.innerHTML = demoSchemes.map(function(s, i){
+      return '<tr>' +
+        '<td>'+s.name+'</td><td>'+s.category+'</td><td>'+s.location+'</td><td>'+s.verified+'</td>' +
+        '<td><span class="pill '+(s.active?'active':'inactive')+'">'+(s.active?'Active':'Disabled')+'</span></td>' +
+        '<td class="row-actions"><button data-toggle="'+i+'">'+(s.active?'Disable':'Enable')+'</button><button class="danger" data-remove="'+i+'">Remove</button></td>' +
+      '</tr>';
+    }).join("");
+
+    body.querySelectorAll("[data-toggle]").forEach(function(btn){
+      btn.addEventListener("click", async function(){
+        var row = demoSchemes[parseInt(btn.getAttribute("data-toggle"))];
+        var goingActive = !row.active;
+        if (backendConfigured && editingUnlocked){
+          var result = goingActive
+            ? await apiRequest("/api/schemes", "PUT", { id: row.id, active: true })
+            : await apiRequest("/api/schemes", "DELETE", { id: row.id });
+          if (!result.ok){ alert("Couldn't save: " + (result.data.error || result.status)); return; }
+        }
+        row.active = goingActive;
+        renderTable(); renderStats();
+      });
+    });
+    body.querySelectorAll("[data-remove]").forEach(function(btn){
+      btn.addEventListener("click", async function(){
+        var idx = parseInt(btn.getAttribute("data-remove"));
+        var row = demoSchemes[idx];
+        if (backendConfigured && editingUnlocked){
+          var result = await apiRequest("/api/schemes", "DELETE", { id: row.id });
+          if (!result.ok){ alert("Couldn't remove: " + (result.data.error || result.status)); return; }
+        }
+        demoSchemes.splice(idx, 1);
+        renderTable(); renderStats();
+      });
+    });
+  }
+
+  function renderPartnerTable(){
+    var body = document.getElementById("partnerTableBody");
+    var statusLabel = { green:"Preferred", yellow:"Limited", red:"Do Not Route" };
+    var statusPillClass = { green:"active", yellow:"yellow", red:"inactive" };
+    body.innerHTML = demoPartners.map(function(p, i){
+      return '<tr>' +
+        '<td>'+p.name+'</td><td>'+p.type.toUpperCase()+'</td><td>'+p.state+'</td><td>'+p.capacity+'%</td>' +
+        '<td><span class="pill '+statusPillClass[p.routingStatus]+'">'+statusLabel[p.routingStatus]+'</span></td>' +
+        '<td class="row-actions"><button data-cyclestatus="'+i+'">Cycle status</button><button class="danger" data-removepartner="'+i+'">Remove</button></td>' +
+      '</tr>';
+    }).join("");
+
+    body.querySelectorAll("[data-cyclestatus]").forEach(function(btn){
+      btn.addEventListener("click", async function(){
+        var row = demoPartners[parseInt(btn.getAttribute("data-cyclestatus"))];
+        var next = { green:"yellow", yellow:"red", red:"green" }[row.routingStatus];
+        if (backendConfigured && editingUnlocked){
+          var result = await apiRequest("/api/partners", "PUT", { id: row.id, routing_status: next });
+          if (!result.ok){ alert("Couldn't save: " + (result.data.error || result.status)); return; }
+        }
+        row.routingStatus = next;
+        renderPartnerTable(); renderStats();
+      });
+    });
+    body.querySelectorAll("[data-removepartner]").forEach(function(btn){
+      btn.addEventListener("click", async function(){
+        var idx = parseInt(btn.getAttribute("data-removepartner"));
+        var row = demoPartners[idx];
+        if (backendConfigured && editingUnlocked){
+          var result = await apiRequest("/api/partners", "DELETE", { id: row.id });
+          if (!result.ok){ alert("Couldn't remove: " + (result.data.error || result.status)); return; }
+        }
+        demoPartners.splice(idx, 1);
+        renderPartnerTable(); renderStats();
+      });
+    });
+  }
+
+  document.getElementById("addSchemeBtn").addEventListener("click", async function(){
+    var name = document.getElementById("newSchemeName").value.trim();
+    var category = document.getElementById("newSchemeCategory").value.trim() || "other";
+    var location = document.getElementById("newSchemeLocation").value.trim() || "All India";
+    if (!name) return;
+
+    var newRow = { id: slugify(name), name:name, category:category, location:location, verified:new Date().toLocaleDateString("en-GB"), active:true };
+
+    if (backendConfigured && editingUnlocked){
+      var result = await apiRequest("/api/schemes", "POST", {
+        id: newRow.id, tag: category, cat: category,
+        name_en: name, name_hi: name, desc_en: "", desc_hi: "",
+        location: location, category_type: "micro", active: true
+      });
+      if (!result.ok){ alert("Couldn't save to database: " + (result.data.error || result.status) + " — added locally only."); }
+    }
+
+    demoSchemes.push(newRow);
+    document.getElementById("newSchemeName").value = "";
+    document.getElementById("newSchemeCategory").value = "";
+    document.getElementById("newSchemeLocation").value = "";
+    renderTable(); renderStats();
+  });
+
+  document.getElementById("addPartnerBtn").addEventListener("click", async function(){
+    var name = document.getElementById("newPartnerName").value.trim();
+    var type = document.getElementById("newPartnerType").value.trim().toLowerCase() || "sca";
+    var stateVal = document.getElementById("newPartnerState").value.trim() || "Uttar Pradesh";
+    if (!name) return;
+
+    var newRow = { id: slugify(name), name:name, type:type, state:stateVal, capacity:50, routingStatus:"green" };
+
+    if (backendConfigured && editingUnlocked){
+      var result = await apiRequest("/api/partners", "POST", {
+        id: newRow.id, name: name, type: type, state: stateVal, district: stateVal,
+        categories_supported: ["micro"], capacity: 50, routing_status: "green", active: true
+      });
+      if (!result.ok){ alert("Couldn't save to database: " + (result.data.error || result.status) + " — added locally only."); }
+    }
+
+    demoPartners.push(newRow);
+    document.getElementById("newPartnerName").value = "";
+    document.getElementById("newPartnerType").value = "";
+    document.getElementById("newPartnerState").value = "";
+    renderPartnerTable(); renderStats();
+  });
+
+  async function init(){
+    try {
+      var schemesRes = await fetch("/api/schemes").then(function(r){ return r.json(); }).catch(function(){ return null; });
+      if (schemesRes && schemesRes.configured){
+        backendConfigured = true;
+        if (Array.isArray(schemesRes.schemes) && schemesRes.schemes.length){
+          demoSchemes = schemesRes.schemes.map(function(row){
+            return { id: row.id, name: row.name_en, category: row.cat, location: row.location || "—", verified: row.verified_date || "—", active: row.active };
+          });
+        }
+      }
+      var partnersRes = await fetch("/api/partners").then(function(r){ return r.json(); }).catch(function(){ return null; });
+      if (partnersRes && partnersRes.configured){
+        backendConfigured = true;
+        if (Array.isArray(partnersRes.partners) && partnersRes.partners.length){
+          demoPartners = partnersRes.partners.map(function(row){
+            return { id: row.id, name: row.name, type: row.type, state: row.state, capacity: row.capacity, routingStatus: row.routing_status };
+          });
+        }
+      }
+    } catch (e) {
+      backendConfigured = false;
+    }
+    updateStatusUI();
+    renderStats();
+    renderTable();
+    renderPartnerTable();
+  }
+
+  init();
+</script>
+</body>
+</html>

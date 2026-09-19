@@ -1,0 +1,2103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sahayog — Your journey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Mukta:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal-dark:#0A4F4B; --teal:#0F6B66; --teal-soft:#E4F0EE;
+    --aqua:#4FB3A9; --gold:#F7C948; --gold-soft:#FCEBB6;
+    --coral:#EF7B45; --cream:#FBF8F2; --ink:#20302C; --ink-soft:#4B5C57; --white:#FFFFFF;
+    --border:#E7E1D3; --danger:#C2703A; --shadow:0 4px 14px rgba(15,107,102,0.08);
+    --fs-base:16px;
+  }
+  html.a11y-large{ --fs-base:19px; }
+  html.a11y-contrast{ --teal:#00504A; --teal-dark:#003532; --coral:#C2500F; --ink:#000000; --ink-soft:#242424; --border:#8a8a8a; --cream:#FFFFFF; }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{font-size:var(--fs-base);}
+  body{font-family:'Mukta',sans-serif; background:var(--cream); color:var(--ink); line-height:1.5; padding-bottom:100px; font-size:1rem;}
+  h1,h2,h3,.display{font-family:'Baloo 2',sans-serif; font-weight:700; color:var(--teal-dark); line-height:1.2;}
+  button{font-family:inherit; cursor:pointer;}
+  .wrap{max-width:800px; margin:0 auto; padding:0 20px;}
+  .fine{font-size:0.8rem;}
+
+  /* ---- top bar ---- */
+  .topbar{background:var(--white); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:40;}
+  .topbar-inner{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 20px; max-width:800px; margin:0 auto; flex-wrap:wrap;}
+  .brand{display:flex; align-items:center; gap:8px;}
+  .brand svg{width:32px; height:32px;}
+  .brand span{font-family:'Baloo 2'; font-weight:800; font-size:1.1rem; color:var(--teal-dark);}
+  .topbar-actions{display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+  .lang-switch{display:flex; background:var(--teal-soft); border-radius:999px; padding:3px; gap:2px;}
+  .lang-switch button{border:none; background:transparent; color:var(--teal-dark); font-weight:600; font-size:0.8rem; padding:7px 13px; border-radius:999px;}
+  .lang-switch button.active{background:var(--teal); color:var(--white);}
+  .icon-toggle{width:38px; height:38px; border-radius:50%; border:1.5px solid var(--border); background:var(--white); display:flex; align-items:center; justify-content:center; color:var(--teal-dark);}
+  .icon-toggle svg{width:18px; height:18px;}
+  .icon-toggle.active{background:var(--teal-soft); border-color:var(--teal);}
+
+  /* ---- accessibility panel ---- */
+  .a11y-panel{display:none; position:fixed; top:64px; right:20px; background:var(--white); border:1px solid var(--border); border-radius:16px; box-shadow:0 12px 30px rgba(0,0,0,0.18); padding:14px; z-index:60; width:230px;}
+  .a11y-panel.open{display:block;}
+  .a11y-panel h4{font-size:0.85rem; margin-bottom:10px; color:var(--teal-dark);}
+  .a11y-row{display:flex; align-items:center; justify-content:space-between; padding:8px 0; font-size:0.85rem; border-bottom:1px solid var(--border);}
+  .a11y-row:last-child{border-bottom:none;}
+  .switch{width:38px; height:22px; border-radius:999px; background:var(--border); position:relative; border:none; flex:none;}
+  .switch.on{background:var(--teal);}
+  .switch::after{content:""; position:absolute; top:2px; left:2px; width:18px; height:18px; border-radius:50%; background:var(--white); transition:transform 0.15s;}
+  .switch.on::after{transform:translateX(16px);}
+
+  /* ---- step tracker ---- */
+  .tracker{background:var(--white); border-bottom:1px solid var(--border); overflow-x:auto;}
+  .tracker-inner{display:flex; gap:6px; padding:12px 20px; max-width:800px; margin:0 auto; min-width:max-content;}
+  .tstep{display:flex; align-items:center; gap:6px; flex:none;}
+  .tstep .dot{width:26px; height:26px; border-radius:50%; background:var(--teal-soft); color:var(--teal-dark); display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; flex:none;}
+  .tstep.done .dot{background:var(--teal); color:var(--white);}
+  .tstep.active .dot{background:var(--coral); color:var(--white);}
+  .tstep .label{font-size:0.72rem; color:var(--ink-soft); font-weight:600; white-space:nowrap;}
+  .tstep.active .label{color:var(--teal-dark);}
+  .tstep .line{width:16px; height:2px; background:var(--border); flex:none;}
+
+  /* ---- content ---- */
+  .screen{padding:36px 20px 20px; max-width:800px; margin:0 auto;}
+  .eyebrow{font-size:0.8rem; font-weight:700; color:var(--coral); text-transform:uppercase; letter-spacing:0.03em; margin-bottom:8px;}
+  .screen h2{font-size:1.6rem; margin-bottom:8px;}
+  .screen .sub{color:var(--ink-soft); font-size:0.94rem; margin-bottom:26px; max-width:56ch;}
+
+  .card{background:var(--white); border:1px solid var(--border); border-radius:16px; padding:22px; box-shadow:var(--shadow);}
+
+  .btn{display:inline-flex; align-items:center; gap:8px; border-radius:14px; padding:13px 22px; font-weight:700; font-size:0.92rem; border:2px solid transparent;}
+  .btn-primary{background:var(--coral); color:var(--white); box-shadow:0 5px 0 #C25E2C;}
+  .btn-primary:active{transform:translateY(3px); box-shadow:0 2px 0 #C25E2C;}
+  .btn-outline{background:var(--white); color:var(--teal-dark); border-color:var(--teal);}
+  .btn-ghost{background:var(--teal-soft); color:var(--teal-dark); border-color:transparent;}
+  .btn:disabled{opacity:0.45; cursor:not-allowed;}
+  .btn svg{width:18px; height:18px;}
+  .btn-row{display:flex; flex-wrap:wrap; gap:10px;}
+
+  /* ---- landing (step 0) ---- */
+  .landing-hero{position:relative; text-align:center; padding:20px 0 8px; overflow:hidden; border-radius:20px;}
+  .landing-hero .netbg{position:absolute; inset:0; z-index:0; opacity:0.5;}
+  .landing-hero .content{position:relative; z-index:1;}
+  .landing-hero h2{font-size:2rem; max-width:18ch; margin:0 auto 12px;}
+  .landing-hero .sub{margin:0 auto 22px;}
+  .stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:28px;}
+  .stat-card{background:var(--white); border:1px solid var(--border); border-radius:14px; padding:16px 8px; text-align:center; box-shadow:var(--shadow);}
+  .stat-card .n{font-family:'Baloo 2'; font-weight:800; font-size:1.3rem; color:var(--teal-dark);}
+  .stat-card .l{font-size:0.7rem; color:var(--ink-soft); font-weight:600; margin-top:2px;}
+  .proto-tag{font-size:0.65rem; color:var(--coral); font-weight:700; margin-top:22px;}
+  @media (max-width:560px){.stat-grid{grid-template-columns:1fr 1fr;}}
+
+  /* ---- assessment ---- */
+  .field{margin-bottom:22px;}
+  .field > label{display:block; font-weight:700; font-size:0.95rem; margin-bottom:10px; color:var(--teal-dark);}
+  .field input[type=text], .field textarea{width:100%; border:1.5px solid #DDD3BC; border-radius:12px; padding:13px 16px; font-size:0.95rem; font-family:'Mukta'; outline:none;}
+  .field textarea{min-height:90px; resize:vertical;}
+  .field input:focus, .field textarea:focus{border-color:var(--teal);}
+  .mic-row{display:flex; gap:10px; align-items:center;}
+  .loc-picker-row{display:flex; gap:10px;}
+  .loc-select{flex:1; border:1.5px solid #DDD3BC; border-radius:12px; padding:12px 14px; font-size:0.9rem; font-family:'Mukta'; background:var(--white); color:var(--ink);}
+  .loc-select:focus{border-color:var(--teal);}
+  .mic-row input{flex:1;}
+  .mic-btn{width:44px; height:44px; border-radius:50%; border:none; background:var(--teal-soft); color:var(--teal-dark); display:flex; align-items:center; justify-content:center; flex:none;}
+  .mic-btn.listening{background:var(--coral); color:var(--white);}
+  .mic-btn svg{width:19px; height:19px;}
+
+  .cat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:10px;}
+  .cat-card{background:var(--white); border:2px solid var(--border); border-radius:14px; padding:16px 8px; text-align:center; font-size:0.82rem; font-weight:700; color:var(--ink);}
+  .cat-card .emoji{font-size:1.5rem; display:block; margin-bottom:6px;}
+  .cat-card.selected{border-color:var(--teal); background:var(--teal-soft); color:var(--teal-dark);}
+  @media (max-width:560px){.cat-grid{grid-template-columns:repeat(3,1fr);}}
+
+  .chip-select{display:flex; flex-wrap:wrap; gap:10px;}
+  .chip-opt{border:2px solid var(--teal-soft); background:var(--white); color:var(--teal-dark); border-radius:999px; padding:10px 18px; font-weight:600; font-size:0.85rem;}
+  .chip-opt.selected{background:var(--teal); border-color:var(--teal); color:var(--white);}
+
+  .meter-wrap{background:var(--border); border-radius:999px; height:10px; overflow:hidden; margin-top:6px;}
+  .meter-fill{background:var(--teal); height:100%; transition:width 0.3s;}
+  .meter-label{font-size:0.8rem; color:var(--ink-soft); font-weight:600; margin-top:6px;}
+
+  /* ---- profile ---- */
+  .profile-card{display:flex; gap:18px; align-items:flex-start;}
+  .avatar{width:60px; height:60px; border-radius:50%; background:var(--gold-soft); display:flex; align-items:center; justify-content:center; flex:none;}
+  .avatar svg{width:30px; height:30px; color:var(--teal-dark);}
+  .profile-row{display:flex; justify-content:space-between; padding:11px 0; border-bottom:1px solid var(--border); font-size:0.9rem; gap:10px;}
+  .profile-row:last-child{border-bottom:none;}
+  .profile-row .k{color:var(--ink-soft); flex:none;}
+  .profile-row .v{font-weight:600; color:var(--ink); text-align:right;}
+  .tag-pill{display:inline-block; background:var(--teal-soft); color:var(--teal-dark); border-radius:999px; padding:5px 12px; font-size:0.75rem; font-weight:700; margin:2px 4px 2px 0;}
+
+  /* ---- matching (loading) ---- */
+  .match-loading{display:flex; flex-direction:column; align-items:center; text-align:center; padding:26px 0;}
+  .spinner{width:56px; height:56px; border-radius:50%; border:5px solid var(--teal-soft); border-top-color:var(--teal); animation:spin 0.9s linear infinite; margin-bottom:20px;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .checklist{text-align:left; margin-top:18px; display:flex; flex-direction:column; gap:10px; max-width:340px;}
+  .checklist .item{display:flex; align-items:center; gap:10px; font-size:0.88rem; color:var(--ink-soft);}
+  .checklist .item.done{color:var(--teal-dark); font-weight:600;}
+  .checklist svg{width:18px; height:18px; flex:none; color:var(--border);}
+  .checklist .item.done svg{color:var(--teal);}
+
+  /* ---- results ---- */
+  .demo-note{background:var(--gold-soft); border-radius:10px; padding:10px 14px; font-size:0.78rem; color:#7A5A2E; margin-bottom:18px;}
+  .scheme-card{background:var(--white); border:1px solid var(--border); border-radius:16px; padding:20px; margin-bottom:16px; box-shadow:var(--shadow);}
+  .scheme-top{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:8px;}
+  .scheme-name-wrap{display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+  .scheme-name{font-family:'Baloo 2'; font-weight:700; font-size:1.05rem; color:var(--teal-dark);}
+  .verified-pill{display:inline-flex; align-items:center; gap:4px; background:#E4F0EE; color:var(--teal); font-size:0.65rem; font-weight:700; padding:3px 8px; border-radius:999px;}
+  .elig-pill{display:inline-flex; align-items:center; font-size:0.65rem; font-weight:700; padding:3px 9px; border-radius:999px;}
+  .elig-pill.elig-yes{background:#E1F3EA; color:#1E7A4C;}
+  .elig-pill.elig-maybe{background:var(--gold-soft); color:#7A5A2E;}
+  .elig-pill.elig-no{background:#FBE7E1; color:var(--danger);}
+  .verified-pill svg{width:11px; height:11px;}
+  .match-badge{background:var(--teal); color:var(--white); border-radius:999px; padding:5px 12px; font-size:0.8rem; font-weight:700; flex:none;}
+  .score-bars{display:flex; flex-direction:column; gap:8px; margin:12px 0;}
+  .score-row{display:flex; align-items:center; gap:10px; font-size:0.75rem;}
+  .score-row .slabel{width:96px; flex:none; color:var(--ink-soft); font-weight:600;}
+  .score-row .sbar{flex:1; background:var(--teal-soft); border-radius:999px; height:7px; overflow:hidden;}
+  .score-row .sfill{background:var(--aqua); height:100%;}
+  .score-row .spct{width:32px; flex:none; text-align:right; font-weight:700; color:var(--teal-dark);}
+  .why-toggle{background:none; border:none; color:var(--teal); font-weight:700; font-size:0.82rem; padding:6px 0; display:flex; align-items:center; gap:5px;}
+  .why-toggle svg{width:14px; height:14px;}
+  .why-panel{display:none; margin-top:10px; border-top:1px dashed var(--border); padding-top:12px;}
+  .why-panel.open{display:block;}
+  .factor-table{width:100%; border-collapse:collapse; font-size:0.8rem; margin-bottom:10px;}
+  .factor-table td{padding:6px 4px; border-bottom:1px solid var(--border);}
+  .factor-table td:last-child{text-align:right; font-weight:700;}
+  .ai-explain{background:var(--teal-soft); border-radius:10px; padding:12px 14px; font-size:0.83rem; color:var(--teal-dark); font-style:italic;}
+  .scheme-actions{display:flex; align-items:center; gap:14px; margin-top:12px; flex-wrap:wrap;}
+  .save-toggle{display:flex; align-items:center; gap:6px; background:none; border:none; font-size:0.8rem; font-weight:600; color:var(--ink-soft);}
+  .save-toggle svg{width:16px; height:16px;}
+  .save-toggle.saved{color:var(--coral);}
+  .compare-check{display:flex; align-items:center; gap:6px; font-size:0.8rem; font-weight:600; color:var(--ink-soft);}
+  .compare-bar{position:sticky; bottom:70px; background:var(--teal-dark); color:var(--white); border-radius:14px; padding:12px 16px; display:none; align-items:center; justify-content:space-between; margin-bottom:16px;}
+  .compare-bar.show{display:flex;}
+  .compare-bar .btn-primary{padding:9px 16px; font-size:0.8rem;}
+
+  .compare-table-wrap{overflow-x:auto; margin-bottom:20px;}
+  .compare-table{width:100%; border-collapse:collapse; font-size:0.82rem; background:var(--white); border-radius:12px; overflow:hidden;}
+  .compare-table th, .compare-table td{padding:10px 12px; border-bottom:1px solid var(--border); text-align:left; white-space:nowrap;}
+  .compare-table th{background:var(--teal-soft); color:var(--teal-dark);}
+  .best-pill{background:var(--coral); color:var(--white); border-radius:999px; padding:6px 14px; font-weight:700; font-size:0.82rem; display:inline-block; margin-bottom:20px;}
+
+  /* ---- scheme detail ---- */
+  .detail-section{margin-bottom:22px;}
+  .detail-section h3{font-size:0.98rem; margin-bottom:10px;}
+  .detail-list{list-style:none; display:flex; flex-direction:column; gap:8px;}
+  .detail-list li{display:flex; gap:8px; font-size:0.88rem; color:var(--ink-soft);}
+  .detail-list svg{width:16px; height:16px; color:var(--teal); flex:none; margin-top:3px;}
+  .trust-box{display:flex; align-items:center; gap:12px; background:var(--teal-soft); border-radius:12px; padding:12px 16px; margin-bottom:22px;}
+  .trust-box svg{width:22px; height:22px; color:var(--teal); flex:none;}
+  .trust-box .t1{font-weight:700; font-size:0.85rem; color:var(--teal-dark);}
+  .trust-box .t2{font-size:0.75rem; color:var(--ink-soft);}
+  .app-process{display:flex; flex-direction:column; gap:0;}
+  .ap-step{display:flex; gap:14px; align-items:flex-start;}
+  .ap-step .apdot{width:26px; height:26px; border-radius:50%; background:var(--teal-soft); color:var(--teal-dark); font-size:0.72rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex:none;}
+  .ap-step .apbar{width:2px; flex:1; background:var(--border); margin:2px 0; min-height:20px; margin-left:12px;}
+  .ap-step:last-child .apbar{display:none;}
+  .ap-body{padding-bottom:16px; font-size:0.86rem; padding-top:2px;}
+
+  .whatif-box{background:#FDF3E7; border:1px solid #F0DDBB; border-radius:14px; padding:18px; margin-top:8px;}
+  .whatif-box h4{font-size:0.9rem; color:#7A5A2E; margin-bottom:8px;}
+  .whatif-box ul{list-style:none; margin:10px 0; display:flex; flex-direction:column; gap:6px;}
+  .whatif-box li{font-size:0.85rem; color:#7A5A2E; display:flex; gap:6px;}
+  .whatif-result{background:var(--white); border-radius:10px; padding:12px 14px; font-size:0.85rem; margin-top:10px; color:var(--teal-dark); font-weight:700;}
+  .calc-box{background:var(--teal-soft); border-radius:14px; padding:18px;}
+  .calc-row{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+  .calc-row label{width:150px; flex:none; font-size:0.82rem; font-weight:600; color:var(--teal-dark);}
+  .calc-row input{flex:1; border:1.5px solid #BFE0DA; border-radius:10px; padding:9px 12px; font-size:0.85rem; font-family:'Mukta'; background:var(--white);}
+  .calc-result{background:var(--white); border-radius:10px; padding:12px 14px; margin-top:8px; font-weight:700; color:var(--teal-dark);}
+
+  /* ---- roadmap ---- */
+  .roadmap{display:flex; flex-direction:column; gap:0;}
+  .rstep{display:flex; gap:16px;}
+  .rstep .rline{display:flex; flex-direction:column; align-items:center;}
+  .rstep .rdot{width:30px; height:30px; border-radius:50%; background:var(--teal-soft); color:var(--teal-dark); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.8rem; flex:none;}
+  .rstep.done .rdot{background:var(--teal); color:var(--white);}
+  .rstep .rbar{width:2px; flex:1; background:var(--border); margin:4px 0; min-height:30px;}
+  .rstep:last-child .rbar{display:none;}
+  .rstep-body{padding-bottom:26px;}
+  .rstep-body h4{font-size:0.94rem; color:var(--teal-dark); margin-bottom:4px;}
+  .rstep-body p{font-size:0.82rem; color:var(--ink-soft);}
+  .rstep-body .eta{font-size:0.72rem; color:var(--coral); font-weight:700; margin-top:4px;}
+
+  /* ---- documents ---- */
+  .doc-row{display:flex; align-items:flex-start; gap:14px; padding:16px 0; border-bottom:1px solid var(--border);}
+  .doc-row:last-child{border-bottom:none;}
+  .doc-icon{width:40px; height:40px; border-radius:10px; background:var(--teal-soft); display:flex; align-items:center; justify-content:center; flex:none;}
+  .doc-icon svg{width:20px; height:20px; color:var(--teal-dark);}
+  .doc-body{flex:1;}
+  .doc-name{font-weight:700; font-size:0.92rem; margin-bottom:3px;}
+  .doc-tip{font-size:0.78rem; color:var(--ink-soft); margin-bottom:8px;}
+  .doc-upload{background:var(--teal-soft); color:var(--teal-dark); border:none; border-radius:10px; padding:8px 14px; font-weight:600; font-size:0.78rem;}
+  .doc-upload.uploaded{background:var(--teal); color:var(--white);}
+  .doc-progress-wrap{background:var(--border); border-radius:999px; height:8px; margin-bottom:12px; overflow:hidden;}
+  .doc-progress{background:var(--teal); height:100%; transition:width 0.3s;}
+  .doc-remaining{font-size:0.82rem; color:var(--coral); font-weight:700; margin-bottom:20px;}
+
+  /* ---- dashboard ---- */
+  .dash-greet{font-size:1.4rem; margin-bottom:20px;}
+  .dash-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:24px;}
+  .dash-card{background:var(--white); border:1px solid var(--border); border-radius:16px; padding:16px; box-shadow:var(--shadow);}
+  .dash-card .num{font-family:'Baloo 2'; font-size:1.5rem; color:var(--teal-dark); font-weight:800;}
+  .dash-card .lbl{font-size:0.72rem; color:var(--ink-soft); font-weight:600;}
+  .status-pill{display:inline-block; border-radius:999px; padding:4px 12px; font-size:0.72rem; font-weight:700; background:var(--gold-soft); color:#7A5A2E;}
+  @media (max-width:560px){.dash-grid{grid-template-columns:1fr 1fr;}}
+
+  .dash-section{margin-bottom:26px;}
+  .dash-section h3{font-size:1rem; margin-bottom:12px;}
+  .alert-row{display:flex; gap:12px; align-items:flex-start; padding:12px 0; border-bottom:1px solid var(--border); font-size:0.85rem;}
+  .alert-row:last-child{border-bottom:none;}
+  .alert-row svg{width:18px; height:18px; color:var(--coral); flex:none; margin-top:2px;}
+  .tracker-mini{display:flex; align-items:center; gap:6px; margin-top:10px;}
+  .tracker-mini .tseg{flex:1; height:6px; border-radius:999px; background:var(--border);}
+  .tracker-mini .tseg.on{background:var(--teal);}
+  .tracker-mini-labels{display:flex; justify-content:space-between; font-size:0.7rem; color:var(--ink-soft); margin-top:4px;}
+
+  .journey{display:flex; overflow-x:auto; gap:0; padding-bottom:8px;}
+  .jstep{display:flex; flex-direction:column; align-items:center; flex:none; width:96px; text-align:center;}
+  .jstep .jdot{width:38px; height:38px; border-radius:50%; background:var(--teal-soft); color:var(--teal-dark); display:flex; align-items:center; justify-content:center; font-size:1.1rem; margin-bottom:6px;}
+  .jstep.current .jdot{background:var(--coral); color:var(--white);}
+  .jstep .jl{font-size:0.72rem; font-weight:700; color:var(--ink-soft);}
+  .jstep.current .jl{color:var(--teal-dark);}
+  .jconnector{flex:none; width:20px; height:2px; background:var(--border); margin-top:19px;}
+
+  /* ---- nav footer ---- */
+  .navfoot{position:fixed; bottom:0; left:0; right:0; background:var(--white); border-top:1px solid var(--border); padding:14px 20px; display:flex; justify-content:space-between; gap:12px; z-index:40;}
+  .navfoot-inner{max-width:800px; margin:0 auto; display:flex; justify-content:space-between; width:100%; gap:12px;}
+</style>
+<style>
+.site-nav{background:#0A4F4B;color:#fff;padding:10px 20px;display:flex;gap:16px;align-items:center;font-family:'Mukta',Arial,sans-serif;font-size:13px;flex-wrap:wrap;}
+.site-nav a{color:#fff;text-decoration:none;opacity:0.85;font-weight:600;}
+.site-nav a.current{opacity:1;text-decoration:underline;}
+.site-nav .brand{font-weight:800;margin-right:8px;opacity:1;}
+</style>
+</head>
+<body>
+<div class="site-nav"><span class="brand">🌱 Sahayog</span><a href="index.html">Overview</a><a href="landing.html">Landing</a><a href="app.html" class="current">App Flow</a><a href="admin.html">Admin</a></div>
+
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="200" cy="200" r="190" fill="#0F6B66"/>
+          <circle cx="200" cy="175" r="42" fill="#F7C948"/>
+          <path d="M105 300 C105 260, 130 245, 155 245 C170 245, 180 255, 185 268 L185 300 Z" fill="#FFFFFF"/>
+          <path d="M295 300 C295 260, 270 245, 245 245 C230 245, 220 255, 215 268 L215 300 Z" fill="#FFFFFF"/>
+          <line x1="200" y1="268" x2="200" y2="235" stroke="#EF7B45" stroke-width="9" stroke-linecap="round"/>
+        </svg>
+        <span>Sahayog</span>
+      </div>
+      <div class="topbar-actions">
+        <div class="lang-switch">
+          <button data-lang="hi">हिंदी</button>
+          <button data-lang="en">English</button>
+        </div>
+        <button class="icon-toggle" id="a11yBtn" aria-label="Accessibility options">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="4" r="2"/><path d="M5 9l7 2 7-2M12 11v4l-3 7M12 15l3 7"/></svg>
+        </button>
+        <button class="btn btn-ghost" id="loginBtn" style="padding:8px 14px; font-size:0.78rem;"></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="a11y-panel" id="loginPanel" style="width:260px;">
+    <h4 id="loginPanelTitle">Sign in with your phone</h4>
+    <div id="loginStepPhone">
+      <div class="field" style="margin-bottom:10px;"><input type="text" id="loginPhoneInput" placeholder="Enter phone number" style="width:100%; border:1.5px solid #DDD3BC; border-radius:10px; padding:9px 12px; font-size:0.85rem;"></div>
+      <button class="btn btn-primary" id="loginSendOtpBtn" style="width:100%; justify-content:center; padding:9px;"></button>
+    </div>
+    <div id="loginStepOtp" style="display:none;">
+      <p class="fine" id="loginOtpNote" style="color:var(--ink-soft); margin-bottom:8px;"></p>
+      <div class="field" style="margin-bottom:10px;"><input type="text" id="loginOtpInput" placeholder="Enter OTP" style="width:100%; border:1.5px solid #DDD3BC; border-radius:10px; padding:9px 12px; font-size:0.85rem;"></div>
+      <button class="btn btn-primary" id="loginVerifyBtn" style="width:100%; justify-content:center; padding:9px;"></button>
+    </div>
+    <div id="loginStepDone" style="display:none; text-align:center;">
+      <p style="font-weight:700; color:var(--teal-dark); margin-bottom:10px;" id="loginWelcomeText"></p>
+      <button class="btn btn-outline" id="loginSignOutBtn" style="width:100%; justify-content:center; padding:9px;"></button>
+    </div>
+  </div>
+
+  <div class="a11y-panel" id="a11yPanel">
+    <h4 id="a11yTitle">Accessibility</h4>
+    <div class="a11y-row"><span id="a11yLarge">Larger text</span><button class="switch" id="toggleLarge"></button></div>
+    <div class="a11y-row"><span id="a11yContrast">High contrast</span><button class="switch" id="toggleContrast"></button></div>
+    <div class="a11y-row"><span id="a11yRead">Read this page</span><button class="icon-toggle" id="readAloudBtn" style="width:32px;height:32px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg></button></div>
+  </div>
+
+  <div class="tracker">
+    <div class="tracker-inner" id="tracker"></div>
+  </div>
+
+  <div class="screen" id="screen"></div>
+
+  <div class="navfoot">
+    <div class="navfoot-inner">
+      <button class="btn btn-outline" id="backBtn">Back</button>
+      <button class="btn btn-primary" id="nextBtn">Next</button>
+    </div>
+  </div>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+/* ============ STRINGS ============ */
+var STR = {
+  en: {
+    steps: ["Landing","AI Assessment","Profile","Smart Matching","Results","Scheme Details","Channel Partner","Investment Planner","Revenue Explorer","Roadmap","Documents","Dashboard"],
+    back: "Back", next: "Next", getStarted: "Find My Schemes", finish: "Go to dashboard",
+
+    landingTitle: "Your Business Idea. The Right Government Support. Matched by AI.",
+    landingSub: "Discover government schemes and financial support designed around your entrepreneurial journey.",
+    exploreBtn: "Explore Schemes",
+    stat1n:"500+", stat1l:"Schemes", stat2n:"AI", stat2l:"Powered Matching", stat3n:"1-to-1", stat3l:"Personalized Recommendations", stat4n:"Verified", stat4l:"Government Sources",
+    protoTag: "Prototype data — not yet backed by a live dataset.",
+
+    assessGreet: "Hi! I'm Sahayog AI. I'll help you discover government schemes suitable for your business.",
+    q1: "What do you want to do?",
+    categories: {agri:"Agriculture", mfg:"Manufacturing", food:"Food Processing", tech:"Technology", craft:"Handicraft", retail:"Retail", other:"Other"},
+    q2: "Where is your business located?",
+    q2ph: "Your village, town or city",
+    q3: "What stage is your business in?",
+    stages: {idea:"Idea", starting:"Starting", existing:"Existing", expansion:"Expansion"},
+    q4: "What support do you need?",
+    supports: {funding:"Funding", equipment:"Equipment", training:"Training", market:"Market access", skill:"Skill development"},
+    q5: "Tell us about your business",
+    q5ph: "e.g. I want to start a small food-processing business...",
+    q4b: "Which of these describe you? (optional, helps us match better)",
+    catLabels: {women:"Woman entrepreneur", rural:"Rural / village", disability:"Person with disability", lowincome:"Low-income household", minority:"Minority community", tribal:"Tribal entrepreneur"},
+    q6: "What is your approximate available startup budget?",
+    budgetRanges: {under1l:"Under ₹1 lakh", r1to3:"₹1–3 lakh", r3to5:"₹3–5 lakh", r5to10:"₹5–10 lakh", over10:"₹10 lakh+"},
+    q7: "How do you plan to earn?",
+    revenueModels2: {product:"Product sales", services:"Services", online:"Online sales", wholesale:"Wholesale", subscription:"Subscription", mixed:"Mixed model", unsure:"Not sure yet"},
+    q8: "What's your growth goal?",
+    growthGoals: {local:"Local only", regional:"Regional", national:"National", export:"Export"},
+    q9: "What is your annual family income? (₹)",
+    q9ph: "e.g. 300000",
+    incomeEligibleGreen: "🟢 Within stated income threshold",
+    incomeEligibleOrange: "🟠 May exceed the stated threshold — please verify current official eligibility",
+    incomeNote: "This is a prototype indicator, not final legal eligibility. Eligibility is subject to current official scheme guidelines and verification.",
+    profileMeter: "Profile completion",
+    analyzeBtn: "Analyze My Eligibility",
+
+    profileTitle: "Your profile",
+    profileSub: "This is what we understood about you. You can go back and change anything.",
+    pName:"Business focus", pWork:"Description", pLoc:"Location", pStage:"Stage", pSupport:"Support needed", pCat:"You are",
+
+    matchTitle: "Finding your matches",
+    matchSub: "Our AI is checking your profile against every scheme we know about.",
+    matchSteps: ["Analyzing your profile...","Understanding your requirements...","Checking scheme eligibility...","Comparing benefits...","Generating personalized recommendations..."],
+
+    resultsTitle: "Your Top Matches", resultsSub: "Ranked by how well each one fits your profile. Tap any card to see full details.",
+    demoNote: "Demo data — these are illustrative scheme categories, not a live government database.",
+    why: "View Why", hideWhy:"Hide details",
+    factorRows: {biz:"Business Type", loc:"Location", stage:"Enterprise Stage", supp:"Support Required", elig:"Eligibility Criteria"},
+    strong:"✅ Strong", verify:"⚠️ Needs verification",
+    scoreLabels:{biz:"Business Match", loc:"Location", stage:"Business Stage", need:"Support Match", elig:"Eligibility"},
+    save:"Save", saved:"Saved", compare:"Compare", compareBar:"selected for comparison", compareBtn:"Compare Schemes",
+    compareTitle:"Scheme Comparison", bestForYou:"Best for You",
+    compareRows:{match:"Match", funding:"Funding", training:"Training", location:"Location", mode:"Application"},
+
+    detailTitle: "Scheme details",
+    benefits: "What you get", eligibility: "Who can apply", documents: "Documents needed", startApp: "Start application",
+    verifiedTitle:"Officially Verified", verifiedSrc:"Source: Official Government Portal", officialLink:"View Official Source",
+    appProcess:"Application Process",
+    processSteps:["Check eligibility","Prepare documents","Register","Submit application","Track application"],
+    whatifTitle:"Improve Your Eligibility", whatifSub:"You're currently missing some conditions.",
+    whatifIfComplete:"If you complete:", whatifResult:"Potentially eligible for {n} additional schemes.",
+
+    roadmapTitle: "Your application roadmap",
+    roadmapSub: "Here's exactly what happens after you apply, step by step.",
+
+    docsTitle: "AI Document Assistant",
+    docsSub: "Upload what you have. We'll guide you on how to get anything you're missing.",
+    upload: "Upload", uploaded: "Uploaded",
+    docsRemaining: "{n} documents may still be required.", prepareChecklist:"Prepare My Checklist",
+
+    dashGreetMorning:"Good morning", dashGreetAfternoon:"Good afternoon", dashGreetEvening:"Good evening",
+    dashName:"Entrepreneur",
+    dashTitle: "Your dashboard",
+    dashSub: "Everything in one place — your application, your documents, your saved schemes.",
+    dProfile:"Profile", dRecommended:"Recommended", dStrong:"Strong Matches", dApplications:"Applications", dDocs:"Documents",
+    healthTitle:"Business Health Snapshot", healthNote:"Prototype indicators based on your available profile information — not an official assessment.",
+    healthFunding:"Funding Readiness", healthEligibility:"Scheme Eligibility Readiness", healthPlan:"Business Plan Completion", healthDocsLbl:"Document Readiness",
+    tipsTitle:"Tips from other entrepreneurs like you", tipsNote:"Illustrative examples for this prototype, not verified crowd data.",
+    recommendedFor:"Recommended for You", savedSchemes:"Saved Schemes", noSaved:"No schemes saved yet.",
+    appTracker:"Application Tracker", trackStages:["Documents","Submitted","Verification"],
+    alerts:"Smart Alerts",
+    alert1:"New scheme matching your profile", alert2:"Eligibility criteria updated", alert3:"Application deadline approaching", alert4:"Missing document detected",
+    journeyTitle:"Your Entrepreneur Journey",
+    journeySteps:["Validate Idea","Register / Prepare","Find Support","Plan Funding","Allocate Investment","Launch Business","Generate Revenue","Scale"],
+    mentorTitle:"Talk to a real person", mentorSub:"Prefer human help over the AI? Request a call from a volunteer or mentor.",
+    mentorNamePh:"Your name", mentorPhonePh:"Phone number", mentorMorning:"Morning", mentorAfternoon:"Afternoon", mentorEvening:"Evening",
+    mentorRequestBtn:"Request a call", mentorSentMsg:"Request noted. A volunteer would call you at your preferred time in the real product.",
+    mentorDemoNote:"Prototype only — no real call is placed.",
+    calcTitle:"Illustrative loan calculator", calcAmountLabel:"Amount needed", calcAmountPh:"e.g. 100000",
+    calcYearsLabel:"Repayment period (years)", calcBtn:"Calculate", calcResultLabel:"Estimated monthly payment",
+    calcNote:"Illustrative only, at an example 8% interest rate — actual terms are set by the lender, not by Sahayog.",
+    loginBtn:"Sign in", loginTitle:"Sign in with your phone", loginPhonePh:"Enter phone number", loginSendOtp:"Send OTP",
+    loginOtpSentNote:"Demo OTP is 1234 — no real SMS is sent in this prototype.", loginOtpPh:"Enter OTP", loginVerify:"Verify",
+    loginWelcomeBack:"Signed in", loginSignOut:"Sign out",
+
+    invTitle:"Plan your investment", invSub:"See a suggested starting budget split for your kind of business, and adjust it yourself.",
+    invBudgetLabel:"Available startup budget (₹)", invBudgetPh:"e.g. 500000",
+    invSuggested:"Suggested planning allocation", invSuggestedNote:"AI-generated illustrative planning estimate — not financial advice.",
+    invAllocated:"Total allocated", invRemaining:"Remaining", invOptimize:"Optimize my budget with AI",
+    invOptimizedNote:"Adjusted proportionally so your sliders add up to 100%.",
+    invCategories:{equipment:"Equipment", materials:"Raw Materials", working:"Working Capital", marketing:"Marketing", tech:"Technology", reserve:"Emergency Reserve"},
+    fundTitle:"How can I fund my business?", fundSub:"Categories of support to explore — availability depends on the institution's own criteria and process.",
+    fundGovTitle:"Government Schemes", fundGovDesc:"The relevant government support already matched for you earlier in this journey.",
+    fundFormalTitle:"Formal Financing", fundFormalDesc:"General options like bank financing, eligible institutional lending, or business loans — terms vary by lender.",
+    fundProgTitle:"Entrepreneurship Programs", fundProgDesc:"Training, incubation, and mentorship programs that may include funding components.",
+    fundSelfTitle:"Self-Funding", fundSelfDesc:"Bootstrapping with personal savings or capital — explained here at a general, educational level only.",
+    fundOtherTitle:"Other Support", fundOtherDesc:"Any other applicable support programs, depending on what's in the verified scheme dataset.",
+    fundDisclaimer:"Funding availability and eligibility depend on the relevant institution's own criteria and approval process. Sahayog does not guarantee funding.",
+
+    revTitle:"Explore your revenue opportunities", revSub:"Possible revenue models for your kind of business — not a prediction or guarantee.",
+    revModelsTitle:"Possible revenue streams", revCalcTitle:"Try a quick revenue scenario",
+    revPriceLabel:"Price per unit (₹)", revUnitsLabel:"Expected monthly units", revResultLabel:"Illustrative monthly revenue",
+    revScenarioNote:"This is a scenario calculation, not a prediction or guarantee.",
+    profitTitle:"Profit simulator", profitVarCostLabel:"Variable cost per unit (₹)", profitFixedCostLabel:"Monthly fixed cost (₹)",
+    profitRevenue:"Revenue", profitVarCostTotal:"Estimated variable cost", profitFixedCostTotal:"Estimated fixed cost",
+    profitSurplus:"Illustrative operating surplus", profitBreakeven:"Break-even point", profitBreakevenUnits:"units/month",
+    profitBreakevenNote:"Break-even is the approximate sales level at which total revenue equals total costs.",
+    whatifBizTitle:"What if I change something?", whatifBizSub:"Ask a what-if question, or adjust price/units directly to compare scenarios.",
+    whatifChipPrice:"What if I increase my price?", whatifChipUnits:"What if I sell 500 more units?", whatifChipCost:"What if I reduce costs?",
+    scenarioA:"Scenario A (current)", scenarioB:"Scenario B (changed)", scenarioDiff:"Difference",
+    scenarioNote:"Scenario-based estimates, not guaranteed outcomes.",
+
+    healthTitle:"Business Health Snapshot", healthNote:"Prototype indicators based on your profile so far — not an official assessment.",
+    readinessTitle:"Overall Readiness", readinessNext:"Suggested next step",
+
+    catExplainerTitle:"Which type of scheme is right for you?",
+    catExplainerSub:"A quick comparison — figures shown are example, configured scheme data, not fixed limits.",
+    catMicro:"Micro Finance", catMicroDesc:"For smaller projects.", catMicroExample:"Example PS context: projects up to approximately ₹1.40 lakh.",
+    catTerm:"Term Loan", catTermDesc:"For larger projects.", catTermExample:"Example PS context: projects up to approximately ₹50 lakh.",
+    catEducation:"Educational Loan", catEducationDesc:"For eligible education-related expenses.",
+    letAIDecide:"Let AI Decide →", letAIDecideResult:"Based on your project cost and needs, this category looks like the closest fit:",
+
+    calcSchemeAware:"Calculator parameters loaded from the selected scheme profile.",
+    calcInterestLabel:"Interest rate (%)", calcTenureLabel:"Tenure (months)", calcMoratoriumLabel:"Moratorium (months)",
+    calcEditAssumptions:"Edit assumptions", calcTotalInterest:"Total interest", calcTotalRepayment:"Total repayment",
+    moratoriumTitle:"Understand your moratorium", moratoriumDesc:"A moratorium is a period during which scheduled repayment may be deferred according to the applicable scheme terms.",
+    moratoriumApproval:"Loan Approval", moratoriumPeriod:"Moratorium Period", moratoriumRepay:"Repayment Begins",
+    moratoriumInterestNote:"Actual interest treatment during the moratorium depends on the applicable scheme terms.",
+    fundingCoverageTitle:"Funding coverage", fundingCoverageProject:"Project Cost", fundingCoveragePotential:"Potential Financing",
+    fundingCoverageOwn:"Potential Own Contribution", fundingCoverageNote:"Example calculation based on configured scheme parameters — illustrative planning estimate.",
+
+    partnerTitle:"Find your nearest Channel Partner", partnerSub:"Explore authorized partners who can process your application for this scheme.",
+    partnerUseLocation:"Use my location", partnerEnterLocation:"Search by state / district",
+    partnerFound:"eligible partners found", partnerTypeLabel:"Partner Type", partnerDistance:"Distance",
+    partnerSchemeCategory:"Supported Scheme Category", partnerServiceArea:"Service Area", partnerStatus:"Routing Status",
+    partnerStatusGreen:"Available for Routing", partnerStatusYellow:"Limited Capacity", partnerStatusRed:"Currently Not Preferred",
+    partnerFindBest:"Find My Best Channel Partner →", partnerRecommended:"Recommended Partner",
+    partnerWhyTitle:"Why did we route you here?", partnerScoreLabel:"Smart Partner Score",
+    partnerTypes:{sca:"State Channelizing Agency", psb:"Public Sector Bank", rrb:"Regional Rural Bank", nbfc:"NBFC-MFI"},
+    partnerNotRecommended:"This partner is nearby but is not currently recommended for your application.",
+    partnerContinueApp:"Continue to Official Application →",
+    readyNextStep:"Ready for your next step", readyScheme:"Recommended Scheme", readyPartner:"Recommended Partner",
+    readyPartnerType:"Partner Type", readyLocation:"Location",
+    statusLabel: "In review",
+    continueApp: "Continue application", exploreMore: "Explore more schemes", editProfile: "Edit profile"
+  },
+  hi: {
+    steps: ["लैंडिंग","AI आकलन","प्रोफ़ाइल","स्मार्ट मैचिंग","परिणाम","योजना विवरण","चैनल पार्टनर","निवेश योजना","आय अन्वेषक","आवेदन रोडमैप","दस्तावेज़ सहायक","डैशबोर्ड"],
+    back: "पीछे", next: "आगे", getStarted: "मेरी योजनाएँ ढूंढें", finish: "डैशबोर्ड पर जाएँ",
+
+    landingTitle: "आपका व्यापार विचार। सही सरकारी सहायता। AI द्वारा मिलान।",
+    landingSub: "अपनी उद्यमशीलता यात्रा के अनुसार बनाई गई सरकारी योजनाएँ और वित्तीय सहायता खोजें।",
+    exploreBtn: "योजनाएँ देखें",
+    stat1n:"500+", stat1l:"योजनाएँ", stat2n:"AI", stat2l:"संचालित मिलान", stat3n:"1-से-1", stat3l:"व्यक्तिगत सुझाव", stat4n:"सत्यापित", stat4l:"सरकारी स्रोत",
+    protoTag: "प्रोटोटाइप डेटा — अभी लाइव डेटासेट पर आधारित नहीं है।",
+
+    assessGreet: "नमस्ते! मैं सहयोग AI हूँ। मैं आपको आपके व्यापार के लिए उपयुक्त सरकारी योजनाएँ ढूंढने में मदद करूँगी।",
+    q1: "आप क्या करना चाहते हैं?",
+    categories: {agri:"कृषि", mfg:"विनिर्माण", food:"खाद्य प्रसंस्करण", tech:"तकनीक", craft:"हस्तशिल्प", retail:"खुदरा व्यापार", other:"अन्य"},
+    q2: "आपका व्यापार कहाँ स्थित है?",
+    q2ph: "आपका गाँव, कस्बा या शहर",
+    q3: "आपका व्यापार किस चरण में है?",
+    stages: {idea:"विचार", starting:"शुरुआत", existing:"चल रहा है", expansion:"विस्तार"},
+    q4: "आपको किस तरह की सहायता चाहिए?",
+    supports: {funding:"धन", equipment:"उपकरण", training:"प्रशिक्षण", market:"बाज़ार पहुँच", skill:"कौशल विकास"},
+    q5: "अपने व्यापार के बारे में बताइए",
+    q5ph: "जैसे: मैं एक छोटा खाद्य प्रसंस्करण व्यापार शुरू करना चाहती हूँ...",
+    q4b: "इनमें से कौन सी बातें आप पर लागू होती हैं? (वैकल्पिक, बेहतर मिलान में मदद करता है)",
+    catLabels: {women:"महिला उद्यमी", rural:"ग्रामीण / गाँव", disability:"दिव्यांग", lowincome:"कम आय वाला परिवार", minority:"अल्पसंख्यक समुदाय", tribal:"आदिवासी उद्यमी"},
+    q6: "आपका अनुमानित उपलब्ध शुरुआती बजट कितना है?",
+    budgetRanges: {under1l:"₹1 लाख से कम", r1to3:"₹1–3 लाख", r3to5:"₹3–5 लाख", r5to10:"₹5–10 लाख", over10:"₹10 लाख+"},
+    q7: "आप कैसे कमाई की योजना बना रहे हैं?",
+    revenueModels2: {product:"उत्पाद बिक्री", services:"सेवाएँ", online:"ऑनलाइन बिक्री", wholesale:"थोक", subscription:"सदस्यता", mixed:"मिश्रित मॉडल", unsure:"अभी तय नहीं"},
+    q8: "आपका विकास लक्ष्य क्या है?",
+    growthGoals: {local:"केवल स्थानीय", regional:"क्षेत्रीय", national:"राष्ट्रीय", export:"निर्यात"},
+    q9: "आपकी वार्षिक पारिवारिक आय कितनी है? (₹)",
+    q9ph: "जैसे 300000",
+    incomeEligibleGreen: "🟢 बताई गई आय सीमा के भीतर",
+    incomeEligibleOrange: "🟠 आय सीमा से अधिक हो सकती है — कृपया वर्तमान आधिकारिक पात्रता जाँच लें",
+    incomeNote: "यह प्रोटोटाइप आकलन है, अंतिम कानूनी पात्रता नहीं। पात्रता वर्तमान आधिकारिक योजना दिशानिर्देशों और सत्यापन के अधीन है।",
+    profileMeter: "प्रोफ़ाइल पूर्णता",
+    analyzeBtn: "मेरी पात्रता जाँचें",
+
+    profileTitle: "आपकी प्रोफ़ाइल",
+    profileSub: "यह वह जानकारी है जो हमने आपके बारे में समझी। आप वापस जाकर कुछ भी बदल सकते हैं।",
+    pName:"व्यापार का फोकस", pWork:"विवरण", pLoc:"स्थान", pStage:"चरण", pSupport:"चाहिए सहायता", pCat:"आप हैं",
+
+    matchTitle: "आपकी योजनाएँ ढूंढी जा रही हैं",
+    matchSub: "हमारा AI आपकी प्रोफ़ाइल को हर जानी-मानी योजना से मिला रहा है।",
+    matchSteps: ["आपकी प्रोफ़ाइल का विश्लेषण हो रहा है...","आपकी ज़रूरतें समझी जा रही हैं...","योजना पात्रता जाँची जा रही है...","लाभों की तुलना हो रही है...","व्यक्तिगत सुझाव तैयार किए जा रहे हैं..."],
+
+    resultsTitle: "आपकी सर्वश्रेष्ठ मेल", resultsSub: "आपकी प्रोफ़ाइल से मेल के अनुसार क्रमबद्ध। पूरी जानकारी के लिए किसी भी कार्ड पर टैप करें।",
+    demoNote: "डेमो डेटा — ये उदाहरण योजना श्रेणियाँ हैं, यह कोई लाइव सरकारी डेटाबेस नहीं है।",
+    why: "क्यों देखें", hideWhy:"विवरण छुपाएँ",
+    factorRows: {biz:"व्यापार प्रकार", loc:"स्थान", stage:"उद्यम चरण", supp:"आवश्यक सहायता", elig:"पात्रता मानदंड"},
+    strong:"✅ मजबूत", verify:"⚠️ सत्यापन आवश्यक",
+    scoreLabels:{biz:"व्यापार मेल", loc:"स्थान", stage:"व्यापार चरण", need:"सहायता मेल", elig:"पात्रता"},
+    save:"सहेजें", saved:"सहेजा गया", compare:"तुलना करें", compareBar:"तुलना के लिए चयनित", compareBtn:"योजनाओं की तुलना करें",
+    compareTitle:"योजना तुलना", bestForYou:"आपके लिए सर्वश्रेष्ठ",
+    compareRows:{match:"मेल", funding:"धन", training:"प्रशिक्षण", location:"स्थान", mode:"आवेदन"},
+
+    detailTitle: "योजना का विवरण",
+    benefits: "आपको क्या मिलेगा", eligibility: "कौन आवेदन कर सकता है", documents: "ज़रूरी दस्तावेज़", startApp: "आवेदन शुरू करें",
+    verifiedTitle:"आधिकारिक रूप से सत्यापित", verifiedSrc:"स्रोत: आधिकारिक सरकारी पोर्टल", officialLink:"आधिकारिक स्रोत देखें",
+    appProcess:"आवेदन प्रक्रिया",
+    processSteps:["पात्रता जाँचें","दस्तावेज़ तैयार करें","पंजीकरण करें","आवेदन जमा करें","आवेदन ट्रैक करें"],
+    whatifTitle:"अपनी पात्रता सुधारें", whatifSub:"अभी आपमें कुछ शर्तें पूरी नहीं हैं।",
+    whatifIfComplete:"यदि आप पूरा करें:", whatifResult:"संभवतः {n} और योजनाओं के लिए पात्र।",
+
+    roadmapTitle: "आपका आवेदन रोडमैप",
+    roadmapSub: "आवेदन के बाद क्या-क्या होगा, कदम दर कदम।",
+
+    docsTitle: "AI दस्तावेज़ सहायक",
+    docsSub: "जो आपके पास है वह अपलोड करें। जो नहीं है, उसे पाने में हम मदद करेंगे।",
+    upload: "अपलोड करें", uploaded: "अपलोड हो गया",
+    docsRemaining: "{n} दस्तावेज़ अभी भी आवश्यक हो सकते हैं।", prepareChecklist:"मेरी सूची तैयार करें",
+
+    dashGreetMorning:"सुप्रभात", dashGreetAfternoon:"नमस्कार", dashGreetEvening:"शुभ संध्या",
+    dashName:"उद्यमी",
+    dashTitle: "आपका डैशबोर्ड",
+    dashSub: "सब कुछ एक जगह — आपका आवेदन, दस्तावेज़, और सहेजी गई योजनाएँ।",
+    dProfile:"प्रोफ़ाइल", dRecommended:"सुझाई गई", dStrong:"मजबूत मेल", dApplications:"आवेदन", dDocs:"दस्तावेज़",
+    healthTitle:"व्यापार स्वास्थ्य स्नैपशॉट", healthNote:"आपकी उपलब्ध प्रोफ़ाइल जानकारी पर आधारित प्रोटोटाइप संकेतक — कोई आधिकारिक आकलन नहीं।",
+    healthFunding:"फंडिंग तैयारी", healthEligibility:"योजना पात्रता तैयारी", healthPlan:"व्यापार योजना पूर्णता", healthDocsLbl:"दस्तावेज़ तैयारी",
+    tipsTitle:"आप जैसे अन्य उद्यमियों की सलाह", tipsNote:"इस प्रोटोटाइप के लिए उदाहरण, सत्यापित सामुदायिक डेटा नहीं।",
+    recommendedFor:"आपके लिए सुझाई गई", savedSchemes:"सहेजी गई योजनाएँ", noSaved:"अभी तक कोई योजना सहेजी नहीं गई।",
+    appTracker:"आवेदन ट्रैकर", trackStages:["दस्तावेज़","जमा किया गया","सत्यापन"],
+    alerts:"स्मार्ट अलर्ट",
+    alert1:"आपकी प्रोफ़ाइल से मेल खाती नई योजना", alert2:"पात्रता मानदंड अपडेट हुए", alert3:"आवेदन की अंतिम तिथि नज़दीक है", alert4:"दस्तावेज़ की कमी पाई गई",
+    journeyTitle:"आपकी उद्यमी यात्रा",
+    journeySteps:["विचार परखें","पंजीकरण करें / तैयारी करें","सहायता ढूंढें","फंडिंग की योजना बनाएँ","निवेश आवंटित करें","व्यापार शुरू करें","आमदनी शुरू करें","विस्तार करें"],
+    mentorTitle:"किसी असली इंसान से बात करें", mentorSub:"AI की बजाय इंसानी मदद चाहिए? किसी स्वयंसेवक या मार्गदर्शक से कॉल का अनुरोध करें।",
+    mentorNamePh:"आपका नाम", mentorPhonePh:"फ़ोन नंबर", mentorMorning:"सुबह", mentorAfternoon:"दोपहर", mentorEvening:"शाम",
+    mentorRequestBtn:"कॉल का अनुरोध करें", mentorSentMsg:"अनुरोध दर्ज हो गया। असली उत्पाद में एक स्वयंसेवक आपके पसंदीदा समय पर कॉल करेगा।",
+    mentorDemoNote:"सिर्फ प्रोटोटाइप — कोई असली कॉल नहीं की जाती।",
+    calcTitle:"उदाहरण ऋण कैलकुलेटर", calcAmountLabel:"ज़रूरी राशि", calcAmountPh:"जैसे 100000",
+    calcYearsLabel:"भुगतान अवधि (वर्ष)", calcBtn:"गणना करें", calcResultLabel:"अनुमानित मासिक भुगतान",
+    calcNote:"यह केवल उदाहरण है, 8% ब्याज दर पर — असली शर्तें ऋणदाता तय करता है, सहयोग नहीं।",
+    loginBtn:"साइन इन करें", loginTitle:"अपने फ़ोन से साइन इन करें", loginPhonePh:"फ़ोन नंबर डालें", loginSendOtp:"OTP भेजें",
+    loginOtpSentNote:"डेमो OTP है 1234 — इस प्रोटोटाइप में कोई असली SMS नहीं भेजा जाता।", loginOtpPh:"OTP डालें", loginVerify:"सत्यापित करें",
+    loginWelcomeBack:"साइन इन हो गया", loginSignOut:"साइन आउट करें",
+
+    invTitle:"अपने निवेश की योजना बनाएं", invSub:"अपने व्यापार के प्रकार के लिए सुझाई गई शुरुआती बजट बाँट देखें, और खुद बदलें।",
+    invBudgetLabel:"उपलब्ध शुरुआती बजट (₹)", invBudgetPh:"जैसे 500000",
+    invSuggested:"सुझाई गई योजना बाँट", invSuggestedNote:"AI-जनित उदाहरण योजना अनुमान — यह वित्तीय सलाह नहीं है।",
+    invAllocated:"कुल बाँटा गया", invRemaining:"शेष", invOptimize:"AI से मेरा बजट सुधारें",
+    invOptimizedNote:"आपके स्लाइडर 100% तक पहुँचें, इसके अनुपात में समायोजित किया गया।",
+    invCategories:{equipment:"उपकरण", materials:"कच्चा माल", working:"कार्यशील पूंजी", marketing:"विपणन", tech:"तकनीक", reserve:"आपातकालीन कोष"},
+    fundTitle:"मैं अपने व्यापार को कैसे फंड करूँ?", fundSub:"तलाशने के लिए सहायता की श्रेणियाँ — उपलब्धता संस्था के अपने मानदंडों पर निर्भर है।",
+    fundGovTitle:"सरकारी योजनाएँ", fundGovDesc:"इस यात्रा में पहले आपके लिए मेल खाई गई सरकारी सहायता।",
+    fundFormalTitle:"औपचारिक वित्तपोषण", fundFormalDesc:"बैंक वित्तपोषण, पात्र संस्थागत उधार, या व्यापार ऋण जैसे सामान्य विकल्प — शर्तें ऋणदाता अनुसार अलग होती हैं।",
+    fundProgTitle:"उद्यमिता कार्यक्रम", fundProgDesc:"प्रशिक्षण, इनक्यूबेशन और मार्गदर्शन कार्यक्रम, जिनमें धन सहायता भी शामिल हो सकती है।",
+    fundSelfTitle:"स्व-वित्तपोषण", fundSelfDesc:"निजी बचत या पूंजी से शुरुआत — यहाँ केवल सामान्य, शिक्षाप्रद स्तर पर बताया गया है।",
+    fundOtherTitle:"अन्य सहायता", fundOtherDesc:"सत्यापित योजना डेटासेट में मौजूद कोई भी अन्य लागू सहायता कार्यक्रम।",
+    fundDisclaimer:"धन सहायता की उपलब्धता और पात्रता संबंधित संस्था के अपने मानदंडों और स्वीकृति प्रक्रिया पर निर्भर है। सहयोग धन सहायता की गारंटी नहीं देता।",
+
+    revTitle:"अपने आय के अवसर तलाशें", revSub:"आपके व्यापार के लिए संभावित आय मॉडल — यह भविष्यवाणी या गारंटी नहीं है।",
+    revModelsTitle:"संभावित आय स्रोत", revCalcTitle:"एक त्वरित आय परिदृश्य आज़माएं",
+    revPriceLabel:"प्रति इकाई मूल्य (₹)", revUnitsLabel:"अनुमानित मासिक इकाइयाँ", revResultLabel:"उदाहरण मासिक आय",
+    revScenarioNote:"यह एक परिदृश्य गणना है, भविष्यवाणी या गारंटी नहीं।",
+    profitTitle:"लाभ सिम्युलेटर", profitVarCostLabel:"प्रति इकाई परिवर्तनीय लागत (₹)", profitFixedCostLabel:"मासिक स्थिर लागत (₹)",
+    profitRevenue:"आय", profitVarCostTotal:"अनुमानित परिवर्तनीय लागत", profitFixedCostTotal:"अनुमानित स्थिर लागत",
+    profitSurplus:"उदाहरण परिचालन अधिशेष", profitBreakeven:"ब्रेक-ईवन बिंदु", profitBreakevenUnits:"इकाई/माह",
+    profitBreakevenNote:"ब्रेक-ईवन वह अनुमानित बिक्री स्तर है जहाँ कुल आय, कुल लागत के बराबर होती है।",
+    whatifBizTitle:"अगर मैं कुछ बदलूं तो?", whatifBizSub:"एक क्या-हो-अगर सवाल पूछें, या परिदृश्यों की तुलना के लिए सीधे मूल्य/इकाई बदलें।",
+    whatifChipPrice:"अगर मैं अपना मूल्य बढ़ाऊं तो?", whatifChipUnits:"अगर मैं 500 और इकाइयाँ बेचूं तो?", whatifChipCost:"अगर मैं लागत कम करूं तो?",
+    scenarioA:"परिदृश्य A (वर्तमान)", scenarioB:"परिदृश्य B (बदला हुआ)", scenarioDiff:"अंतर",
+    scenarioNote:"परिदृश्य-आधारित अनुमान, गारंटीकृत परिणाम नहीं।",
+
+    healthTitle:"व्यापार स्वास्थ्य स्नैपशॉट", healthNote:"अब तक आपकी प्रोफ़ाइल पर आधारित प्रोटोटाइप संकेतक — कोई आधिकारिक मूल्यांकन नहीं।",
+    readinessTitle:"समग्र तैयारी", readinessNext:"सुझाया गया अगला कदम",
+
+    catExplainerTitle:"आपके लिए कौन सी योजना श्रेणी सही है?",
+    catExplainerSub:"एक त्वरित तुलना — दिखाए गए आंकड़े उदाहरण, कॉन्फ़िगर की गई योजना जानकारी हैं, तय सीमा नहीं।",
+    catMicro:"माइक्रो फाइनेंस", catMicroDesc:"छोटी परियोजनाओं के लिए।", catMicroExample:"उदाहरण PS संदर्भ: लगभग ₹1.40 लाख तक की परियोजनाएँ।",
+    catTerm:"टर्म लोन", catTermDesc:"बड़ी परियोजनाओं के लिए।", catTermExample:"उदाहरण PS संदर्भ: लगभग ₹50 लाख तक की परियोजनाएँ।",
+    catEducation:"शैक्षिक ऋण", catEducationDesc:"पात्र शिक्षा-संबंधी खर्चों के लिए।",
+    letAIDecide:"AI को तय करने दें →", letAIDecideResult:"आपकी परियोजना लागत और ज़रूरतों के आधार पर, यह श्रेणी सबसे उपयुक्त लगती है:",
+
+    calcSchemeAware:"कैलकुलेटर पैरामीटर चुनी गई योजना प्रोफ़ाइल से लोड किए गए हैं।",
+    calcInterestLabel:"ब्याज दर (%)", calcTenureLabel:"अवधि (महीने)", calcMoratoriumLabel:"मोहलत अवधि (महीने)",
+    calcEditAssumptions:"मान्यताएँ बदलें", calcTotalInterest:"कुल ब्याज", calcTotalRepayment:"कुल भुगतान",
+    moratoriumTitle:"अपनी मोहलत अवधि समझें", moratoriumDesc:"मोहलत अवधि वह समय है जिसके दौरान लागू योजना शर्तों के अनुसार निर्धारित भुगतान टाला जा सकता है।",
+    moratoriumApproval:"ऋण स्वीकृति", moratoriumPeriod:"मोहलत अवधि", moratoriumRepay:"भुगतान शुरू",
+    moratoriumInterestNote:"मोहलत अवधि के दौरान असली ब्याज व्यवहार लागू योजना शर्तों पर निर्भर करता है।",
+    fundingCoverageTitle:"वित्तपोषण कवरेज", fundingCoverageProject:"परियोजना लागत", fundingCoveragePotential:"संभावित वित्तपोषण",
+    fundingCoverageOwn:"संभावित स्व-योगदान", fundingCoverageNote:"कॉन्फ़िगर की गई योजना पैरामीटर पर आधारित उदाहरण गणना — यह केवल एक योजना अनुमान है।",
+
+    partnerTitle:"अपना नज़दीकी चैनल पार्टनर ढूंढें", partnerSub:"इस योजना के लिए आपका आवेदन प्रोसेस करने वाले अधिकृत पार्टनर तलाशें।",
+    partnerUseLocation:"मेरा स्थान इस्तेमाल करें", partnerEnterLocation:"राज्य / जिले से खोजें",
+    partnerFound:"पात्र पार्टनर मिले", partnerTypeLabel:"पार्टनर प्रकार", partnerDistance:"दूरी",
+    partnerSchemeCategory:"समर्थित योजना श्रेणी", partnerServiceArea:"सेवा क्षेत्र", partnerStatus:"रूटिंग स्थिति",
+    partnerStatusGreen:"रूटिंग के लिए उपलब्ध", partnerStatusYellow:"सीमित क्षमता", partnerStatusRed:"फिलहाल प्राथमिकता में नहीं",
+    partnerFindBest:"मेरा सर्वश्रेष्ठ चैनल पार्टनर ढूंढें →", partnerRecommended:"सुझाया गया पार्टनर",
+    partnerWhyTitle:"हमने आपको यहाँ क्यों भेजा?", partnerScoreLabel:"स्मार्ट पार्टनर स्कोर",
+    partnerTypes:{sca:"राज्य चैनलाइज़िंग एजेंसी", psb:"सार्वजनिक क्षेत्र का बैंक", rrb:"क्षेत्रीय ग्रामीण बैंक", nbfc:"NBFC-MFI"},
+    partnerNotRecommended:"यह पार्टनर नज़दीक है, लेकिन आपके आवेदन के लिए फिलहाल अनुशंसित नहीं है।",
+    partnerContinueApp:"आधिकारिक आवेदन पर जाएँ →",
+    readyNextStep:"अगले कदम के लिए तैयार", readyScheme:"सुझाई गई योजना", readyPartner:"सुझाया गया पार्टनर",
+    readyPartnerType:"पार्टनर प्रकार", readyLocation:"स्थान",
+    statusLabel: "समीक्षा में",
+    continueApp: "आवेदन जारी रखें", exploreMore: "और योजनाएँ देखें", editProfile: "प्रोफ़ाइल बदलें"
+  }
+};
+
+var CAT_EMOJI = {agri:"🚜", mfg:"🏭", food:"🍱", tech:"💻", craft:"🧵", retail:"🛍️", other:"➕"};
+
+// My own addition: illustrative peer-style tips, addressing "lack of networks"
+// as a named barrier for marginalized entrepreneurs — clearly labeled as
+// prototype examples, not verified crowd-sourced data.
+var TIPS_BY_CATEGORY = {
+  agri: { en:"Some farm-based entrepreneurs in similar programs found sharing transport costs with 2-3 neighbouring farms cut delivery expenses noticeably.", hi:"मिलते-जुलते कार्यक्रमों में कुछ किसान उद्यमियों ने पाया कि 2-3 पड़ोसी खेतों के साथ परिवहन लागत साझा करने से डिलीवरी खर्च काफी कम हुआ।" },
+  mfg: { en:"Small manufacturers sometimes reduce equipment cost by starting with shared/rented machinery before buying their own.", hi:"छोटे निर्माता कभी-कभी अपनी मशीन खरीदने से पहले साझा/किराए की मशीनरी से शुरुआत करके लागत कम करते हैं।" },
+  food: { en:"Home-based food businesses often start by selling through a local WhatsApp group before investing in packaging or a shopfront.", hi:"घर से चलने वाले खाद्य व्यापार अक्सर पैकेजिंग या दुकान में निवेश करने से पहले स्थानीय व्हाट्सऐप समूह से बिक्री शुरू करते हैं।" },
+  tech: { en:"Digital service providers sometimes offer a small free sample of work to their first few local clients to build trust before charging full price.", hi:"डिजिटल सेवा देने वाले कभी-कभी पूरा शुल्क लेने से पहले शुरुआती कुछ स्थानीय ग्राहकों को छोटा मुफ्त नमूना देकर भरोसा बनाते हैं।" },
+  craft: { en:"Artisans in similar situations have found grouping raw-material purchases with a few other craftspeople can reduce per-unit cost.", hi:"मिलते-जुलते हालात में कारीगरों ने पाया कि कुछ अन्य कारीगरों के साथ मिलकर कच्चा माल खरीदने से प्रति इकाई लागत घटती है।" },
+  retail: { en:"Small retailers sometimes test a new product with a small quantity locally before committing to a larger stock order.", hi:"छोटे खुदरा विक्रेता अक्सर बड़ा स्टॉक ऑर्डर करने से पहले किसी नए उत्पाद को थोड़ी मात्रा में स्थानीय रूप से आज़माते हैं।" },
+  other: { en:"Many first-time entrepreneurs found it useful to talk to just one or two people already doing similar work before starting.", hi:"कई पहली बार के उद्यमियों को शुरू करने से पहले पहले से यही काम कर रहे एक-दो लोगों से बात करना उपयोगी लगा।" }
+};
+
+/* Feature 1: Location-Based Scheme Discovery — illustrative State -> District data (not exhaustive) */
+var STATE_DISTRICTS = {
+  "Uttar Pradesh": ["Lucknow", "Kanpur", "Varanasi", "Agra", "Prayagraj"],
+  "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Nashik"],
+  "Bihar": ["Patna", "Gaya", "Muzaffarpur"],
+  "Rajasthan": ["Jaipur", "Jodhpur", "Udaipur"],
+  "West Bengal": ["Kolkata", "Howrah", "Darjeeling"],
+  "Odisha": ["Bhubaneswar", "Cuttack", "Puri"]
+};
+
+
+/* ============ SCHEME DATA (illustrative demo data) ============ */
+var SCHEMES = [
+  { id:"women", tag:"women", cat:"craft",
+    name:{en:"Women Entrepreneurship Support Scheme", hi:"महिला उद्यमिता सहायता योजना"},
+    desc:{en:"Low-interest loans and mentorship for women starting or growing a small business.", hi:"महिलाओं के लिए व्यापार शुरू करने या बढ़ाने हेतु कम ब्याज़ पर कर्ज़ और मार्गदर्शन।"},
+    benefits:{en:["Loan up to a subsidised rate","Free business mentorship","Priority processing"], hi:["रियायती दर पर कर्ज़","मुफ्त व्यापार मार्गदर्शन","प्राथमिकता प्रक्रिया"]},
+    eligibility:{en:["Woman-owned or woman-led business","Business less than 5 years old","Valid ID proof"], hi:["महिला के स्वामित्व/नेतृत्व वाला व्यापार","5 वर्ष से कम पुराना व्यापार","वैध पहचान प्रमाण"]},
+    docs:{en:["Aadhaar card","Bank passbook","Business address proof"], hi:["आधार कार्ड","बैंक पासबुक","व्यापार पते का प्रमाण"]},
+    funding:"₹2L–5L", training:true, location:"UP", mode:{en:"Online", hi:"ऑनलाइन"}, verified:"01/08/2026",
+    missing:{en:["Business Registration"], hi:["व्यापार पंजीकरण"]},
+    interestRate:7.0, maxLoan:500000, maxTenureMonths:60, moratoriumOptions:[3, 6, 9, 12], categoryType:"micro", incomeThreshold:300000
+  },
+  { id:"rural", tag:"rural", cat:"agri",
+    name:{en:"Rural Business Growth Fund", hi:"ग्रामीण व्यापार विकास कोष"},
+    desc:{en:"Support for village and small-town businesses to reach wider markets.", hi:"गाँव और छोटे शहरों के व्यापार को बड़े बाज़ार तक पहुँचाने में सहायता।"},
+    benefits:{en:["Seed funding grant","Market linkage support","Transport subsidy"], hi:["शुरुआती अनुदान","बाज़ार जोड़ने में सहायता","परिवहन सब्सिडी"]},
+    eligibility:{en:["Business located in a rural area","Operating for at least 6 months"], hi:["ग्रामीण क्षेत्र में व्यापार","कम से कम 6 महीने से चल रहा हो"]},
+    docs:{en:["Aadhaar card","Residence proof","Business photo/proof"], hi:["आधार कार्ड","निवास प्रमाण","व्यापार का फोटो/प्रमाण"]},
+    funding:"₹1L–3L", training:false, location:"All India", mode:{en:"Offline", hi:"ऑफ़लाइन"}, verified:"15/07/2026",
+    missing:{en:["Bank Account Details"], hi:["बैंक खाता विवरण"]},
+    interestRate:8.5, maxLoan:300000, maxTenureMonths:48, moratoriumOptions:[3, 6, 12], categoryType:"micro", incomeThreshold:250000
+  },
+  { id:"disability", tag:"disability", cat:"other",
+    name:{en:"Disability-Inclusive Enterprise Scheme", hi:"दिव्यांग समावेशी उद्यम योजना"},
+    desc:{en:"Extra support, accessible resources, and funding for entrepreneurs with disabilities.", hi:"दिव्यांग उद्यमियों के लिए अतिरिक्त सहायता, सुलभ संसाधन और धन।"},
+    benefits:{en:["Higher subsidy rate","Accessible equipment support","Dedicated helpline"], hi:["अधिक सब्सिडी दर","सुलभ उपकरण सहायता","समर्पित हेल्पलाइन"]},
+    eligibility:{en:["Valid disability certificate","Age 18 or above"], hi:["वैध दिव्यांगता प्रमाणपत्र","18 वर्ष या अधिक आयु"]},
+    docs:{en:["Disability certificate","Aadhaar card","Bank passbook"], hi:["दिव्यांगता प्रमाणपत्र","आधार कार्ड","बैंक पासबुक"]},
+    funding:"₹3L–6L", training:true, location:"All India", mode:{en:"Online", hi:"ऑनलाइन"}, verified:"22/08/2026",
+    missing:{en:["Disability Certificate"], hi:["दिव्यांगता प्रमाणपत्र"]},
+    interestRate:6.5, maxLoan:600000, maxTenureMonths:72, moratoriumOptions:[6, 9, 12], categoryType:"term", incomeThreshold:400000
+  },
+  { id:"minority", tag:"minority", cat:"retail",
+    name:{en:"Minority Business Development Program", hi:"अल्पसंख्यक व्यापार विकास कार्यक्रम"},
+    desc:{en:"Financial and training support for entrepreneurs from minority communities.", hi:"अल्पसंख्यक समुदाय के उद्यमियों के लिए वित्तीय और प्रशिक्षण सहायता।"},
+    benefits:{en:["Concessional loan","Skill training","Networking events"], hi:["रियायती कर्ज़","कौशल प्रशिक्षण","नेटवर्किंग कार्यक्रम"]},
+    eligibility:{en:["Belongs to a notified minority community","Valid income certificate"], hi:["अधिसूचित अल्पसंख्यक समुदाय से हों","वैध आय प्रमाणपत्र"]},
+    docs:{en:["Community certificate","Income certificate","Aadhaar card"], hi:["समुदाय प्रमाणपत्र","आय प्रमाणपत्र","आधार कार्ड"]},
+    funding:"₹1.5L–4L", training:true, location:"UP", mode:{en:"Online", hi:"ऑनलाइन"}, verified:"10/07/2026",
+    missing:{en:["Income Certificate"], hi:["आय प्रमाणपत्र"]},
+    interestRate:7.5, maxLoan:400000, maxTenureMonths:60, moratoriumOptions:[3, 6, 9], categoryType:"micro", incomeThreshold:300000
+  },
+  { id:"tribal", tag:"tribal", cat:"craft",
+    name:{en:"Tribal Enterprise Support Scheme", hi:"आदिवासी उद्यम सहायता योजना"},
+    desc:{en:"Support for tribal entrepreneurs, with a focus on local craft and produce businesses.", hi:"आदिवासी उद्यमियों के लिए सहायता, स्थानीय शिल्प और उत्पाद व्यापार पर केंद्रित।"},
+    benefits:{en:["Grant for raw materials","Craft market access","Transport support"], hi:["कच्चे माल के लिए अनुदान","शिल्प बाज़ार तक पहुँच","परिवहन सहायता"]},
+    eligibility:{en:["Belongs to a Scheduled Tribe","Village-based business"], hi:["अनुसूचित जनजाति से हों","गाँव आधारित व्यापार"]},
+    docs:{en:["Tribal certificate","Aadhaar card","Residence proof"], hi:["जनजाति प्रमाणपत्र","आधार कार्ड","निवास प्रमाण"]},
+    funding:"₹80K–2L", training:false, location:"All India", mode:{en:"Offline", hi:"ऑफ़लाइन"}, verified:"05/08/2026",
+    missing:{en:["Tribal Certificate"], hi:["जनजाति प्रमाणपत्र"]},
+    interestRate:6.0, maxLoan:200000, maxTenureMonths:36, moratoriumOptions:[3, 6], categoryType:"micro", incomeThreshold:200000
+  },
+  { id:"general", tag:"lowincome", cat:"food",
+    name:{en:"General Small Business Loan Scheme", hi:"सामान्य लघु व्यापार ऋण योजना"},
+    desc:{en:"A baseline loan scheme open to small business owners from low-income households.", hi:"कम आय वाले परिवारों के छोटे व्यापारियों के लिए एक बुनियादी ऋण योजना।"},
+    benefits:{en:["Low documentation loan","Flexible repayment"], hi:["कम कागज़ी काम वाला कर्ज़","लचीला भुगतान"]},
+    eligibility:{en:["Annual household income below threshold","Valid ID"], hi:["वार्षिक पारिवारिक आय सीमा से कम","वैध पहचान"]},
+    docs:{en:["Aadhaar card","Income proof"], hi:["आधार कार्ड","आय प्रमाण"]},
+    funding:"₹50K–1.5L", training:false, location:"All India", mode:{en:"Online", hi:"ऑनलाइन"}, verified:"28/07/2026",
+    missing:{en:["Income Proof"], hi:["आय प्रमाण"]},
+    interestRate:9.0, maxLoan:150000, maxTenureMonths:36, moratoriumOptions:[3, 6], categoryType:"micro", incomeThreshold:350000
+  }
+];
+
+/* Feature: Geo-Spatial Channel Partner Locator — illustrative demo partner
+   records (fictional, prototype/demo data — NOT real operational or NPA
+   information). distanceKm and capacity are simulated for demonstration only. */
+var PARTNERS = [
+  { id:"p1", name:"UP State Channelizing Agency", type:"sca", state:"Uttar Pradesh", district:"Lucknow", categoriesSupported:["micro","term"], distanceKm:4, routingStatus:"green", capacity:90 },
+  { id:"p2", name:"National Bank Lucknow Branch", type:"psb", state:"Uttar Pradesh", district:"Lucknow", categoriesSupported:["micro","term","education"], distanceKm:6, routingStatus:"green", capacity:75 },
+  { id:"p3", name:"Awadh Regional Rural Bank", type:"rrb", state:"Uttar Pradesh", district:"Kanpur", categoriesSupported:["micro"], distanceKm:18, routingStatus:"yellow", capacity:45 },
+  { id:"p4", name:"Bharat NBFC-MFI Services", type:"nbfc", state:"Uttar Pradesh", district:"Varanasi", categoriesSupported:["micro","term"], distanceKm:34, routingStatus:"green", capacity:65 },
+  { id:"p5", name:"Maharashtra State Channelizing Agency", type:"sca", state:"Maharashtra", district:"Pune", categoriesSupported:["micro","term","education"], distanceKm:5, routingStatus:"green", capacity:88 },
+  { id:"p6", name:"Konkan Regional Rural Bank", type:"rrb", state:"Maharashtra", district:"Nagpur", categoriesSupported:["micro"], distanceKm:22, routingStatus:"red", capacity:20 },
+  { id:"p7", name:"Bihar Public Sector Bank Branch", type:"psb", state:"Bihar", district:"Patna", categoriesSupported:["micro","term","education"], distanceKm:7, routingStatus:"green", capacity:70 },
+  { id:"p8", name:"Rajasthan NBFC-MFI Network", type:"nbfc", state:"Rajasthan", district:"Jaipur", categoriesSupported:["micro","term"], distanceKm:12, routingStatus:"yellow", capacity:50 },
+  { id:"p9", name:"Bengal State Channelizing Agency", type:"sca", state:"West Bengal", district:"Kolkata", categoriesSupported:["micro","term","education"], distanceKm:9, routingStatus:"green", capacity:82 },
+  { id:"p10", name:"Odisha Regional Rural Bank", type:"rrb", state:"Odisha", district:"Bhubaneswar", categoriesSupported:["micro"], distanceKm:15, routingStatus:"green", capacity:60 }
+];
+
+/* Feature: Business Investment Planner — illustrative allocation presets per
+   category, matching the master prompt's food-processing/digital-services/
+   retail examples, extrapolated reasonably for the rest. All percentages,
+   labeled everywhere as an illustrative planning estimate, not advice. */
+var BUSINESS_ALLOCATIONS = {
+  food:    { equipment:35, materials:25, working:20, marketing:8,  tech:2,  reserve:10 },
+  agri:    { equipment:30, materials:30, working:20, marketing:5,  tech:5,  reserve:10 },
+  mfg:     { equipment:40, materials:25, working:15, marketing:5,  tech:5,  reserve:10 },
+  craft:   { equipment:20, materials:35, working:15, marketing:15, tech:5,  reserve:10 },
+  retail:  { equipment:15, materials:35, working:20, marketing:15, tech:5,  reserve:10 },
+  tech:    { equipment:10, materials:5,  working:25, marketing:20, tech:30, reserve:10 },
+  other:   { equipment:25, materials:25, working:20, marketing:10, tech:10, reserve:10 }
+};
+
+/* Feature: Revenue Explorer — illustrative revenue model suggestions per category */
+var REVENUE_MODELS = {
+  food:   { en:["Direct product sales","Wholesale to retailers","Online orders","Institutional/B2B customers"], hi:["सीधी उत्पाद बिक्री","खुदरा विक्रेताओं को थोक बिक्री","ऑनलाइन ऑर्डर","संस्थागत/B2B ग्राहक"] },
+  agri:   { en:["Direct sale to consumers","Sale to local mandi/market","Contract farming","Value-added processing"], hi:["उपभोक्ताओं को सीधी बिक्री","स्थानीय मंडी में बिक्री","कॉन्ट्रैक्ट खेती","मूल्य-वर्धित प्रसंस्करण"] },
+  mfg:    { en:["Wholesale supply","Direct-to-business sales","Export potential","Custom orders"], hi:["थोक आपूर्ति","व्यवसाय को सीधी बिक्री","निर्यात संभावना","कस्टम ऑर्डर"] },
+  craft:  { en:["Direct sales at markets/fairs","Online marketplaces","Wholesale to boutiques","Custom/commissioned work"], hi:["बाज़ार/मेलों में सीधी बिक्री","ऑनलाइन बाज़ार","बुटीक को थोक बिक्री","कस्टम ऑर्डर"] },
+  retail: { en:["In-store sales","Online sales","Subscription/repeat orders","Wholesale bulk orders"], hi:["दुकान में बिक्री","ऑनलाइन बिक्री","सदस्यता/दोहराए ऑर्डर","थोक ऑर्डर"] },
+  tech:   { en:["One-time service fees","Subscription model","Freemium with paid upgrades","Business-to-business contracts"], hi:["एकबारगी सेवा शुल्क","सदस्यता मॉडल","फ्रीमियम व सशुल्क अपग्रेड","व्यवसाय-से-व्यवसाय अनुबंध"] },
+  other:  { en:["Direct sales","Online sales","Wholesale","Mixed model"], hi:["सीधी बिक्री","ऑनलाइन बिक्री","थोक","मिश्रित मॉडल"] }
+};
+
+/* ============ STATE ============ */
+var state = {
+  lang: "en",
+  step: 0,
+  profile: { category:"", location:"", stateName:"", district:"", stage:"", supportNeeded:[], description:"", categories:[] },
+  matches: [],
+  selectedScheme: null,
+  docsUploaded: {},
+  savedSchemes: {},
+  compareSelection: {},
+  showCompare: false,
+  openWhy: {},
+  lowDataMode: false,
+  mentorRequestSent: false,
+  loanAmount: null,
+
+  // Investment Planner
+  budget: null,
+  allocation: null, // set once budget entered, defaults from BUSINESS_ALLOCATIONS[category]
+
+  // Revenue Explorer
+  revPrice: null,
+  revUnits: null,
+  profitVarCost: null,
+  profitFixedCost: null,
+  whatIfPrice: null,
+  whatIfUnits: null,
+
+  // Assessment additions
+  income: null,
+  budgetRange: "",
+  revenueModel: "",
+  growthGoal: "",
+
+  // Financial Calculator (Scheme Details)
+  calcAmountVal: null,
+  calcInterest: null,
+  calcTenure: null,
+  calcMoratorium: null,
+  calcEditingAssumptions: false,
+
+  // Channel Partner Locator
+  selectedPartner: null,
+  partnerSearched: false
+};
+
+function t(key){ return STR[state.lang][key]; }
+
+/* ============ MATCHING LOGIC (transparent scoring, for explainability) ============ */
+/* Weighted scoring, matching the specified formula:
+   Business Match x30% + Location Match x20% + Business Stage x15% + Support Requirement x20% + Eligibility Match x15% */
+var WEIGHTS = { biz:0.30, loc:0.20, stage:0.15, supp:0.20, elig:0.15 };
+
+function computeMatches(){
+  var p = state.profile;
+  var scored = SCHEMES.map(function(s){
+    var bizScore = 45, locScore = 45, stageScore = 60, suppScore = 45, eligScore = 40;
+    var reasons = [];
+    var factors = {biz:false, loc:false, stage:true, supp:false, elig:false};
+
+    if (p.category && s.cat === p.category){
+      bizScore = 95; factors.biz = true;
+      reasons.push({en:"Your business type matches what this scheme is designed for.", hi:"आपका व्यापार प्रकार इस योजना के लिए उपयुक्त है।"});
+    }
+    if (p.location){
+      locScore = 92; factors.loc = true;
+      reasons.push({en:"Available in your area.", hi:"आपके क्षेत्र में उपलब्ध है।"});
+    }
+    if (p.stage){ stageScore = 88; }
+    if (p.supportNeeded.length){
+      suppScore = 90; factors.supp = true;
+      reasons.push({en:"Matches the kind of support you said you need.", hi:"आपको चाहिए सहायता के प्रकार से मेल खाती है।"});
+    }
+    if (p.categories.indexOf(s.tag) !== -1){
+      eligScore = 96; factors.elig = true;
+      reasons.push({en:"You told us you're a " + STR.en.catLabels[s.tag].toLowerCase() + " — this scheme is built for that group.",
+                     hi:"आपने बताया कि आप " + STR.hi.catLabels[s.tag] + " हैं — यह योजना इसी समूह के लिए बनी है।"});
+    }
+
+    var pct = Math.round(
+      bizScore * WEIGHTS.biz + locScore * WEIGHTS.loc + stageScore * WEIGHTS.stage +
+      suppScore * WEIGHTS.supp + eligScore * WEIGHTS.elig
+    );
+
+    var eligLabel = pct >= 75 ? "eligible" : pct >= 50 ? "possible" : "notyet";
+
+    return { scheme:s, pct:pct, reasons:reasons, eligLabel:eligLabel,
+      scores:{elig:eligScore, need:suppScore, loc:locScore, stage:stageScore, biz:bizScore}, factors:factors };
+  });
+  scored.sort(function(a,b){ return b.pct - a.pct; });
+  return scored.slice(0,4);
+}
+
+/* Feature: Intelligent Partner Routing — weighted scoring per the spec:
+   Scheme Compatibility x35% + Geographic Proximity x25% + Routing Eligibility
+   x20% + Service Area Compatibility x10% + Operational Capacity x10%.
+   Partner data is fictional/demo — see PARTNERS above. */
+var PARTNER_WEIGHTS = { compat:0.35, proximity:0.25, routing:0.20, serviceArea:0.10, capacity:0.10 };
+
+function computePartnerScores(scheme){
+  var p = state.profile;
+  var scored = PARTNERS.map(function(partner){
+    var compatScore = partner.categoriesSupported.indexOf(scheme.categoryType) !== -1 ? 95 : 30;
+    var proximityScore = Math.max(10, 100 - partner.distanceKm * 2);
+    var routingScore = { green:95, yellow:55, red:10 }[partner.routingStatus];
+    var serviceAreaScore = (p.stateName && partner.state === p.stateName) ? 95 : 50;
+    var capacityScore = partner.capacity;
+
+    var score = Math.round(
+      compatScore * PARTNER_WEIGHTS.compat + proximityScore * PARTNER_WEIGHTS.proximity +
+      routingScore * PARTNER_WEIGHTS.routing + serviceAreaScore * PARTNER_WEIGHTS.serviceArea +
+      capacityScore * PARTNER_WEIGHTS.capacity
+    );
+
+    var eligible = partner.routingStatus !== "red" && partner.categoriesSupported.indexOf(scheme.categoryType) !== -1;
+
+    var reasons = [];
+    if (partner.categoriesSupported.indexOf(scheme.categoryType) !== -1){
+      reasons.push(state.lang==="hi" ? "यह आपकी चुनी गई योजना श्रेणी का समर्थन करता है।" : "Supports your selected scheme category.");
+    }
+    if (p.stateName && partner.state === p.stateName){
+      reasons.push(state.lang==="hi" ? "आपके क्षेत्र में सेवा देता है।" : "Serves your location.");
+    }
+    if (partner.routingStatus === "green"){
+      reasons.push(state.lang==="hi" ? "फिलहाल रूटिंग के लिए पात्र है।" : "Currently eligible for routing.");
+    }
+    reasons.push((state.lang==="hi" ? "नज़दीकी: " : "Nearby: ") + partner.distanceKm + " km");
+
+    return { partner:partner, score:score, eligible:eligible, reasons:reasons };
+  });
+  scored.sort(function(a,b){ return b.score - a.score; });
+  return scored;
+}
+
+/* ============ RENDER: TRACKER ============ */
+function renderTracker(){
+  var el = document.getElementById("tracker");
+  el.innerHTML = "";
+  t("steps").forEach(function(label, i){
+    var wrap = document.createElement("div");
+    wrap.className = "tstep" + (i < state.step ? " done" : i === state.step ? " active" : "");
+    wrap.innerHTML = '<span class="dot">'+(i+1)+'</span><span class="label">'+label+'</span>';
+    el.appendChild(wrap);
+    if (i < t("steps").length - 1){
+      var line = document.createElement("div");
+      line.className = "line";
+      el.appendChild(line);
+    }
+  });
+}
+
+/* ============ RENDER: EACH SCREEN ============ */
+function renderScreen(){
+  var el = document.getElementById("screen");
+  var s = state.step;
+  var html = "";
+
+  if (s === 0){ // LANDING
+    html = '<div class="landing-hero">' +
+      '<svg class="netbg" viewBox="0 0 400 140" preserveAspectRatio="none"><g stroke="#0F6B66" stroke-width="1" opacity="0.25">' +
+      '<line x1="20" y1="20" x2="120" y2="60"/><line x1="120" y1="60" x2="220" y2="30"/><line x1="220" y1="30" x2="320" y2="70"/>' +
+      '<line x1="60" y1="100" x2="150" y2="60"/><line x1="150" y1="60" x2="260" y2="100"/><line x1="260" y1="100" x2="360" y2="40"/></g>' +
+      '<g fill="#F7C948"><circle cx="20" cy="20" r="4"/><circle cx="120" cy="60" r="4"/><circle cx="220" cy="30" r="4"/><circle cx="320" cy="70" r="4"/><circle cx="60" cy="100" r="4"/><circle cx="150" cy="60" r="4"/><circle cx="260" cy="100" r="4"/><circle cx="360" cy="40" r="4"/></g></svg>' +
+      '<div class="content">' +
+      '<div class="eyebrow">Sahayog</div>' +
+      '<h2>'+t("landingTitle")+'</h2>' +
+      '<p class="sub" style="margin-left:auto;margin-right:auto;">'+t("landingSub")+'</p>' +
+      '<div class="btn-row" style="justify-content:center;">' +
+        '<button class="btn btn-primary" id="landingFindBtn">'+t("getStarted")+' →</button>' +
+        '<button class="btn btn-outline" id="landingExploreBtn">'+t("exploreBtn")+'</button>' +
+      '</div>' +
+      '<div class="stat-grid">' +
+        '<div class="stat-card"><div class="n">'+t("stat1n")+'</div><div class="l">'+t("stat1l")+'</div></div>' +
+        '<div class="stat-card"><div class="n">'+t("stat2n")+'</div><div class="l">'+t("stat2l")+'</div></div>' +
+        '<div class="stat-card"><div class="n">'+t("stat3n")+'</div><div class="l">'+t("stat3l")+'</div></div>' +
+        '<div class="stat-card"><div class="n">'+t("stat4n")+'</div><div class="l">'+t("stat4l")+'</div></div>' +
+      '</div>' +
+      '<div class="proto-tag">'+t("protoTag")+'</div>' +
+      '</div></div>';
+  }
+
+  else if (s === 1){ // AI ASSESSMENT
+    html = '<div class="eyebrow">'+t("steps")[1]+'</div><h2>'+t("assessGreet")+'</h2>';
+
+    html += '<div class="field"><label>'+t("q1")+'</label><div class="cat-grid" id="catGrid">';
+    Object.keys(t("categories")).forEach(function(key){
+      var sel = state.profile.category === key;
+      html += '<button type="button" class="cat-card'+(sel?' selected':'')+'" data-cat="'+key+'"><span class="emoji">'+CAT_EMOJI[key]+'</span>'+t("categories")[key]+'</button>';
+    });
+    html += '</div></div>';
+
+    html += '<div class="field"><label>'+t("q2")+'</label>' +
+      '<div class="loc-picker-row">' +
+        '<select id="f_state" class="loc-select"><option value="">'+(state.lang==="hi"?"राज्य चुनें":"Select State")+'</option>' +
+        Object.keys(STATE_DISTRICTS).map(function(st){ return '<option value="'+st+'"'+(state.profile.stateName===st?' selected':'')+'>'+st+'</option>'; }).join('') +
+        '</select>' +
+        '<select id="f_district" class="loc-select"><option value="">'+(state.lang==="hi"?"जिला चुनें":"Select District")+'</option>' +
+        (state.profile.stateName ? STATE_DISTRICTS[state.profile.stateName].map(function(d){ return '<option value="'+d+'"'+(state.profile.district===d?' selected':'')+'>'+d+'</option>'; }).join('') : '') +
+        '</select>' +
+      '</div>' +
+      '<div class="mic-row" style="margin-top:10px;"><input type="text" id="f_loc" placeholder="'+t("q2ph")+'" value="'+state.profile.location+'"><button class="mic-btn" data-mic="f_loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg></button></div>' +
+    '</div>';
+
+    html += '<div class="field"><label>'+t("q3")+'</label><div class="chip-select" id="stageChips">';
+    Object.keys(t("stages")).forEach(function(key){
+      var sel = state.profile.stage === key;
+      html += '<button type="button" class="chip-opt'+(sel?' selected':'')+'" data-stage="'+key+'">'+t("stages")[key]+'</button>';
+    });
+    html += '</div></div>';
+
+    html += '<div class="field"><label>'+t("q4")+'</label><div class="chip-select" id="supportChips">';
+    Object.keys(t("supports")).forEach(function(key){
+      var sel = state.profile.supportNeeded.indexOf(key) !== -1;
+      html += '<button type="button" class="chip-opt'+(sel?' selected':'')+'" data-support="'+key+'">'+t("supports")[key]+'</button>';
+    });
+    html += '</div></div>';
+
+    html += '<div class="field"><label>'+t("q5")+'</label><textarea id="f_desc" placeholder="'+t("q5ph")+'">'+state.profile.description+'</textarea></div>';
+
+    html += '<div class="field"><label>'+t("q4b")+'</label><div class="chip-select" id="catChips">';
+    Object.keys(t("catLabels")).forEach(function(key){
+      var sel = state.profile.categories.indexOf(key) !== -1;
+      html += '<button type="button" class="chip-opt'+(sel?' selected':'')+'" data-audience="'+key+'">'+t("catLabels")[key]+'</button>';
+    });
+    html += '</div></div>';
+
+    html += '<div class="field"><label>'+t("q6")+'</label><div class="chip-select" id="budgetChips">';
+    Object.keys(t("budgetRanges")).forEach(function(key){
+      var sel = state.budgetRange === key;
+      html += '<button type="button" class="chip-opt'+(sel?' selected':'')+'" data-budgetrange="'+key+'">'+t("budgetRanges")[key]+'</button>';
+    });
+    html += '</div></div>';
+
+    html += '<div class="field"><label>'+t("q7")+'</label><div class="chip-select" id="revModelChips">';
+    Object.keys(t("revenueModels2")).forEach(function(key){
+      var sel = state.revenueModel === key;
+      html += '<button type="button" class="chip-opt'+(sel?' selected':'')+'" data-revmodel="'+key+'">'+t("revenueModels2")[key]+'</button>';
+    });
+    html += '</div></div>';
+
+    html += '<div class="field"><label>'+t("q8")+'</label><div class="chip-select" id="growthChips">';
+    Object.keys(t("growthGoals")).forEach(function(key){
+      var sel = state.growthGoal === key;
+      html += '<button type="button" class="chip-opt'+(sel?' selected':'')+'" data-growth="'+key+'">'+t("growthGoals")[key]+'</button>';
+    });
+    html += '</div></div>';
+
+    html += '<div class="field"><label>'+t("q9")+'</label><div class="mic-row"><input type="text" id="f_income" placeholder="'+t("q9ph")+'" value="'+(state.income||"")+'"></div>' +
+      '<div id="incomeIndicator" style="margin-top:8px; font-size:0.85rem; font-weight:700;">'+incomeIndicatorHtml()+'</div>' +
+      '<p class="fine" style="color:var(--ink-soft); margin-top:6px;">'+t("incomeNote")+'</p></div>';
+
+    var pct = profileCompletionPct();
+    html += '<div class="field"><label>'+t("profileMeter")+'</label><div class="meter-wrap"><div class="meter-fill" style="width:'+pct+'%;"></div></div><div class="meter-label">'+pct+'%</div></div>';
+  }
+
+  else if (s === 2){ // PROFILE
+    html = '<div class="eyebrow">'+t("steps")[2]+'</div><h2>'+t("profileTitle")+'</h2><p class="sub">'+t("profileSub")+'</p>';
+    html += '<div class="card"><div class="profile-card">' +
+      '<div class="avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div>' +
+      '<div style="flex:1;">' +
+        '<div class="profile-row"><span class="k">'+t("pName")+'</span><span class="v">'+(state.profile.category ? t("categories")[state.profile.category] : "—")+'</span></div>' +
+        '<div class="profile-row"><span class="k">'+t("pLoc")+'</span><span class="v">'+(state.profile.location||"—")+'</span></div>' +
+        '<div class="profile-row"><span class="k">'+t("pStage")+'</span><span class="v">'+(state.profile.stage ? t("stages")[state.profile.stage] : "—")+'</span></div>' +
+        '<div class="profile-row"><span class="k">'+t("pSupport")+'</span><span class="v">'+(state.profile.supportNeeded.length ? state.profile.supportNeeded.map(function(k){return t("supports")[k];}).join(", ") : "—")+'</span></div>' +
+        '<div class="profile-row"><span class="k">'+t("pWork")+'</span><span class="v">'+(state.profile.description||"—")+'</span></div>' +
+        '<div class="profile-row"><span class="k">'+t("q6")+'</span><span class="v">'+(state.budgetRange ? t("budgetRanges")[state.budgetRange] : "—")+'</span></div>' +
+        '<div class="profile-row"><span class="k">'+t("q7")+'</span><span class="v">'+(state.revenueModel ? t("revenueModels2")[state.revenueModel] : "—")+'</span></div>' +
+        '<div class="profile-row"><span class="k">'+t("q8")+'</span><span class="v">'+(state.growthGoal ? t("growthGoals")[state.growthGoal] : "—")+'</span></div>' +
+        '<div class="profile-row"><span class="k">'+t("q9")+'</span><span class="v">'+(state.income ? "₹"+state.income.toLocaleString(state.lang==="hi"?"hi-IN":"en-IN") : "—")+'</span></div>' +
+        '<div class="profile-row" style="border-bottom:none;"><span class="k">'+t("pCat")+'</span><span class="v">' +
+          (state.profile.categories.length ? state.profile.categories.map(function(c){return '<span class="tag-pill">'+t("catLabels")[c]+'</span>';}).join("") : "—") +
+        '</span></div>' +
+      '</div>' +
+    '</div></div>';
+  }
+
+  else if (s === 3){ // SMART MATCHING (loading)
+    html = '<div class="eyebrow">'+t("steps")[3]+'</div><h2>'+t("matchTitle")+'</h2><p class="sub">'+t("matchSub")+'</p>';
+    html += '<div class="match-loading"><div class="spinner"></div><div class="checklist" id="matchChecklist">';
+    t("matchSteps").forEach(function(step, i){
+      html += '<div class="item" id="mstep'+i+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>'+step+'</div>';
+    });
+    html += '</div></div>';
+  }
+
+  else if (s === 4){ // EXPLAINABLE RESULTS
+    html = '<div class="eyebrow">'+t("steps")[4]+'</div><h2>'+t("resultsTitle")+'</h2><p class="sub">'+t("resultsSub")+'</p>';
+    html += '<div class="demo-note">'+t("demoNote")+'</div>';
+
+    var compareCount = Object.keys(state.compareSelection).filter(function(k){return state.compareSelection[k];}).length;
+    html += '<div class="compare-bar'+(compareCount>=2?' show':'')+'"><span>'+compareCount+' '+t("compareBar")+'</span><button class="btn btn-primary" id="doCompareBtn">'+t("compareBtn")+'</button></div>';
+
+    if (state.showCompare && compareCount >= 2){
+      html += renderCompareTable();
+    }
+
+    state.matches.forEach(function(m){
+      var saved = !!state.savedSchemes[m.scheme.id];
+      var whyOpen = !!state.openWhy[m.scheme.id];
+      var eligMeta = { eligible:{cls:"elig-yes", en:"Eligible", hi:"पात्र"}, possible:{cls:"elig-maybe", en:"Possibly Eligible", hi:"संभवतः पात्र"}, notyet:{cls:"elig-no", en:"Not Eligible Yet", hi:"अभी पात्र नहीं"} }[m.eligLabel];
+      html += '<div class="scheme-card">' +
+        '<div class="scheme-top"><div class="scheme-name-wrap"><span class="scheme-name" data-open="'+m.scheme.id+'" style="cursor:pointer;">'+m.scheme.name[state.lang]+'</span>' +
+          '<span class="verified-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>'+t("verifiedTitle")+'</span>' +
+          '<span class="elig-pill '+eligMeta.cls+'">'+eligMeta[state.lang]+'</span></div>' +
+          '<span class="match-badge">'+m.pct+'%</span></div>' +
+        '<p style="font-size:0.85rem; color:var(--ink-soft);">'+m.scheme.desc[state.lang]+'</p>' +
+        '<div class="score-bars">';
+      ["biz","loc","stage","need","elig"].forEach(function(key){
+        html += '<div class="score-row"><span class="slabel">'+t("scoreLabels")[key]+'</span><div class="sbar"><div class="sfill" style="width:'+m.scores[key]+'%;"></div></div><span class="spct">'+m.scores[key]+'%</span></div>';
+      });
+      html += '</div>';
+      html += '<button class="why-toggle" data-why="'+m.scheme.id+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transform:rotate('+(whyOpen?90:0)+'deg);"><path d="M9 18l6-6-6-6"/></svg>'+(whyOpen?t("hideWhy"):t("why"))+'</button>';
+      html += '<div class="why-panel'+(whyOpen?' open':'')+'"><table class="factor-table"><tbody>';
+      ["biz","loc","stage","supp","elig"].forEach(function(fk){
+        html += '<tr><td>'+t("factorRows")[fk]+'</td><td>'+(m.factors[fk] ? t("strong") : t("verify"))+'</td></tr>';
+      });
+      html += '</tbody></table><div class="ai-explain">' +
+        (state.lang==="hi"
+          ? "यह योजना इसलिए सुझाई गई है क्योंकि आपके व्यापार का प्रकार, स्थान और वित्तीय ज़रूरत इसकी पात्रता शर्तों से मेल खाती है।"
+          : "This scheme is recommended because your business type, location and requested support align with its eligibility criteria.") +
+      '</div></div>';
+      html += '<div class="scheme-actions">' +
+        '<button class="save-toggle'+(saved?' saved':'')+'" data-save="'+m.scheme.id+'"><svg viewBox="0 0 24 24" fill="'+(saved?'currentColor':'none')+'" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>'+(saved?t("saved"):t("save"))+'</button>' +
+        '<label class="compare-check"><input type="checkbox" data-compare="'+m.scheme.id+'" '+(state.compareSelection[m.scheme.id]?'checked':'')+'> '+t("compare")+'</label>' +
+        '<button class="btn btn-outline" style="padding:8px 16px; font-size:0.78rem;" data-view="'+m.scheme.id+'">'+t("detailTitle")+' →</button>' +
+      '</div>';
+      html += '</div>';
+    });
+  }
+
+  else if (s === 5){ // SCHEME DETAILS
+    var sc = state.selectedScheme || (state.matches[0] && state.matches[0].scheme);
+    if (!sc){ html = '<p>—</p>'; }
+    else {
+      html = '<div class="eyebrow">'+t("steps")[5]+'</div><h2>'+sc.name[state.lang]+'</h2><p class="sub">'+sc.desc[state.lang]+'</p>';
+
+      html += '<div class="trust-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>' +
+        '<div><div class="t1">'+t("verifiedTitle")+'</div><div class="t2">'+t("verifiedSrc")+' · '+(state.lang==="hi"?"अंतिम सत्यापन: ":"Last verified: ")+sc.verified+'</div></div></div>';
+
+      var catLabel = sc.categoryType === "term" ? t("catTerm") : sc.categoryType === "education" ? t("catEducation") : t("catMicro");
+      html += '<div class="verified-pill" style="margin-bottom:18px; background:var(--gold-soft); color:#7A5A2E;">🏷️ '+catLabel+'</div>';
+
+      html += '<div class="detail-section"><h3>'+t("benefits")+'</h3><ul class="detail-list">';
+      sc.benefits[state.lang].forEach(function(b){ html += '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>'+b+'</li>'; });
+      html += '</ul></div>';
+      html += '<div class="detail-section"><h3>'+t("eligibility")+'</h3><ul class="detail-list">';
+      sc.eligibility[state.lang].forEach(function(b){ html += '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>'+b+'</li>'; });
+      html += '</ul></div>';
+      html += '<div class="detail-section"><h3>'+t("documents")+'</h3><ul class="detail-list">';
+      sc.docs[state.lang].forEach(function(b){ html += '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>'+b+'</li>'; });
+      html += '</ul></div>';
+
+      html += '<div class="detail-section"><h3>'+t("appProcess")+'</h3><div class="app-process">';
+      t("processSteps").forEach(function(step, i){
+        html += '<div class="ap-step"><div><div class="apdot">'+(i+1)+'</div><div class="apbar"></div></div><div class="ap-body">'+step+'</div></div>';
+      });
+      html += '</div></div>';
+
+      html += '<div class="detail-section"><h3>'+t("officialLink")+'</h3>' +
+        '<a class="btn btn-outline" href="#" onclick="return false;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6M10 14L21 3"/></svg>'+t("officialLink")+'</a></div>';
+
+      html += '<div class="whatif-box"><h4>💡 '+t("whatifTitle")+'</h4><p style="font-size:0.83rem;color:#7A5A2E;">'+t("whatifSub")+'</p>' +
+        '<div style="font-size:0.83rem;color:#7A5A2E;font-weight:700;margin-top:8px;">'+t("whatifIfComplete")+'</div><ul>';
+      sc.missing[state.lang].forEach(function(m){ html += '<li>▸ '+m+'</li>'; });
+      html += '</ul><div class="whatif-result">'+t("whatifResult").replace("{n}", Math.max(1, Math.floor(SCHEMES.length/2)))+'</div></div>';
+
+      html += '<div class="detail-section calc-box"><h3>🧮 '+t("calcTitle")+'</h3>' +
+        '<p class="fine" style="color:var(--ink-soft); margin-bottom:4px;">'+t("calcSchemeAware")+'</p>' +
+        '<p class="fine" style="color:var(--ink-soft); margin-bottom:12px;">'+(state.lang==="hi"?"इस योजना की उदाहरण सीमा: ":"This scheme's illustrative range: ")+sc.funding+'</p>';
+
+      var loanVal = state.calcAmountVal !== null ? state.calcAmountVal : sc.maxLoan;
+      var interestVal = state.calcInterest !== null ? state.calcInterest : sc.interestRate;
+      var tenureVal = state.calcTenure !== null ? state.calcTenure : sc.maxTenureMonths;
+      var moratVal = state.calcMoratorium !== null ? state.calcMoratorium : sc.moratoriumOptions[0];
+
+      html += '<div class="calc-row"><label>'+t("calcAmountLabel")+'</label><input type="text" id="calcAmount" value="'+loanVal+'"></div>';
+      if (state.calcEditingAssumptions){
+        html += '<div class="calc-row"><label>'+t("calcInterestLabel")+'</label><input type="text" id="calcInterest" value="'+interestVal+'"></div>';
+        html += '<div class="calc-row"><label>'+t("calcTenureLabel")+'</label><input type="text" id="calcTenure" value="'+tenureVal+'"></div>';
+      } else {
+        html += '<div class="calc-row"><label>'+t("calcInterestLabel")+'</label><span>'+interestVal+'%</span></div>';
+        html += '<div class="calc-row"><label>'+t("calcTenureLabel")+'</label><span>'+tenureVal+' '+(state.lang==="hi"?"महीने":"months")+'</span></div>';
+      }
+      html += '<div class="calc-row"><label>'+t("calcMoratoriumLabel")+'</label><select id="calcMorat">';
+      sc.moratoriumOptions.forEach(function(m){ html += '<option value="'+m+'"'+(m===moratVal?' selected':'')+'>'+m+'</option>'; });
+      html += '</select></div>';
+
+      html += '<button class="why-toggle" id="toggleAssumptions" style="padding:4px 0;">'+t("calcEditAssumptions")+'</button>';
+      html += '<button class="btn btn-outline" id="calcBtn" style="margin-top:10px; display:block;">'+t("calcBtn")+'</button>';
+      html += '<div class="calc-result" id="calcResult" style="display:none;"></div>';
+
+      html += '<div class="detail-section" style="margin-top:20px;"><h3>⏳ '+t("moratoriumTitle")+'</h3><p class="fine" style="color:var(--ink-soft); margin-bottom:12px;">'+t("moratoriumDesc")+'</p>' +
+        '<div class="app-process">' +
+          '<div class="ap-step"><div><div class="apdot">1</div><div class="apbar"></div></div><div class="ap-body">'+t("moratoriumApproval")+'</div></div>' +
+          '<div class="ap-step"><div><div class="apdot">2</div><div class="apbar"></div></div><div class="ap-body">'+t("moratoriumPeriod")+' ('+moratVal+' '+(state.lang==="hi"?"महीने":"months")+')</div></div>' +
+          '<div class="ap-step"><div><div class="apdot">3</div></div><div class="ap-body">'+t("moratoriumRepay")+'</div></div>' +
+        '</div>' +
+        '<p class="fine" style="color:var(--ink-soft); margin-top:6px;">'+t("moratoriumInterestNote")+'</p></div>';
+
+      var ownContribPct = Math.max(5, 100 - Math.round((loanVal / (loanVal*1.1)) * 100));
+      var financePct = 100 - ownContribPct;
+      html += '<div class="detail-section" style="margin-top:20px;"><h3>📊 '+t("fundingCoverageTitle")+'</h3>' +
+        '<div class="score-row" style="margin-bottom:8px;"><span class="slabel" style="width:140px;">'+t("fundingCoveragePotential")+'</span><div class="sbar"><div class="sfill" style="width:'+financePct+'%;"></div></div><span class="spct">'+financePct+'%</span></div>' +
+        '<div class="score-row"><span class="slabel" style="width:140px;">'+t("fundingCoverageOwn")+'</span><div class="sbar"><div class="sfill" style="width:'+ownContribPct+'%; background:var(--gold);"></div></div><span class="spct">'+ownContribPct+'%</span></div>' +
+        '<p class="fine" style="color:var(--ink-soft); margin-top:10px;">'+t("fundingCoverageNote")+'</p></div>';
+
+      html += '<p class="fine" style="color:var(--ink-soft); margin-top:14px;">'+t("calcNote")+'</p></div>';
+    }
+  }
+
+  else if (s === 6){ // CHANNEL PARTNER LOCATOR
+    var scP = state.selectedScheme || (state.matches[0] && state.matches[0].scheme);
+    html = '<div class="eyebrow">'+t("steps")[6]+'</div><h2>'+t("partnerTitle")+'</h2><p class="sub">'+t("partnerSub")+'</p>';
+
+    html += '<div class="btn-row" style="margin-bottom:18px;">' +
+      '<button class="btn btn-outline" id="partnerUseLocBtn">📍 '+t("partnerUseLocation")+'</button>' +
+      '<button class="btn btn-outline" id="partnerSearchBtn">🔎 '+t("partnerEnterLocation")+'</button>' +
+    '</div>';
+
+    if (state.partnerSearched && scP){
+      var scored = computePartnerScores(scP);
+      html += '<div class="demo-note">'+scored.length+' '+t("partnerFound")+'</div>';
+
+      scored.forEach(function(p){
+        var statusMeta = { green:{cls:"elig-yes", label:t("partnerStatusGreen")}, yellow:{cls:"elig-maybe", label:t("partnerStatusYellow")}, red:{cls:"elig-no", label:t("partnerStatusRed")} }[p.partner.routingStatus];
+        html += '<div class="scheme-card">' +
+          '<div class="scheme-top"><div class="scheme-name-wrap"><span class="scheme-name">'+p.partner.name+'</span>' +
+            '<span class="elig-pill '+statusMeta.cls+'">'+statusMeta.label+'</span></div>' +
+            '<span class="match-badge">'+p.score+'</span></div>' +
+          '<div class="profile-row"><span class="k">'+t("partnerTypeLabel")+'</span><span class="v">'+t("partnerTypes")[p.partner.type]+'</span></div>' +
+          '<div class="profile-row"><span class="k">'+t("partnerDistance")+'</span><span class="v">'+p.partner.distanceKm+' km</span></div>' +
+          '<div class="profile-row" style="border-bottom:none;"><span class="k">'+t("partnerServiceArea")+'</span><span class="v">'+p.partner.district+', '+p.partner.state+'</span></div>';
+        if (!p.eligible){
+          html += '<p class="fine" style="color:var(--danger); margin-top:10px;">'+t("partnerNotRecommended")+'</p>';
+        } else {
+          html += '<button class="btn btn-outline" style="margin-top:12px; padding:8px 16px; font-size:0.78rem;" data-selectpartner="'+p.partner.id+'">'+t("partnerRecommended")+' →</button>';
+        }
+        html += '</div>';
+      });
+
+      var best = scored.filter(function(p){ return p.eligible; })[0];
+      if (best){
+        html += '<button class="btn btn-primary" id="findBestPartnerBtn" style="margin-top:6px;">🥇 '+t("partnerFindBest")+'</button>';
+      }
+
+      if (state.selectedPartner){
+        var sel = scored.filter(function(p){ return p.partner.id === state.selectedPartner; })[0];
+        if (sel){
+          html += '<div class="card" style="margin-top:20px;"><h3 style="font-size:0.95rem; margin-bottom:10px;">💡 '+t("partnerWhyTitle")+'</h3>' +
+            '<div class="score-row" style="margin-bottom:8px;"><span class="slabel">'+t("partnerScoreLabel")+'</span><div class="sbar"><div class="sfill" style="width:'+sel.score+'%;"></div></div><span class="spct">'+sel.score+'</span></div>' +
+            '<ul class="detail-list">';
+          sel.reasons.forEach(function(r){ html += '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>'+r+'</li>'; });
+          html += '</ul></div>';
+
+          html += '<div class="card" style="margin-top:16px;"><h3 style="font-size:0.95rem; margin-bottom:10px;">'+t("readyNextStep")+'</h3>' +
+            '<div class="profile-row"><span class="k">'+t("readyScheme")+'</span><span class="v">'+scP.name[state.lang]+'</span></div>' +
+            '<div class="profile-row"><span class="k">'+t("readyPartner")+'</span><span class="v">'+sel.partner.name+'</span></div>' +
+            '<div class="profile-row"><span class="k">'+t("readyPartnerType")+'</span><span class="v">'+t("partnerTypes")[sel.partner.type]+'</span></div>' +
+            '<div class="profile-row" style="border-bottom:none;"><span class="k">'+t("readyLocation")+'</span><span class="v">'+sel.partner.district+', '+sel.partner.state+'</span></div>' +
+          '</div>';
+          html += '<a class="btn btn-primary" href="#" onclick="return false;" style="margin-top:14px; display:inline-flex;">'+t("partnerContinueApp")+'</a>';
+        }
+      }
+    }
+  }
+
+  else if (s === 7){ // INVESTMENT PLANNER
+    html = '<div class="eyebrow">'+t("steps")[7]+'</div><h2>'+t("invTitle")+'</h2><p class="sub">'+t("invSub")+'</p>';
+
+    if (state.budget === null){
+      html += '<div class="field"><label>'+t("invBudgetLabel")+'</label><div class="mic-row"><input type="text" id="budgetInput" placeholder="'+t("invBudgetPh")+'"></div></div>';
+      html += '<button class="btn btn-primary" id="setBudgetBtn">'+t("calcBtn")+'</button>';
+    } else {
+      var cat = state.profile.category || "other";
+      var alloc = state.allocation || Object.assign({}, BUSINESS_ALLOCATIONS[cat] || BUSINESS_ALLOCATIONS.other);
+      state.allocation = alloc;
+      var total = Object.keys(alloc).reduce(function(sum,k){ return sum + Number(alloc[k]); }, 0);
+      var allocatedAmt = Math.round(state.budget * (total/100));
+      var remainingAmt = state.budget - allocatedAmt;
+
+      html += '<div class="card" style="margin-bottom:18px;">' +
+        '<h3 style="font-size:0.95rem; margin-bottom:14px;">'+t("invSuggested")+'</h3>';
+      Object.keys(alloc).forEach(function(k){
+        html += '<div class="score-row" style="margin-bottom:10px;"><span class="slabel" style="width:120px;">'+t("invCategories")[k]+'</span>' +
+          '<input type="range" min="0" max="100" value="'+alloc[k]+'" data-slider="'+k+'" style="flex:1;">' +
+          '<span class="spct" style="width:70px;">'+alloc[k]+'% (₹'+Math.round(state.budget*alloc[k]/100).toLocaleString(state.lang==="hi"?"hi-IN":"en-IN")+')</span></div>';
+      });
+      html += '<div class="btn-row" style="margin-top:8px;">' +
+        '<div class="dash-card" style="flex:1;"><div class="num" style="font-size:1.1rem;">₹'+allocatedAmt.toLocaleString(state.lang==="hi"?"hi-IN":"en-IN")+'</div><div class="lbl">'+t("invAllocated")+'</div></div>' +
+        '<div class="dash-card" style="flex:1;"><div class="num" style="font-size:1.1rem;">₹'+remainingAmt.toLocaleString(state.lang==="hi"?"hi-IN":"en-IN")+'</div><div class="lbl">'+t("invRemaining")+'</div></div>' +
+      '</div>';
+      html += '<button class="btn btn-outline" id="optimizeBudgetBtn" style="margin-top:14px;">'+t("invOptimize")+'</button>';
+      html += '<p class="fine" style="color:var(--ink-soft); margin-top:10px;">'+t("invSuggestedNote")+'</p>' +
+      '</div>';
+    }
+
+    html += '<div class="detail-section"><h3>💰 '+t("fundTitle")+'</h3><p class="sub" style="margin-bottom:16px;">'+t("fundSub")+'</p>';
+    var fundCats = [
+      ["🏛", t("fundGovTitle"), t("fundGovDesc")],
+      ["🏦", t("fundFormalTitle"), t("fundFormalDesc")],
+      ["🤝", t("fundProgTitle"), t("fundProgDesc")],
+      ["💵", t("fundSelfTitle"), t("fundSelfDesc")],
+      ["🌱", t("fundOtherTitle"), t("fundOtherDesc")]
+    ];
+    fundCats.forEach(function(f){
+      html += '<div class="card" style="margin-bottom:10px; display:flex; gap:12px; align-items:flex-start;"><span style="font-size:1.4rem;">'+f[0]+'</span><div><strong style="font-size:0.9rem; color:var(--teal-dark);">'+f[1]+'</strong><p style="font-size:0.82rem; color:var(--ink-soft); margin-top:3px;">'+f[2]+'</p></div></div>';
+    });
+    html += '<div class="demo-note">'+t("fundDisclaimer")+'</div></div>';
+  }
+
+  else if (s === 8){ // REVENUE EXPLORER
+    var rcat = state.profile.category || "other";
+    var models = REVENUE_MODELS[rcat] || REVENUE_MODELS.other;
+    html = '<div class="eyebrow">'+t("steps")[8]+'</div><h2>'+t("revTitle")+'</h2><p class="sub">'+t("revSub")+'</p>';
+
+    html += '<div class="detail-section"><h3>'+t("revModelsTitle")+'</h3><ul class="detail-list">';
+    models[state.lang].forEach(function(m){ html += '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>'+m+'</li>'; });
+    html += '</ul></div>';
+
+    html += '<div class="card" style="margin-bottom:18px;"><h3 style="font-size:0.95rem; margin-bottom:12px;">'+t("revCalcTitle")+'</h3>' +
+      '<div class="calc-row"><label>'+t("revPriceLabel")+'</label><input type="text" id="revPrice" value="'+(state.revPrice||"")+'"></div>' +
+      '<div class="calc-row"><label>'+t("revUnitsLabel")+'</label><input type="text" id="revUnits" value="'+(state.revUnits||"")+'"></div>' +
+      '<button class="btn btn-outline" id="revCalcBtn">'+t("calcBtn")+'</button>' +
+      '<div class="calc-result" id="revResult" style="display:none;"></div>' +
+      '<p class="fine" style="color:var(--ink-soft); margin-top:10px;">'+t("revScenarioNote")+'</p></div>';
+
+    html += '<div class="card" style="margin-bottom:18px;"><h3 style="font-size:0.95rem; margin-bottom:12px;">🧮 '+t("profitTitle")+'</h3>' +
+      '<div class="calc-row"><label>'+t("profitVarCostLabel")+'</label><input type="text" id="profitVarCost" value="'+(state.profitVarCost||"")+'"></div>' +
+      '<div class="calc-row"><label>'+t("profitFixedCostLabel")+'</label><input type="text" id="profitFixedCost" value="'+(state.profitFixedCost||"")+'"></div>' +
+      '<button class="btn btn-outline" id="profitCalcBtn">'+t("calcBtn")+'</button>' +
+      '<div id="profitResult"></div>' +
+      '<p class="fine" style="color:var(--ink-soft); margin-top:10px;">'+t("profitBreakevenNote")+'</p></div>';
+
+    html += '<div class="card"><h3 style="font-size:0.95rem; margin-bottom:12px;">💡 '+t("whatifBizTitle")+'</h3><p class="sub" style="margin-bottom:14px;">'+t("whatifBizSub")+'</p>' +
+      '<div class="chip-select" style="margin-bottom:16px;">' +
+        '<button class="chip-opt" data-whatifchip="price">'+t("whatifChipPrice")+'</button>' +
+        '<button class="chip-opt" data-whatifchip="units">'+t("whatifChipUnits")+'</button>' +
+        '<button class="chip-opt" data-whatifchip="cost">'+t("whatifChipCost")+'</button>' +
+      '</div>' +
+      '<div id="scenarioCompare"></div>' +
+      '<p class="fine" style="color:var(--ink-soft); margin-top:10px;">'+t("scenarioNote")+'</p></div>';
+  }
+
+  else if (s === 9){ // ROADMAP
+    var rsteps = state.lang === "hi"
+      ? [["आवेदन भरें","अपनी जानकारी और दस्तावेज़ जमा करें।","आज"],
+         ["पार्टनर चयन","चैनल पार्टनर चुना गया।","आज"],
+         ["दस्तावेज़ सत्यापन","आपके दस्तावेज़ों की जाँच होगी।","2–4 दिन"],
+         ["समिति समीक्षा","योजना समिति आपके आवेदन को देखेगी।","5–10 दिन"],
+         ["स्वीकृति व वितरण","स्वीकृति के बाद लाभ आपको मिलेगा।","10–15 दिन"]]
+      : [["Fill application","Submit your details and documents.","Today"],
+         ["Partner selection","Channel Partner selected.","Today"],
+         ["Document verification","Your documents will be checked.","2–4 days"],
+         ["Committee review","The scheme committee reviews your application.","5–10 days"],
+         ["Approval & disbursal","Once approved, your benefit is released.","10–15 days"]];
+    html = '<div class="eyebrow">'+t("steps")[9]+'</div><h2>'+t("roadmapTitle")+'</h2><p class="sub">'+t("roadmapSub")+'</p>';
+    html += '<div class="roadmap">';
+    rsteps.forEach(function(r, i){
+      html += '<div class="rstep'+(i<=1?' done':'')+'"><div class="rline"><div class="rdot">'+(i<=1?'✓':(i+1))+'</div><div class="rbar"></div></div>' +
+        '<div class="rstep-body"><h4>'+r[0]+'</h4><p>'+r[1]+'</p><div class="eta">'+r[2]+'</div></div></div>';
+    });
+    html += '</div>';
+  }
+
+  else if (s === 10){ // DOCUMENT ASSISTANT
+    var sc7 = state.selectedScheme || (state.matches[0] && state.matches[0].scheme);
+    var docs7 = sc7 ? sc7.docs[state.lang] : [];
+    var tips = state.lang === "hi"
+      ? {"आधार कार्ड":"नज़दीकी आधार केंद्र या जन सेवा केंद्र पर जाकर बनवाएँ।","बैंक पासबुक":"अपनी बैंक शाखा से पासबुक की कॉपी लें।","व्यापार पते का प्रमाण":"बिजली बिल या दुकान लाइसेंस काम आ सकता है।"}
+      : {"Aadhaar card":"Visit your nearest Aadhaar/CSC centre to get or update this.","Bank passbook":"Get a photocopy from your bank branch.","Business address proof":"An electricity bill or shop licence usually works."};
+    html = '<div class="eyebrow">'+t("steps")[10]+'</div><h2>'+t("docsTitle")+'</h2><p class="sub">'+t("docsSub")+'</p>';
+    var uploadedCount = 0;
+    docs7.forEach(function(d){ if (state.docsUploaded[d]) uploadedCount++; });
+    var pct = docs7.length ? Math.round((uploadedCount/docs7.length)*100) : 0;
+    var remaining = docs7.length - uploadedCount;
+    html += '<div class="doc-progress-wrap"><div class="doc-progress" style="width:'+pct+'%;"></div></div>';
+    if (remaining > 0) html += '<div class="doc-remaining">'+t("docsRemaining").replace("{n}", remaining)+'</div>';
+    html += '<div class="card">';
+    docs7.forEach(function(d){
+      var up = !!state.docsUploaded[d];
+      html += '<div class="doc-row"><div class="doc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>' +
+        '<div class="doc-body"><div class="doc-name">'+d+'</div><div class="doc-tip">'+(tips[d] || "")+'</div>' +
+        '<button class="doc-upload'+(up?' uploaded':'')+'" data-doc="'+d+'">'+(up ? t("uploaded") : t("upload"))+'</button></div></div>';
+    });
+    html += '</div>';
+    html += '<div style="margin-top:18px;"><button class="btn btn-primary" id="prepareChecklistBtn">'+t("prepareChecklist")+'</button></div>';
+  }
+
+  else if (s === 11){ // DASHBOARD
+    var sc8 = state.selectedScheme || (state.matches[0] && state.matches[0].scheme);
+    var docs8 = sc8 ? sc8.docs[state.lang] : [];
+    var uploadedCount8 = 0;
+    docs8.forEach(function(d){ if (state.docsUploaded[d]) uploadedCount8++; });
+    var profileFields = [state.profile.category, state.profile.location, state.profile.stage].filter(Boolean).length;
+    var profilePct = Math.round((profileFields/3)*100);
+    var strongMatches = state.matches.filter(function(m){ return m.pct >= 80; }).length;
+    var savedCount = Object.keys(state.savedSchemes).filter(function(k){return state.savedSchemes[k];}).length;
+
+    var hour = new Date().getHours();
+    var greet = hour < 12 ? t("dashGreetMorning") : hour < 17 ? t("dashGreetAfternoon") : t("dashGreetEvening");
+
+    html = '<div class="eyebrow">'+t("steps")[11]+'</div>';
+    html += '<h2 class="dash-greet">'+greet+', '+t("dashName")+' 👋</h2><p class="sub">'+t("dashSub")+'</p>';
+
+    html += '<div class="dash-grid">' +
+      '<div class="dash-card"><div class="num">'+profilePct+'%</div><div class="lbl">'+t("dProfile")+'</div></div>' +
+      '<div class="dash-card"><div class="num">'+SCHEMES.length+'</div><div class="lbl">'+t("dRecommended")+'</div></div>' +
+      '<div class="dash-card"><div class="num">'+strongMatches+'</div><div class="lbl">'+t("dStrong")+'</div></div>' +
+      '<div class="dash-card"><div class="num">'+uploadedCount8+'/'+docs8.length+'</div><div class="lbl">'+t("dDocs")+'</div></div>' +
+    '</div>';
+
+    // Business Health Snapshot — prototype indicators only, computed from real
+    // profile/document/match state (not an official assessment).
+    var healthDocsScore = docs8.length ? Math.round((uploadedCount8/docs8.length)*100) : 0;
+    var healthEligScore = state.matches.length ? Math.round((strongMatches/state.matches.length)*100) : 0;
+    var healthFundingScore = Math.round((profilePct + healthEligScore) / 2);
+    var healthPlanScore = profilePct;
+    html += '<div class="dash-section"><h3>📊 '+t("healthTitle")+'</h3><div class="card">' +
+      '<div class="score-bars">' +
+        '<div class="score-row"><span class="slabel">'+t("healthFunding")+'</span><div class="sbar"><div class="sfill" style="width:'+healthFundingScore+'%;"></div></div><span class="spct">'+healthFundingScore+'%</span></div>' +
+        '<div class="score-row"><span class="slabel">'+t("healthEligibility")+'</span><div class="sbar"><div class="sfill" style="width:'+healthEligScore+'%;"></div></div><span class="spct">'+healthEligScore+'%</span></div>' +
+        '<div class="score-row"><span class="slabel">'+t("healthPlan")+'</span><div class="sbar"><div class="sfill" style="width:'+healthPlanScore+'%;"></div></div><span class="spct">'+healthPlanScore+'%</span></div>' +
+        '<div class="score-row"><span class="slabel">'+t("healthDocsLbl")+'</span><div class="sbar"><div class="sfill" style="width:'+healthDocsScore+'%;"></div></div><span class="spct">'+healthDocsScore+'%</span></div>' +
+      '</div><p class="fine" style="color:var(--ink-soft); margin-top:10px;">'+t("healthNote")+'</p>' +
+    '</div></div>';
+
+    // My own addition: one combined "Overall Readiness" number and a single
+    // plain-language next step, tying together profile + matches + budget +
+    // revenue planning + documents into the one thing most people actually
+    // want to know: "am I ready, and what should I do right now?"
+    var readinessParts = [profilePct, healthEligScore, healthDocsScore];
+    if (state.budget !== null) readinessParts.push(100); else readinessParts.push(0);
+    if (state.revPrice !== null) readinessParts.push(100); else readinessParts.push(0);
+    var overallReadiness = Math.round(readinessParts.reduce(function(a,b){return a+b;},0) / readinessParts.length);
+    var nextStepText;
+    if (profilePct < 100) nextStepText = state.lang==="hi" ? "अपनी प्रोफ़ाइल पूरी करें।" : "Finish your profile.";
+    else if (state.budget === null) nextStepText = state.lang==="hi" ? "निवेश योजना में अपना बजट डालें।" : "Enter your budget in the Investment Planner.";
+    else if (state.revPrice === null) nextStepText = state.lang==="hi" ? "आय अन्वेषक में अपना आय परिदृश्य आज़माएं।" : "Try a revenue scenario in the Revenue Explorer.";
+    else if (healthDocsScore < 100) nextStepText = state.lang==="hi" ? "बचे हुए दस्तावेज़ अपलोड करें।" : "Upload your remaining documents.";
+    else nextStepText = state.lang==="hi" ? "आप आवेदन करने के लिए तैयार हैं!" : "You're ready to apply!";
+
+    html += '<div class="dash-section"><div class="card" style="display:flex; align-items:center; gap:20px; flex-wrap:wrap;">' +
+      '<div style="text-align:center; flex:none;"><div class="num" style="font-size:2rem;">'+overallReadiness+'%</div><div class="lbl">'+t("readinessTitle")+'</div></div>' +
+      '<div style="flex:1; min-width:200px;"><div class="lbl" style="margin-bottom:4px;">'+t("readinessNext")+'</div><div style="font-weight:700; color:var(--teal-dark); font-size:0.95rem;">'+nextStepText+'</div></div>' +
+    '</div></div>';
+
+    // Community tips — my own addition, addressing the "lack of networks"
+    // barrier named earlier for marginalized entrepreneurs. Illustrative only.
+    var tip = TIPS_BY_CATEGORY[state.profile.category] || TIPS_BY_CATEGORY.other;
+    html += '<div class="dash-section"><h3>💡 '+t("tipsTitle")+'</h3><div class="card">' +
+      '<p style="font-size:0.88rem; color:var(--ink);">'+tip[state.lang]+'</p>' +
+      '<p class="fine" style="color:var(--ink-soft); margin-top:8px;">'+t("tipsNote")+'</p>' +
+    '</div></div>';
+
+    html += '<div class="dash-section"><h3>🎯 '+t("recommendedFor")+'</h3>';
+    state.matches.slice(0,3).forEach(function(m){
+      html += '<div class="scheme-card" style="padding:16px; margin-bottom:10px;"><div class="scheme-top" style="margin-bottom:0;"><span class="scheme-name" style="font-size:0.92rem;">'+m.scheme.name[state.lang]+'</span><span class="match-badge">'+m.pct+'%</span></div></div>';
+    });
+    html += '</div>';
+
+    html += '<div class="dash-section"><h3>📌 '+t("savedSchemes")+'</h3>';
+    if (savedCount === 0){
+      html += '<p class="fine" style="color:var(--ink-soft);">'+t("noSaved")+'</p>';
+    } else {
+      state.matches.filter(function(m){return state.savedSchemes[m.scheme.id];}).forEach(function(m){
+        html += '<div class="scheme-card" style="padding:16px; margin-bottom:10px;"><span class="scheme-name" style="font-size:0.92rem;">'+m.scheme.name[state.lang]+'</span></div>';
+      });
+    }
+    html += '</div>';
+
+    if (sc8){
+      var stageDefs = state.lang === "hi"
+        ? [["प्रोफ़ाइल","पूरी हुई","done"],["दस्तावेज़",(uploadedCount8===docs8.length && docs8.length>0)?"पूरे हुए":(uploadedCount8+"/"+docs8.length+" तैयार"),(uploadedCount8===docs8.length && docs8.length>0)?"done":"current"],["आवेदन","जमा किया गया","done"],["सत्यापन","समीक्षा में — सामान्यतः 5–10 दिन लगते हैं","current"],["स्वीकृति","अभी बाकी है","pending"]]
+        : [["Profile","Completed","done"],["Documents",(uploadedCount8===docs8.length && docs8.length>0)?"All ready":(uploadedCount8+"/"+docs8.length+" ready"),(uploadedCount8===docs8.length && docs8.length>0)?"done":"current"],["Application","Submitted","done"],["Verification","Under review — usually takes 5–10 days","current"],["Approval","Not yet reached","pending"]];
+      html += '<div class="dash-section"><h3>📝 '+t("appTracker")+'</h3><div class="card">' +
+        '<div class="scheme-top" style="margin-bottom:14px;"><span class="scheme-name" style="font-size:0.92rem;">'+sc8.name[state.lang]+'</span><span class="status-pill">'+t("statusLabel")+'</span></div>' +
+        '<div class="roadmap">';
+      stageDefs.forEach(function(st, i){
+        html += '<div class="rstep'+(st[2]==="done"?" done":"")+'"><div class="rline"><div class="rdot">'+(st[2]==="done"?"✓":(i+1))+'</div><div class="rbar"></div></div>' +
+          '<div class="rstep-body"><h4>'+st[0]+'</h4><p>'+st[1]+'</p>' +
+          (st[2]==="current" ? '<div class="eta">'+(state.lang==="hi"?"अटक गए हैं? हेल्पलाइन पर कॉल करें।":"Stuck here? Call the helpline for help.")+'</div>' : '') +
+          '</div></div>';
+      });
+      html += '</div></div></div>';
+    }
+
+    // Feature 3: dynamic Smart Alerts, computed from real state instead of static demo text
+    var dynAlerts = [];
+    if (sc8 && remainingDocsCount(sc8, docs8) > 0){
+      dynAlerts.push({ icon:"doc", en: remainingDocsCount(sc8, docs8) + " document(s) still missing for " + sc8.name.en + ".", hi: remainingDocsCount(sc8, docs8) + " दस्तावेज़ अभी बाकी हैं — " + sc8.name.hi + " के लिए।" });
+    }
+    if (sc8 && sc8.verified){
+      var daysLeft = daysUntilDeadline(sc8.verified, 30);
+      if (daysLeft !== null && daysLeft > 0 && daysLeft <= 20){
+        dynAlerts.push({ icon:"deadline", en: "About " + daysLeft + " days left on the illustrative deadline for " + sc8.name.en + ".", hi: sc8.name.hi + " के लिए लगभग " + daysLeft + " दिन शेष हैं (उदाहरण तिथि)।" });
+      }
+    }
+    if (strongMatches > 1){
+      dynAlerts.push({ icon:"bell", en: "You have " + strongMatches + " strong matches — worth comparing them.", hi: "आपके पास " + strongMatches + " मजबूत मेल हैं — इनकी तुलना करना उपयोगी होगा।" });
+    }
+    if (dynAlerts.length === 0){
+      dynAlerts.push({ icon:"bell", en: "No alerts right now — you're up to date.", hi: "फ़िलहाल कोई अलर्ट नहीं — आप अपडेट हैं।" });
+    }
+    var alertIcons = {
+      doc:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>',
+      deadline:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+      bell:'<path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/>'
+    };
+    html += '<div class="dash-section"><h3>🔔 '+t("alerts")+'</h3><div class="card">';
+    dynAlerts.forEach(function(a){
+      html += '<div class="alert-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">'+alertIcons[a.icon]+'</svg>'+a[state.lang]+'</div>';
+    });
+    html += '</div></div>';
+
+    // Feature 5: Human mentor / volunteer connect
+    html += '<div class="dash-section"><h3>🧑‍🤝‍🧑 '+t("mentorTitle")+'</h3><div class="card">';
+    if (state.mentorRequestSent){
+      html += '<p style="font-size:0.85rem; color:var(--teal-dark); font-weight:600;">'+t("mentorSentMsg")+'</p>';
+    } else {
+      html += '<p style="font-size:0.85rem; color:var(--ink-soft); margin-bottom:14px;">'+t("mentorSub")+'</p>';
+      html += '<div class="field"><input type="text" id="mentorName" placeholder="'+t("mentorNamePh")+'" style="width:100%; border:1.5px solid #DDD3BC; border-radius:12px; padding:11px 14px; font-size:0.88rem; margin-bottom:10px;"></div>';
+      html += '<div class="field"><input type="text" id="mentorPhone" placeholder="'+t("mentorPhonePh")+'" style="width:100%; border:1.5px solid #DDD3BC; border-radius:12px; padding:11px 14px; font-size:0.88rem; margin-bottom:10px;"></div>';
+      html += '<div class="field"><select id="mentorTime" style="width:100%; border:1.5px solid #DDD3BC; border-radius:12px; padding:11px 14px; font-size:0.88rem;">' +
+        '<option value="morning">'+t("mentorMorning")+'</option><option value="afternoon">'+t("mentorAfternoon")+'</option><option value="evening">'+t("mentorEvening")+'</option></select></div>';
+      html += '<button class="btn btn-primary" id="mentorRequestBtn" style="margin-top:6px;">'+t("mentorRequestBtn")+'</button>';
+      html += '<p class="fine" style="color:var(--ink-soft); margin-top:10px;">'+t("mentorDemoNote")+'</p>';
+    }
+    html += '</div></div>';
+
+
+    html += '<div class="dash-section"><h3>📈 '+t("journeyTitle")+'</h3><div class="journey">';
+    t("journeySteps").forEach(function(js, i){
+      var stageIdx = {idea:0, starting:2, existing:5, expansion:7}[state.profile.stage];
+      var current = stageIdx === i;
+      html += '<div class="jstep'+(current?' current':'')+'"><div class="jdot">'+(i+1)+'</div><div class="jl">'+js+'</div></div>';
+      if (i < t("journeySteps").length-1) html += '<div class="jconnector"></div>';
+    });
+    html += '</div></div>';
+
+    html += '<div class="btn-row">' +
+      '<button class="btn btn-primary" id="dashContinue">'+t("continueApp")+'</button>' +
+      '<button class="btn btn-outline" id="dashExplore">'+t("exploreMore")+'</button>' +
+      '<button class="btn btn-outline" id="dashPlanBudget">📊 '+(state.lang==="hi"?"अपना बजट बनाएँ":"Plan My Budget")+'</button>' +
+      '<button class="btn btn-outline" id="dashEdit">'+t("editProfile")+'</button>' +
+    '</div>';
+  }
+
+  el.innerHTML = html;
+  wireScreenEvents(s);
+  updateNavButtons();
+}
+
+function renderCompareTable(){
+  var ids = Object.keys(state.compareSelection).filter(function(k){ return state.compareSelection[k]; });
+  var picks = state.matches.filter(function(m){ return ids.indexOf(m.scheme.id) !== -1; });
+  if (!picks.length) return "";
+  var best = picks.reduce(function(a,b){ return b.pct > a.pct ? b : a; });
+  var html = '<h3 style="font-size:0.95rem;margin-bottom:10px;">'+t("compareTitle")+'</h3>';
+  html += '<div class="compare-table-wrap"><table class="compare-table"><thead><tr><th></th>';
+  picks.forEach(function(m){ html += '<th>'+m.scheme.name[state.lang]+'</th>'; });
+  html += '</tr></thead><tbody>';
+  html += '<tr><td>'+t("compareRows").match+'</td>'; picks.forEach(function(m){ html += '<td>'+m.pct+'%</td>'; }); html += '</tr>';
+  html += '<tr><td>'+t("compareRows").funding+'</td>'; picks.forEach(function(m){ html += '<td>'+m.scheme.funding+'</td>'; }); html += '</tr>';
+  html += '<tr><td>'+t("compareRows").training+'</td>'; picks.forEach(function(m){ html += '<td>'+(m.scheme.training?'✅':'❌')+'</td>'; }); html += '</tr>';
+  html += '<tr><td>'+t("compareRows").location+'</td>'; picks.forEach(function(m){ html += '<td>'+m.scheme.location+'</td>'; }); html += '</tr>';
+  html += '<tr><td>'+t("compareRows").mode+'</td>'; picks.forEach(function(m){ html += '<td>'+m.scheme.mode[state.lang]+'</td>'; }); html += '</tr>';
+  html += '</tbody></table></div>';
+  html += '<div class="best-pill">🏆 '+t("bestForYou")+': '+best.scheme.name[state.lang]+'</div>';
+  return html;
+}
+
+function incomeIndicatorHtml(){
+  if (state.income === null) return "";
+  var lowestThreshold = Math.min.apply(null, SCHEMES.map(function(s){ return s.incomeThreshold; }));
+  var eligible = state.income <= lowestThreshold;
+  return '<span style="color:'+(eligible?'#1E7A4C':'#C2703A')+';">'+(eligible ? t("incomeEligibleGreen") : t("incomeEligibleOrange"))+'</span>';
+}
+
+function profileCompletionPct(){
+  var p = state.profile;
+  var fields = [p.category, p.location, p.stage, p.supportNeeded.length>0, p.description];
+  var filled = fields.filter(Boolean).length;
+  return Math.round((filled/5)*100);
+}
+
+function remainingDocsCount(scheme, docsList){
+  if (!scheme || !docsList) return 0;
+  var remaining = 0;
+  docsList.forEach(function(d){ if (!state.docsUploaded[d]) remaining++; });
+  return remaining;
+}
+
+// Illustrative-only: treats the scheme's demo "verified" date as if it were an
+// application deadline, purely so the Smart Alerts card has a real number to
+// compute from. Not a real deadline — the UI already labels it as illustrative.
+function daysUntilDeadline(verifiedDateStr, addDays){
+  if (!verifiedDateStr) return null;
+  var parts = verifiedDateStr.split("/");
+  if (parts.length !== 3) return null;
+  var d = new Date(parts[2], parts[1]-1, parts[0]);
+  d.setDate(d.getDate() + addDays);
+  var diffMs = d.getTime() - Date.now();
+  return Math.ceil(diffMs / (1000*60*60*24));
+}
+
+/* ============ EVENTS PER SCREEN ============ */
+function wireScreenEvents(s){
+  if (s === 0){
+    var fb = document.getElementById("landingFindBtn"); if (fb) fb.addEventListener("click", function(){ state.step = 1; renderTracker(); renderScreen(); });
+    var eb = document.getElementById("landingExploreBtn"); if (eb) eb.addEventListener("click", function(){ state.matches = computeMatches(); state.step = 4; renderTracker(); renderScreen(); });
+  }
+
+  if (s === 1){
+    document.querySelectorAll(".cat-card").forEach(function(c){
+      c.addEventListener("click", function(){ state.profile.category = c.getAttribute("data-cat"); renderScreen(); });
+    });
+    var locInput = document.getElementById("f_loc");
+    if (locInput) locInput.addEventListener("input", function(){ state.profile.location = locInput.value; updateMeterLive(); });
+    var stateSelect = document.getElementById("f_state");
+    if (stateSelect) stateSelect.addEventListener("change", function(){
+      state.profile.stateName = stateSelect.value;
+      state.profile.district = "";
+      renderScreen();
+    });
+    var districtSelect = document.getElementById("f_district");
+    if (districtSelect) districtSelect.addEventListener("change", function(){
+      state.profile.district = districtSelect.value;
+      if (!state.profile.location) state.profile.location = districtSelect.value;
+      updateMeterLive();
+    });
+    document.querySelectorAll(".mic-btn").forEach(function(btn){
+      btn.addEventListener("click", function(){ startMic(btn.getAttribute("data-mic"), btn); });
+    });
+    document.querySelectorAll("[data-stage]").forEach(function(c){
+      c.addEventListener("click", function(){ state.profile.stage = c.getAttribute("data-stage"); renderScreen(); });
+    });
+    document.querySelectorAll("[data-support]").forEach(function(c){
+      c.addEventListener("click", function(){
+        var key = c.getAttribute("data-support");
+        var idx = state.profile.supportNeeded.indexOf(key);
+        if (idx === -1) state.profile.supportNeeded.push(key); else state.profile.supportNeeded.splice(idx,1);
+        renderScreen();
+      });
+    });
+    var descInput = document.getElementById("f_desc");
+    if (descInput) descInput.addEventListener("input", function(){ state.profile.description = descInput.value; updateMeterLive(); });
+    document.querySelectorAll("[data-audience]").forEach(function(chip){
+      chip.addEventListener("click", function(){
+        var key = chip.getAttribute("data-audience");
+        var idx = state.profile.categories.indexOf(key);
+        if (idx === -1) state.profile.categories.push(key); else state.profile.categories.splice(idx,1);
+        chip.classList.toggle("selected");
+      });
+    });
+    document.querySelectorAll("[data-budgetrange]").forEach(function(c){
+      c.addEventListener("click", function(){ state.budgetRange = c.getAttribute("data-budgetrange"); renderScreen(); });
+    });
+    document.querySelectorAll("[data-revmodel]").forEach(function(c){
+      c.addEventListener("click", function(){ state.revenueModel = c.getAttribute("data-revmodel"); renderScreen(); });
+    });
+    document.querySelectorAll("[data-growth]").forEach(function(c){
+      c.addEventListener("click", function(){ state.growthGoal = c.getAttribute("data-growth"); renderScreen(); });
+    });
+    var incomeInput = document.getElementById("f_income");
+    if (incomeInput) incomeInput.addEventListener("input", function(){
+      var v = parseFloat(incomeInput.value.replace(/[^0-9.]/g, ""));
+      state.income = v || null;
+      var indicatorEl = document.getElementById("incomeIndicator");
+      if (indicatorEl) indicatorEl.innerHTML = incomeIndicatorHtml();
+    });
+  }
+
+  if (s === 3){
+    var i = 0;
+    var iv = setInterval(function(){
+      var item = document.getElementById("mstep"+i);
+      if (item) item.classList.add("done");
+      i++;
+      if (i >= STR.en.matchSteps.length){
+        clearInterval(iv);
+        state.matches = computeMatches();
+        setTimeout(function(){ state.step = 4; renderTracker(); renderScreen(); }, 500);
+      }
+    }, 480);
+  }
+
+  if (s === 4){
+    document.querySelectorAll("[data-open], [data-view]").forEach(function(elx){
+      elx.addEventListener("click", function(){
+        var id = elx.getAttribute("data-open") || elx.getAttribute("data-view");
+        state.selectedScheme = SCHEMES.filter(function(sc){ return sc.id === id; })[0];
+        state.step = 5; renderTracker(); renderScreen();
+      });
+    });
+    document.querySelectorAll("[data-why]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var id = btn.getAttribute("data-why");
+        state.openWhy[id] = !state.openWhy[id];
+        renderScreen();
+      });
+    });
+    document.querySelectorAll("[data-save]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var id = btn.getAttribute("data-save");
+        state.savedSchemes[id] = !state.savedSchemes[id];
+        renderScreen();
+      });
+    });
+    document.querySelectorAll("[data-compare]").forEach(function(chk){
+      chk.addEventListener("change", function(){
+        state.compareSelection[chk.getAttribute("data-compare")] = chk.checked;
+        renderScreen();
+      });
+    });
+    var cmpBtn = document.getElementById("doCompareBtn");
+    if (cmpBtn) cmpBtn.addEventListener("click", function(){ state.showCompare = true; renderScreen(); });
+  }
+
+  if (s === 5){
+    var toggleBtn = document.getElementById("toggleAssumptions");
+    if (toggleBtn) toggleBtn.addEventListener("click", function(){
+      state.calcEditingAssumptions = !state.calcEditingAssumptions;
+      renderScreen();
+    });
+    var moratSelect = document.getElementById("calcMorat");
+    if (moratSelect) moratSelect.addEventListener("change", function(){
+      state.calcMoratorium = parseInt(moratSelect.value, 10);
+    });
+    var calcBtn = document.getElementById("calcBtn");
+    if (calcBtn) calcBtn.addEventListener("click", function(){
+      var scNow = state.selectedScheme || (state.matches[0] && state.matches[0].scheme);
+      var amount = parseFloat((document.getElementById("calcAmount").value || "").replace(/[^0-9.]/g, ""));
+      var interestInput = document.getElementById("calcInterest");
+      var tenureInput = document.getElementById("calcTenure");
+      var interest = interestInput ? parseFloat(interestInput.value) : (state.calcInterest !== null ? state.calcInterest : scNow.interestRate);
+      var tenure = tenureInput ? parseFloat(tenureInput.value) : (state.calcTenure !== null ? state.calcTenure : scNow.maxTenureMonths);
+      var morat = state.calcMoratorium !== null ? state.calcMoratorium : (document.getElementById("calcMorat") ? parseInt(document.getElementById("calcMorat").value,10) : scNow.moratoriumOptions[0]);
+
+      var resultEl = document.getElementById("calcResult");
+      if (!amount || amount <= 0 || !interest || !tenure){
+        resultEl.style.display = "block";
+        resultEl.textContent = state.lang === "hi" ? "कृपया सही जानकारी डालें।" : "Please enter valid values.";
+        return;
+      }
+      state.calcAmountVal = amount; state.calcInterest = interest; state.calcTenure = tenure; state.calcMoratorium = morat;
+
+      var repaymentMonths = Math.max(1, tenure - morat);
+      var rate = (interest/100) / 12;
+      var emi = rate === 0 ? (amount / repaymentMonths) : (amount * rate * Math.pow(1+rate, repaymentMonths)) / (Math.pow(1+rate, repaymentMonths) - 1);
+      var totalRepayment = emi * repaymentMonths;
+      var totalInterest = totalRepayment - amount;
+      var fmt = function(n){ return "₹" + Math.round(n).toLocaleString(state.lang==="hi"?"hi-IN":"en-IN"); };
+
+      resultEl.style.display = "block";
+      resultEl.innerHTML =
+        '<div>'+t("calcResultLabel")+': '+fmt(emi)+' / '+(state.lang==="hi"?"माह":"month")+'</div>' +
+        '<div style="margin-top:6px;">'+t("calcTotalInterest")+': '+fmt(totalInterest)+'</div>' +
+        '<div style="margin-top:6px;">'+t("calcTotalRepayment")+': '+fmt(totalRepayment)+'</div>';
+    });
+  }
+
+  if (s === 6){
+    var useLocBtn = document.getElementById("partnerUseLocBtn");
+    if (useLocBtn) useLocBtn.addEventListener("click", function(){ state.partnerSearched = true; renderScreen(); });
+    var searchBtn = document.getElementById("partnerSearchBtn");
+    if (searchBtn) searchBtn.addEventListener("click", function(){ state.partnerSearched = true; renderScreen(); });
+    document.querySelectorAll("[data-selectpartner]").forEach(function(btn){
+      btn.addEventListener("click", function(){ state.selectedPartner = btn.getAttribute("data-selectpartner"); renderScreen(); });
+    });
+    var bestBtn = document.getElementById("findBestPartnerBtn");
+    if (bestBtn) bestBtn.addEventListener("click", function(){
+      var scNow = state.selectedScheme || (state.matches[0] && state.matches[0].scheme);
+      var scored = computePartnerScores(scNow).filter(function(p){ return p.eligible; });
+      if (scored.length) state.selectedPartner = scored[0].partner.id;
+      renderScreen();
+    });
+  }
+
+  if (s === 7){
+    var budgetBtn = document.getElementById("setBudgetBtn");
+    if (budgetBtn) budgetBtn.addEventListener("click", function(){
+      var v = parseFloat((document.getElementById("budgetInput").value || "").replace(/[^0-9.]/g, ""));
+      if (!v || v <= 0) return;
+      state.budget = v;
+      state.allocation = Object.assign({}, BUSINESS_ALLOCATIONS[state.profile.category] || BUSINESS_ALLOCATIONS.other);
+      renderScreen();
+    });
+    document.querySelectorAll("[data-slider]").forEach(function(slider){
+      slider.addEventListener("input", function(){
+        state.allocation[slider.getAttribute("data-slider")] = parseInt(slider.value, 10);
+        renderScreen();
+      });
+    });
+    var optBtn = document.getElementById("optimizeBudgetBtn");
+    if (optBtn) optBtn.addEventListener("click", function(){
+      var total = Object.keys(state.allocation).reduce(function(sum,k){ return sum + Number(state.allocation[k]); }, 0);
+      if (total > 0){
+        Object.keys(state.allocation).forEach(function(k){
+          state.allocation[k] = Math.round(state.allocation[k] / total * 100);
+        });
+      }
+      renderScreen();
+    });
+  }
+
+  if (s === 8){
+    var revCalcBtn = document.getElementById("revCalcBtn");
+    if (revCalcBtn) revCalcBtn.addEventListener("click", function(){
+      var price = parseFloat(document.getElementById("revPrice").value) || 0;
+      var units = parseFloat(document.getElementById("revUnits").value) || 0;
+      state.revPrice = price; state.revUnits = units;
+      var resultEl = document.getElementById("revResult");
+      resultEl.style.display = "block";
+      resultEl.textContent = t("revResultLabel") + ": ₹" + Math.round(price*units).toLocaleString(state.lang==="hi"?"hi-IN":"en-IN");
+    });
+
+    var profitBtn = document.getElementById("profitCalcBtn");
+    if (profitBtn) profitBtn.addEventListener("click", function(){
+      var price = parseFloat(document.getElementById("revPrice").value) || state.revPrice || 0;
+      var units = parseFloat(document.getElementById("revUnits").value) || state.revUnits || 0;
+      var varCost = parseFloat(document.getElementById("profitVarCost").value) || 0;
+      var fixedCost = parseFloat(document.getElementById("profitFixedCost").value) || 0;
+      state.profitVarCost = varCost; state.profitFixedCost = fixedCost;
+      var revenue = price * units;
+      var varTotal = varCost * units;
+      var surplus = revenue - varTotal - fixedCost;
+      var contribution = price - varCost;
+      var breakeven = contribution > 0 ? Math.ceil(fixedCost / contribution) : null;
+      var fmt = function(n){ return "₹" + Math.round(n).toLocaleString(state.lang==="hi"?"hi-IN":"en-IN"); };
+      document.getElementById("profitResult").innerHTML =
+        '<div class="calc-result">'+t("profitRevenue")+': '+fmt(revenue)+'</div>' +
+        '<div class="calc-result">'+t("profitVarCostTotal")+': '+fmt(varTotal)+'</div>' +
+        '<div class="calc-result">'+t("profitFixedCostTotal")+': '+fmt(fixedCost)+'</div>' +
+        '<div class="calc-result" style="color:'+(surplus>=0?'var(--teal-dark)':'var(--danger)')+';">'+t("profitSurplus")+': '+fmt(surplus)+'</div>' +
+        '<div class="calc-result">'+t("profitBreakeven")+': '+(breakeven!==null ? breakeven+' '+t("profitBreakevenUnits") : "—")+'</div>';
+    });
+
+    document.querySelectorAll("[data-whatifchip]").forEach(function(chip){
+      chip.addEventListener("click", function(){
+        var key = chip.getAttribute("data-whatifchip");
+        var basePrice = state.revPrice || parseFloat(document.getElementById("revPrice").value) || 100;
+        var baseUnits = state.revUnits || parseFloat(document.getElementById("revUnits").value) || 1000;
+        var newPrice = basePrice, newUnits = baseUnits, note = "";
+        if (key === "price"){ newPrice = Math.round(basePrice * 1.1); }
+        if (key === "units"){ newUnits = baseUnits + 500; }
+        if (key === "cost"){ note = state.lang==="hi" ? "(लागत घटाने का असर आपके लाभ पर सीधे पड़ता है — ऊपर लाभ सिम्युलेटर में परिवर्तनीय लागत घटाकर देखें)" : "(reducing cost affects your profit directly — try lowering variable cost above in the Profit Simulator)"; }
+        var revenueA = basePrice * baseUnits;
+        var revenueB = newPrice * newUnits;
+        var fmt = function(n){ return "₹" + Math.round(n).toLocaleString(state.lang==="hi"?"hi-IN":"en-IN"); };
+        document.getElementById("scenarioCompare").innerHTML =
+          '<div class="calc-row"><label>'+t("scenarioA")+'</label><span>'+fmt(revenueA)+'</span></div>' +
+          '<div class="calc-row"><label>'+t("scenarioB")+'</label><span>'+fmt(revenueB)+'</span></div>' +
+          '<div class="calc-result">'+t("scenarioDiff")+': '+fmt(revenueB-revenueA)+'</div>' +
+          (note ? '<p class="fine" style="color:var(--ink-soft); margin-top:6px;">'+note+'</p>' : '');
+      });
+    });
+  }
+
+  if (s === 10){
+    document.querySelectorAll(".doc-upload").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var d = btn.getAttribute("data-doc");
+
+        // Already uploaded: do nothing.
+        if (state.docsUploaded[d]) return;
+
+        // Create a temporary file input so the user can actually choose a file.
+        var fileInput = document.createElement("input");
+        fileInput.type = "file";
+        fileInput.accept = ".pdf,.jpg,.jpeg,.png,.webp";
+        fileInput.style.display = "none";
+        document.body.appendChild(fileInput);
+
+        // Open the native file picker.
+        fileInput.click();
+
+        // Only mark the document as uploaded after a file is selected.
+        fileInput.addEventListener("change", function(){
+          if (fileInput.files && fileInput.files.length > 0){
+            var file = fileInput.files[0];
+            state.docsUploaded[d] = file.name;
+            renderScreen();
+          }
+
+          // Remove the temporary input from the page.
+          if (fileInput.parentNode) fileInput.parentNode.removeChild(fileInput);
+        });
+      });
+    });
+    var pcb = document.getElementById("prepareChecklistBtn");
+    if (pcb) pcb.addEventListener("click", function(){ state.step = 11; renderTracker(); renderScreen(); });
+  }
+
+  if (s === 11){
+    var c = document.getElementById("dashContinue"); if (c) c.addEventListener("click", function(){ state.step = 9; renderTracker(); renderScreen(); });
+    var ex = document.getElementById("dashExplore"); if (ex) ex.addEventListener("click", function(){ state.step = 4; renderTracker(); renderScreen(); });
+    var ed = document.getElementById("dashEdit"); if (ed) ed.addEventListener("click", function(){ state.step = 2; renderTracker(); renderScreen(); });
+    var mrb = document.getElementById("mentorRequestBtn");
+    if (mrb) mrb.addEventListener("click", function(){
+      var name = document.getElementById("mentorName").value.trim();
+      if (!name) { document.getElementById("mentorName").focus(); return; }
+      state.mentorRequestSent = true;
+      renderScreen();
+    });
+    var dpb = document.getElementById("dashPlanBudget");
+    if (dpb) dpb.addEventListener("click", function(){ state.step = 7; renderTracker(); renderScreen(); });
+  }
+}
+
+function updateMeterLive(){
+  var pct = profileCompletionPct();
+  var fill = document.querySelector(".meter-fill");
+  var label = document.querySelector(".meter-label");
+  if (fill) fill.style.width = pct + "%";
+  if (label) label.textContent = pct + "%";
+}
+
+/* ============ VOICE INPUT ============ */
+var Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+function startMic(fieldId, btn){
+  if (!Recognition){ alert(state.lang==="hi" ? "इस डिवाइस पर आवाज़ इनपुट उपलब्ध नहीं है।" : "Voice input isn't supported on this device."); return; }
+  var rec = new Recognition();
+  rec.lang = state.lang === "hi" ? "hi-IN" : "en-IN";
+  rec.onresult = function(e){
+    var text = e.results[0][0].transcript;
+    var input = document.getElementById(fieldId);
+    if (input){
+      input.value = text;
+      if (fieldId==="f_loc") state.profile.location = text;
+      updateMeterLive();
+    }
+    btn.classList.remove("listening");
+  };
+  rec.onerror = function(){ btn.classList.remove("listening"); };
+  rec.onend = function(){ btn.classList.remove("listening"); };
+  btn.classList.add("listening");
+  try { rec.start(); } catch(e){ btn.classList.remove("listening"); }
+}
+
+/* ============ NAV ============ */
+function updateNavButtons(){
+  var backBtn = document.getElementById("backBtn");
+  var nextBtn = document.getElementById("nextBtn");
+  backBtn.style.visibility = state.step === 0 ? "hidden" : "visible";
+  backBtn.textContent = t("back");
+
+  if (state.step === 0) nextBtn.textContent = t("getStarted");
+  else if (state.step === 1) nextBtn.textContent = t("analyzeBtn");
+  else if (state.step === 11) nextBtn.textContent = t("finish");
+  else nextBtn.textContent = t("next");
+
+  nextBtn.style.display = (state.step === 0 || state.step === 3) ? "none" : "inline-flex";
+
+  var valid = true;
+  if (state.step === 1) valid = !!(state.profile.category && state.profile.location.trim());
+  nextBtn.disabled = !valid;
+}
+
+document.getElementById("backBtn").addEventListener("click", function(){
+  if (state.step > 0){
+    state.step -= 1;
+    if (state.step === 3) state.step = 2;
+    renderTracker(); renderScreen();
+  }
+});
+document.getElementById("nextBtn").addEventListener("click", function(){
+  if (state.step === 11){ renderScreen(); return; }
+  state.step += 1;
+  renderTracker(); renderScreen();
+});
+
+document.querySelectorAll(".lang-switch button").forEach(function(btn){
+  btn.addEventListener("click", function(){
+    state.lang = btn.getAttribute("data-lang");
+    document.querySelectorAll(".lang-switch button").forEach(function(b){ b.classList.toggle("active", b===btn); });
+    renderAccessibilityLabels();
+    if (typeof renderLoginButton === "function") renderLoginButton();
+    renderTracker(); renderScreen();
+  });
+});
+
+/* Feature 12: multilingual roadmap stub — Hindi/English fully translated;
+   these four are shown so the switcher visibly supports more languages,
+   but say so honestly rather than silently falling back to English. */
+(function(){
+  var stubNames = { bn:"বাংলা", mr:"मराठी", ta:"தமிழ்", te:"తెలుగు" };
+  var stubNotice = {
+    bn: "এই ভাষায় সম্পূর্ণ অনুবাদ শীঘ্রই আসছে। / Full translation coming soon.",
+    mr: "या भाषेत पूर्ण भाषांतर लवकरच येत आहे. / Full translation coming soon.",
+    ta: "இந்த மொழியில் முழு மொழிபெயர்ப்பு விரைவில். / Full translation coming soon.",
+    te: "ఈ భాషలో పూర్తి అనువాదం త్వరలో. / Full translation coming soon."
+  };
+  var container = document.querySelector(".lang-switch");
+  if (!container) return;
+  Object.keys(stubNames).forEach(function(code){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = stubNames[code];
+    b.addEventListener("click", function(){ alert(stubNotice[code]); });
+    container.appendChild(b);
+  });
+})();
+
+/* ============ ACCESSIBILITY PANEL ============ */
+var a11yBtn = document.getElementById("a11yBtn");
+var a11yPanel = document.getElementById("a11yPanel");
+a11yBtn.addEventListener("click", function(){ a11yPanel.classList.toggle("open"); });
+document.addEventListener("click", function(e){
+  if (!a11yPanel.contains(e.target) && e.target !== a11yBtn && !a11yBtn.contains(e.target)) a11yPanel.classList.remove("open");
+});
+
+var toggleLarge = document.getElementById("toggleLarge");
+toggleLarge.addEventListener("click", function(){
+  document.documentElement.classList.toggle("a11y-large");
+  toggleLarge.classList.toggle("on");
+});
+var toggleContrast = document.getElementById("toggleContrast");
+toggleContrast.addEventListener("click", function(){
+  document.documentElement.classList.toggle("a11y-contrast");
+  toggleContrast.classList.toggle("on");
+});
+document.getElementById("readAloudBtn").addEventListener("click", function(){
+  if (!("speechSynthesis" in window)) return;
+  var heading = document.querySelector("#screen h2");
+  var sub = document.querySelector("#screen .sub");
+  var text = (heading ? heading.textContent : "") + ". " + (sub ? sub.textContent : "");
+  window.speechSynthesis.cancel();
+  var utter = new SpeechSynthesisUtterance(text);
+  utter.lang = state.lang === "hi" ? "hi-IN" : "en-IN";
+  window.speechSynthesis.speak(utter);
+});
+
+/* ============ SIMULATED PHONE + OTP LOGIN (Feature 9 — demo only, no real backend) ============ */
+state.loggedIn = false;
+state.loginPhone = "";
+var loginBtn = document.getElementById("loginBtn");
+var loginPanel = document.getElementById("loginPanel");
+var loginStepPhone = document.getElementById("loginStepPhone");
+var loginStepOtp = document.getElementById("loginStepOtp");
+var loginStepDone = document.getElementById("loginStepDone");
+
+loginBtn.addEventListener("click", function(){ loginPanel.classList.toggle("open"); });
+document.addEventListener("click", function(e){
+  if (!loginPanel.contains(e.target) && e.target !== loginBtn && !loginBtn.contains(e.target)) loginPanel.classList.remove("open");
+});
+
+document.getElementById("loginSendOtpBtn").addEventListener("click", function(){
+  var phone = document.getElementById("loginPhoneInput").value.trim();
+  if (!phone) return;
+  state.loginPhone = phone;
+  loginStepPhone.style.display = "none";
+  loginStepOtp.style.display = "block";
+  document.getElementById("loginOtpNote").textContent = t("loginOtpSentNote");
+});
+
+document.getElementById("loginVerifyBtn").addEventListener("click", function(){
+  var otp = document.getElementById("loginOtpInput").value.trim();
+  if (otp !== "1234"){
+    document.getElementById("loginOtpNote").textContent = state.lang === "hi" ? "गलत OTP — डेमो के लिए 1234 इस्तेमाल करें।" : "Incorrect OTP — use 1234 for this demo.";
+    return;
+  }
+  state.loggedIn = true;
+  loginStepOtp.style.display = "none";
+  loginStepDone.style.display = "block";
+  document.getElementById("loginWelcomeText").textContent = (state.lang === "hi" ? "स्वागत है, " : "Welcome, ") + state.loginPhone;
+  renderLoginButton();
+});
+
+document.getElementById("loginSignOutBtn").addEventListener("click", function(){
+  state.loggedIn = false;
+  state.loginPhone = "";
+  document.getElementById("loginPhoneInput").value = "";
+  document.getElementById("loginOtpInput").value = "";
+  loginStepDone.style.display = "none";
+  loginStepPhone.style.display = "block";
+  loginPanel.classList.remove("open");
+  renderLoginButton();
+});
+
+function renderLoginButton(){
+  loginBtn.textContent = state.loggedIn ? "✓ " + (state.loginPhone || "") : t("loginBtn");
+  document.getElementById("loginPanelTitle").textContent = t("loginTitle");
+  document.getElementById("loginSendOtpBtn").textContent = t("loginSendOtp");
+  document.getElementById("loginVerifyBtn").textContent = t("loginVerify");
+  document.getElementById("loginSignOutBtn").textContent = t("loginSignOut");
+  document.getElementById("loginPhoneInput").placeholder = t("loginPhonePh");
+  document.getElementById("loginOtpInput").placeholder = t("loginOtpPh");
+}
+renderLoginButton();
+
+function renderAccessibilityLabels(){
+  var labels = state.lang === "hi"
+    ? {title:"सुगमता", large:"बड़ा टेक्स्ट", contrast:"उच्च कंट्रास्ट", read:"यह पृष्ठ सुनें"}
+    : {title:"Accessibility", large:"Larger text", contrast:"High contrast", read:"Read this page"};
+  document.getElementById("a11yTitle").textContent = labels.title;
+  document.getElementById("a11yLarge").textContent = labels.large;
+  document.getElementById("a11yContrast").textContent = labels.contrast;
+  document.getElementById("a11yRead").textContent = labels.read;
+}
+
+/* init */
+document.querySelector('.lang-switch button[data-lang="en"]').classList.add("active");
+renderAccessibilityLabels();
+renderTracker();
+renderScreen();
+ </script>
+<script src="app-supabase.js"></script>
+</body>
+</html>

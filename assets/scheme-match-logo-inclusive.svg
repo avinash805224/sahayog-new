@@ -1,0 +1,48 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F6B66"/>
+      <stop offset="100%" stop-color="#0A4F4B"/>
+    </linearGradient>
+    <linearGradient id="sunGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F7C948"/>
+      <stop offset="100%" stop-color="#F2A73B"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Badge -->
+  <circle cx="200" cy="200" r="190" fill="url(#bgGrad2)"/>
+  <circle cx="200" cy="200" r="190" fill="none" stroke="#F7C948" stroke-width="4" opacity="0.35"/>
+
+  <!-- Rising sun rays (hope, opportunity - simple universal symbol) -->
+  <g stroke="#F7C948" stroke-width="8" stroke-linecap="round" opacity="0.9">
+    <line x1="200" y1="80" x2="200" y2="105"/>
+    <line x1="140" y1="98" x2="153" y2="118"/>
+    <line x1="260" y1="98" x2="247" y2="118"/>
+    <line x1="100" y1="140" x2="120" y2="153"/>
+    <line x1="300" y1="140" x2="280" y2="153"/>
+  </g>
+
+  <!-- Sun -->
+  <circle cx="200" cy="175" r="42" fill="url(#sunGrad)"/>
+
+  <!-- Two simple hands cupping together (support, trust, community - no text needed) -->
+  <path d="M105 300
+           C105 260, 130 245, 155 245
+           C170 245, 180 255, 185 268
+           L185 300 Z"
+        fill="#FFFFFF"/>
+  <path d="M295 300
+           C295 260, 270 245, 245 245
+           C230 245, 220 255, 215 268
+           L215 300 Z"
+        fill="#FFFFFF"/>
+
+  <!-- Small plant growing from the cupped hands (growth, new beginning) -->
+  <line x1="200" y1="268" x2="200" y2="235" stroke="#EF7B45" stroke-width="7" stroke-linecap="round"/>
+  <path d="M200 245 C185 240, 178 225, 185 210 C195 218, 200 232, 200 245 Z" fill="#4FB3A9"/>
+  <path d="M200 245 C215 240, 222 225, 215 210 C205 218, 200 232, 200 245 Z" fill="#4FB3A9"/>
+
+  <!-- Ground / base line -->
+  <path d="M90 300 Q200 320 310 300" stroke="#FFFFFF" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.85"/>
+</svg>
