@@ -3,14 +3,5 @@
     "api/*.js": {
       "runtime": "@vercel/node@2.0.0"
     }
-  },
-  "builds": [
-    { "src": "dist/**", "use": "@vercel/static-build" }
-  ],
-  "routes": [
-    { "src": "/landing.html", "dest": "dist/landing.html" },
-    { "src": "/admin.html", "dest": "dist/admin.html" },
-    { "src": "/app.html", "dest": "dist/app.html" },
-    { "src": "/", "dest": "dist/index.html" }
-  ]
+  }
 }
