@@ -4,7 +4,17 @@
       "runtime": "@vercel/node@2.0.0"
     }
   },
-  "rewrites": [
-    { "source": "/landing.html", "destination": "/landing.html" }
+  "builds": [
+    { "src": "dist/**", "use": "@vercel/static" },
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "landing.html", "use": "@vercel/static" },
+    { "src": "admin.html", "use": "@vercel/static" },
+    { "src": "app.html", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/landing.html", "dest": "landing.html" },
+    { "src": "/admin.html", "dest": "admin.html" },
+    { "src": "/app.html", "dest": "app.html" },
+    { "src": "/", "dest": "index.html" }
   ]
 }
