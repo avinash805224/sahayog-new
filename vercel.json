@@ -5,16 +5,12 @@
     }
   },
   "builds": [
-    { "src": "dist/**", "use": "@vercel/static" },
-    { "src": "index.html", "use": "@vercel/static" },
-    { "src": "landing.html", "use": "@vercel/static" },
-    { "src": "admin.html", "use": "@vercel/static" },
-    { "src": "app.html", "use": "@vercel/static" }
+    { "src": "dist/**", "use": "@vercel/static-build" }
   ],
   "routes": [
-    { "src": "/landing.html", "dest": "landing.html" },
-    { "src": "/admin.html", "dest": "admin.html" },
-    { "src": "/app.html", "dest": "app.html" },
-    { "src": "/", "dest": "index.html" }
+    { "src": "/landing.html", "dest": "dist/landing.html" },
+    { "src": "/admin.html", "dest": "dist/admin.html" },
+    { "src": "/app.html", "dest": "dist/app.html" },
+    { "src": "/", "dest": "dist/index.html" }
   ]
 }
