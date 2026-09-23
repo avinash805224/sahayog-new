@@ -273,10 +273,30 @@
 .site-nav a.current{opacity:1;text-decoration:underline;}
 .site-nav .brand{font-weight:800;margin-right:8px;opacity:1;}
 </style>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+/* ===== Sahayog AI Chatbot ===== */
+.ai-chat-toggle{position:fixed;right:20px;bottom:88px;width:58px;height:58px;border:0;border-radius:50%;background:var(--teal);color:#fff;font-size:25px;box-shadow:0 8px 22px rgba(0,0,0,.2);z-index:80}
+.ai-chat-toggle:hover{transform:translateY(-2px)}
+.ai-chat{position:fixed;right:20px;bottom:155px;width:min(380px,calc(100vw - 30px));height:520px;background:var(--white);border:1px solid var(--border);border-radius:20px;box-shadow:0 18px 50px rgba(0,0,0,.22);z-index:79;display:none;overflow:hidden}
+.ai-chat.open{display:flex;flex-direction:column}
+.ai-chat-head{background:var(--teal-dark);color:#fff;padding:15px 16px;display:flex;align-items:center;justify-content:space-between}
+.ai-chat-head strong{font-family:'Baloo 2';font-size:1rem}.ai-chat-head small{display:block;opacity:.8;font-size:.72rem}
+.ai-chat-close{border:0;background:transparent;color:#fff;font-size:22px}
+.ai-chat-window{flex:1;overflow-y:auto;padding:14px;background:var(--cream)}
+.ai-msg{max-width:86%;padding:10px 12px;border-radius:14px;margin:7px 0;font-size:.84rem;white-space:pre-wrap;word-break:break-word}
+.ai-msg.bot{background:var(--white);border:1px solid var(--border);margin-right:auto}.ai-msg.user{background:var(--teal);color:#fff;margin-left:auto}
+.ai-chat-form{display:flex;gap:8px;padding:10px;border-top:1px solid var(--border);background:var(--white)}
+.ai-chat-input{flex:1;border:1.5px solid #DDD3BC;border-radius:12px;padding:10px 12px;font:inherit;outline:none}.ai-chat-input:focus{border-color:var(--teal)}
+.ai-chat-send{border:0;border-radius:12px;background:var(--coral);color:#fff;font-weight:700;padding:0 14px}
+.ai-quick{display:flex;gap:6px;overflow-x:auto;padding:8px 10px;background:var(--white);border-top:1px solid var(--border)}
+.ai-quick button{white-space:nowrap;border:1px solid var(--teal-soft);background:var(--teal-soft);color:var(--teal-dark);border-radius:999px;padding:6px 10px;font-size:.72rem}
+@media(max-width:560px){.ai-chat{right:10px;bottom:150px;height:60vh}.ai-chat-toggle{right:14px}}
+</style>
+
 </head>
 <body>
-<div class="site-nav"><span class="brand">🌱 Sahayog</span><a href="index.html">Overview</a><a href="landing.html">Landing</a><a href="app.html" class="current">App Flow</a><a href="admin.html">Admin</a></div>
+<div class="site-nav"><span class="brand">🌱 Sahayog</span><a href="index.html">Overview</a><a href="landing.html">Home</a><a href="app.html" class="current">App Flow</a><a href="admin.html">Admin</a></div>
 
 
   <div class="topbar">
@@ -304,17 +324,16 @@
     </div>
   </div>
 
-   <div class="a11y-panel" id="loginPanel" style="width:270px;">
-    <h4 id="loginPanelTitle">Sign in</h4>
-    <div id="loginStepForm">
-      <p class="fine" id="loginFormNote" style="color:var(--ink-soft); margin-bottom:8px;"></p>
-      <div class="field" style="margin-bottom:10px;"><input type="email" id="loginEmailInput" placeholder="Email address" autocomplete="email" style="width:100%; border:1.5px solid #DDD3BC; border-radius:10px; padding:9px 12px; font-size:0.85rem;"></div>
-      <div class="field" style="margin-bottom:6px;"><input type="password" id="loginPasswordInput" placeholder="Password" autocomplete="current-password" style="width:100%; border:1.5px solid #DDD3BC; border-radius:10px; padding:9px 12px; font-size:0.85rem;"></div>
-      <p class="fine" id="loginErrorNote" style="color:#C0392B; min-height:16px; margin-bottom:8px;"></p>
-      <button class="btn btn-primary" id="loginSubmitBtn" style="width:100%; justify-content:center; padding:9px;"></button>
-      <p class="fine" style="text-align:center; margin-top:10px;">
-        <a href="#" id="loginModeToggle" style="color:var(--teal-dark); font-weight:700; text-decoration:underline;"></a>
-      </p>
+  <div class="a11y-panel" id="loginPanel" style="width:260px;">
+    <h4 id="loginPanelTitle">Sign in with your phone</h4>
+    <div id="loginStepPhone">
+      <div class="field" style="margin-bottom:10px;"><input type="text" id="loginPhoneInput" placeholder="Enter phone number" style="width:100%; border:1.5px solid #DDD3BC; border-radius:10px; padding:9px 12px; font-size:0.85rem;"></div>
+      <button class="btn btn-primary" id="loginSendOtpBtn" style="width:100%; justify-content:center; padding:9px;"></button>
+    </div>
+    <div id="loginStepOtp" style="display:none;">
+      <p class="fine" id="loginOtpNote" style="color:var(--ink-soft); margin-bottom:8px;"></p>
+      <div class="field" style="margin-bottom:10px;"><input type="text" id="loginOtpInput" placeholder="Enter OTP" style="width:100%; border:1.5px solid #DDD3BC; border-radius:10px; padding:9px 12px; font-size:0.85rem;"></div>
+      <button class="btn btn-primary" id="loginVerifyBtn" style="width:100%; justify-content:center; padding:9px;"></button>
     </div>
     <div id="loginStepDone" style="display:none; text-align:center;">
       <p style="font-weight:700; color:var(--teal-dark); margin-bottom:10px;" id="loginWelcomeText"></p>
@@ -335,7 +354,28 @@
 
   <div class="screen" id="screen"></div>
 
-  <div class="navfoot">
+  
+<!-- ===== Sahayog AI Chatbot ===== -->
+<button class="ai-chat-toggle" id="aiChatToggle" aria-label="Open Sahayog AI">🤖</button>
+<div class="ai-chat" id="aiChat" aria-label="Sahayog AI chatbot">
+  <div class="ai-chat-head">
+    <div><strong>🤝 Sahayog AI</strong><small id="aiStatus">Scheme & business assistant</small></div>
+    <button class="ai-chat-close" id="aiChatClose" aria-label="Close">×</button>
+  </div>
+  <div class="ai-chat-window" id="aiChatWindow"></div>
+  <div class="ai-quick">
+    <button data-aiq="Which scheme is best for me?">Best scheme</button>
+    <button data-aiq="What documents do I need?">Documents</button>
+    <button data-aiq="Explain my match score">My score</button>
+  </div>
+  <form class="ai-chat-form" id="aiChatForm">
+    <input class="ai-chat-input" id="aiUserMessage" type="text" autocomplete="off" placeholder="Ask Sahayog AI...">
+    <button class="ai-chat-send" type="submit">Send</button>
+  </form>
+</div>
+
+
+<div class="navfoot">
     <div class="navfoot-inner">
       <button class="btn btn-outline" id="backBtn">Back</button>
       <button class="btn btn-primary" id="nextBtn">Next</button>
@@ -346,7 +386,7 @@
 /* ============ STRINGS ============ */
 var STR = {
   en: {
-    steps: ["Landing","AI Assessment","Profile","Smart Matching","Results","Scheme Details","Channel Partner","Investment Planner","Revenue Explorer","Roadmap","Documents","Dashboard"],
+    steps: ["Home","AI Assessment","Profile","Smart Matching","Results","Scheme Details","Channel Partner","Investment Planner","Revenue Explorer","Roadmap","Documents","Dashboard"],
     back: "Back", next: "Next", getStarted: "Find My Schemes", finish: "Go to dashboard",
 
     landingTitle: "Your Business Idea. The Right Government Support. Matched by AI.",
@@ -437,15 +477,10 @@ var STR = {
     calcTitle:"Illustrative loan calculator", calcAmountLabel:"Amount needed", calcAmountPh:"e.g. 100000",
     calcYearsLabel:"Repayment period (years)", calcBtn:"Calculate", calcResultLabel:"Estimated monthly payment",
     calcNote:"Illustrative only, at an example 8% interest rate — actual terms are set by the lender, not by Sahayog.",
-       loginBtn:"Sign in", loginTitleIn:"Sign in", loginTitleUp:"Create your account",
-    loginEmailPh:"Email address", loginPasswordPh:"Password (min. 6 characters)",
-    loginSubmitIn:"Sign in", loginSubmitUp:"Create account",
-    loginToggleToUp:"New here? Create an account", loginToggleToIn:"Already have an account? Sign in",
-    loginFormNoteUp:"Your details are saved to your profile so you can pick up where you left off.",
-    loginFormNoteIn:"Sign in to save your progress and come back to it anytime.",
-    loginErrGeneric:"Something went wrong. Please try again.",
-    loginErrConfirm:"Check your email to confirm your account, then sign in.",
+    loginBtn:"Sign in", loginTitle:"Sign in with your phone", loginPhonePh:"Enter phone number", loginSendOtp:"Send OTP",
+    loginOtpSentNote:"Demo OTP is 1234 — no real SMS is sent in this prototype.", loginOtpPh:"Enter OTP", loginVerify:"Verify",
     loginWelcomeBack:"Signed in", loginSignOut:"Sign out",
+
     invTitle:"Plan your investment", invSub:"See a suggested starting budget split for your kind of business, and adjust it yourself.",
     invBudgetLabel:"Available startup budget (₹)", invBudgetPh:"e.g. 500000",
     invSuggested:"Suggested planning allocation", invSuggestedNote:"AI-generated illustrative planning estimate — not financial advice.",
@@ -599,14 +634,8 @@ var STR = {
     calcTitle:"उदाहरण ऋण कैलकुलेटर", calcAmountLabel:"ज़रूरी राशि", calcAmountPh:"जैसे 100000",
     calcYearsLabel:"भुगतान अवधि (वर्ष)", calcBtn:"गणना करें", calcResultLabel:"अनुमानित मासिक भुगतान",
     calcNote:"यह केवल उदाहरण है, 8% ब्याज दर पर — असली शर्तें ऋणदाता तय करता है, सहयोग नहीं।",
-       loginBtn:"साइन इन करें", loginTitleIn:"साइन इन करें", loginTitleUp:"अपना खाता बनाएँ",
-    loginEmailPh:"ईमेल पता", loginPasswordPh:"पासवर्ड (कम से कम 6 अक्षर)",
-    loginSubmitIn:"साइन इन करें", loginSubmitUp:"खाता बनाएं",
-    loginToggleToUp:"नए हैं? खाता बनाएं", loginToggleToIn:"पहले से खाता है? साइन इन करें",
-    loginFormNoteUp:"आपकी जानकारी आपकी प्रोफ़ाइल में सहेजी जाती है ताकि आप वहीं से जारी रख सकें।",
-    loginFormNoteIn:"अपनी प्रगति सहेजने और कभी भी वापस आने के लिए साइन इन करें।",
-    loginErrGeneric:"कुछ गलत हो गया। कृपया फिर से प्रयास करें।",
-    loginErrConfirm:"अपना खाता सत्यापित करने के लिए ईमेल जांचें, फिर साइन इन करें।",
+    loginBtn:"साइन इन करें", loginTitle:"अपने फ़ोन से साइन इन करें", loginPhonePh:"फ़ोन नंबर डालें", loginSendOtp:"OTP भेजें",
+    loginOtpSentNote:"डेमो OTP है 1234 — इस प्रोटोटाइप में कोई असली SMS नहीं भेजा जाता।", loginOtpPh:"OTP डालें", loginVerify:"सत्यापित करें",
     loginWelcomeBack:"साइन इन हो गया", loginSignOut:"साइन आउट करें",
 
     invTitle:"अपने निवेश की योजना बनाएं", invSub:"अपने व्यापार के प्रकार के लिए सुझाई गई शुरुआती बजट बाँट देखें, और खुद बदलें।",
@@ -1865,31 +1894,8 @@ function wireScreenEvents(s){
     document.querySelectorAll(".doc-upload").forEach(function(btn){
       btn.addEventListener("click", function(){
         var d = btn.getAttribute("data-doc");
-
-        // Already uploaded: do nothing.
-        if (state.docsUploaded[d]) return;
-
-        // Create a temporary file input so the user can actually choose a file.
-        var fileInput = document.createElement("input");
-        fileInput.type = "file";
-        fileInput.accept = ".pdf,.jpg,.jpeg,.png,.webp";
-        fileInput.style.display = "none";
-        document.body.appendChild(fileInput);
-
-        // Open the native file picker.
-        fileInput.click();
-
-        // Only mark the document as uploaded after a file is selected.
-        fileInput.addEventListener("change", function(){
-          if (fileInput.files && fileInput.files.length > 0){
-            var file = fileInput.files[0];
-            state.docsUploaded[d] = file.name;
-            renderScreen();
-          }
-
-          // Remove the temporary input from the page.
-          if (fileInput.parentNode) fileInput.parentNode.removeChild(fileInput);
-        });
+        state.docsUploaded[d] = !state.docsUploaded[d];
+        renderScreen();
       });
     });
     var pcb = document.getElementById("prepareChecklistBtn");
@@ -1972,7 +1978,6 @@ document.getElementById("nextBtn").addEventListener("click", function(){
   if (state.step === 11){ renderScreen(); return; }
   state.step += 1;
   renderTracker(); renderScreen();
-  saveProfileToSupabase(); // no-op if not signed in
 });
 
 document.querySelectorAll(".lang-switch button").forEach(function(btn){
@@ -2036,166 +2041,63 @@ document.getElementById("readAloudBtn").addEventListener("click", function(){
   window.speechSynthesis.speak(utter);
 });
 
-/* ============ REAL EMAIL/PASSWORD AUTH (Supabase Auth + profiles table) ============ */
-// The anon key below is safe to expose in front-end code by design — Supabase
-// enforces access with Row Level Security (see supabase/schema.sql), not by
-// keeping this key secret. Never put your service_role key here.
-var SUPABASE_URL = "https://buzqsyrwhwjjfgusmdlt.supabase.co";
-var SUPABASE_ANON_KEY = "sb_publishable_WvmGnTzx-Tu0M5-jIWcWbw_TDyZmzAs";
-var supabaseClient = (window.supabase && SUPABASE_URL && SUPABASE_ANON_KEY)
-  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-  : null;
-
+/* ============ SIMULATED PHONE + OTP LOGIN (Feature 9 — demo only, no real backend) ============ */
 state.loggedIn = false;
-state.loginEmail = "";
-state.userId = null;
-state.loginMode = "in"; // "in" = sign in, "up" = create account
-
+state.loginPhone = "";
 var loginBtn = document.getElementById("loginBtn");
 var loginPanel = document.getElementById("loginPanel");
-var loginStepForm = document.getElementById("loginStepForm");
+var loginStepPhone = document.getElementById("loginStepPhone");
+var loginStepOtp = document.getElementById("loginStepOtp");
 var loginStepDone = document.getElementById("loginStepDone");
-var loginEmailInput = document.getElementById("loginEmailInput");
-var loginPasswordInput = document.getElementById("loginPasswordInput");
-var loginErrorNote = document.getElementById("loginErrorNote");
-var loginSubmitBtn = document.getElementById("loginSubmitBtn");
-var loginModeToggle = document.getElementById("loginModeToggle");
 
 loginBtn.addEventListener("click", function(){ loginPanel.classList.toggle("open"); });
 document.addEventListener("click", function(e){
   if (!loginPanel.contains(e.target) && e.target !== loginBtn && !loginBtn.contains(e.target)) loginPanel.classList.remove("open");
 });
 
-loginModeToggle.addEventListener("click", function(e){
-  e.preventDefault();
-  state.loginMode = state.loginMode === "in" ? "up" : "in";
-  loginErrorNote.textContent = "";
+document.getElementById("loginSendOtpBtn").addEventListener("click", function(){
+  var phone = document.getElementById("loginPhoneInput").value.trim();
+  if (!phone) return;
+  state.loginPhone = phone;
+  loginStepPhone.style.display = "none";
+  loginStepOtp.style.display = "block";
+  document.getElementById("loginOtpNote").textContent = t("loginOtpSentNote");
+});
+
+document.getElementById("loginVerifyBtn").addEventListener("click", function(){
+  var otp = document.getElementById("loginOtpInput").value.trim();
+  if (otp !== "1234"){
+    document.getElementById("loginOtpNote").textContent = state.lang === "hi" ? "गलत OTP — डेमो के लिए 1234 इस्तेमाल करें।" : "Incorrect OTP — use 1234 for this demo.";
+    return;
+  }
+  state.loggedIn = true;
+  loginStepOtp.style.display = "none";
+  loginStepDone.style.display = "block";
+  document.getElementById("loginWelcomeText").textContent = (state.lang === "hi" ? "स्वागत है, " : "Welcome, ") + state.loginPhone;
   renderLoginButton();
 });
 
-loginSubmitBtn.addEventListener("click", function(){
-  if (!supabaseClient){
-    loginErrorNote.textContent = "Supabase isn't configured for this deployment.";
-    return;
-  }
-  var email = loginEmailInput.value.trim();
-  var password = loginPasswordInput.value;
-  if (!email || !password || password.length < 6){
-    loginErrorNote.textContent = t("loginErrGeneric");
-    return;
-  }
-  loginErrorNote.textContent = "";
-  loginSubmitBtn.disabled = true;
-
-  var action = state.loginMode === "up"
-    ? supabaseClient.auth.signUp({ email: email, password: password })
-    : supabaseClient.auth.signInWithPassword({ email: email, password: password });
-
-  action.then(function(result){
-    loginSubmitBtn.disabled = false;
-    if (result.error){
-      loginErrorNote.textContent = result.error.message || t("loginErrGeneric");
-      return;
-    }
-    if (state.loginMode === "up" && result.data && result.data.user && !result.data.session){
-      loginErrorNote.textContent = t("loginErrConfirm");
-      return;
-    }
-    onAuthSuccess(result.data.user, result.data.session);
-  }).catch(function(){
-    loginSubmitBtn.disabled = false;
-    loginErrorNote.textContent = t("loginErrGeneric");
-  });
-});
-
 document.getElementById("loginSignOutBtn").addEventListener("click", function(){
-  if (supabaseClient) supabaseClient.auth.signOut();
   state.loggedIn = false;
-  state.loginEmail = "";
-  state.userId = null;
-  loginEmailInput.value = "";
-  loginPasswordInput.value = "";
+  state.loginPhone = "";
+  document.getElementById("loginPhoneInput").value = "";
+  document.getElementById("loginOtpInput").value = "";
   loginStepDone.style.display = "none";
-  loginStepForm.style.display = "block";
+  loginStepPhone.style.display = "block";
   loginPanel.classList.remove("open");
   renderLoginButton();
 });
 
-function onAuthSuccess(user, session){
-  state.loggedIn = true;
-  state.loginEmail = user.email;
-  state.userId = user.id;
-  loginStepForm.style.display = "none";
-  loginStepDone.style.display = "block";
-  document.getElementById("loginWelcomeText").textContent = (state.lang === "hi" ? "स्वागत है, " : "Welcome, ") + state.loginEmail;
-  renderLoginButton();
-  loadProfileFromSupabase();
-}
-
-function profileRowFromState(){
-  return {
-    id: state.userId,
-    category: state.profile.category || null,
-    state_name: state.profile.stateName || null,
-    district: state.profile.district || null,
-    stage: state.profile.stage || null,
-    support_needed: state.profile.supportNeeded || [],
-    description: state.profile.description || null,
-    audience_categories: state.profile.categories || [],
-    budget_range: state.budgetRange || null,
-    revenue_model: state.revenueModel || null,
-    growth_goal: state.growthGoal || null,
-    income: state.income,
-    language: state.lang,
-    updated_at: new Date().toISOString()
-  };
-}
-
-function saveProfileToSupabase(){
-  if (!supabaseClient || !state.loggedIn || !state.userId) return;
-  supabaseClient.from("profiles").upsert(profileRowFromState()).then(function(result){
-    if (result.error) console.warn("Profile save failed:", result.error.message);
-  });
-}
-
-function loadProfileFromSupabase(){
-  if (!supabaseClient || !state.userId) return;
-  supabaseClient.from("profiles").select("*").eq("id", state.userId).maybeSingle().then(function(result){
-    if (result.error || !result.data) return;
-    var p = result.data;
-    if (p.category) state.profile.category = p.category;
-    if (p.state_name) state.profile.stateName = p.state_name;
-    if (p.district) state.profile.district = p.district;
-    if (p.stage) state.profile.stage = p.stage;
-    if (p.support_needed) state.profile.supportNeeded = p.support_needed;
-    if (p.description) state.profile.description = p.description;
-    if (p.audience_categories) state.profile.categories = p.audience_categories;
-    if (p.budget_range) state.budgetRange = p.budget_range;
-    if (p.revenue_model) state.revenueModel = p.revenue_model;
-    if (p.growth_goal) state.growthGoal = p.growth_goal;
-    if (p.income != null) state.income = p.income;
-    renderTracker(); renderScreen();
-  });
-}
-
 function renderLoginButton(){
-  loginBtn.textContent = state.loggedIn ? "✓ " + (state.loginEmail || "") : t("loginBtn");
-  document.getElementById("loginPanelTitle").textContent = state.loginMode === "up" ? t("loginTitleUp") : t("loginTitleIn");
-  document.getElementById("loginFormNote").textContent = state.loginMode === "up" ? t("loginFormNoteUp") : t("loginFormNoteIn");
-  loginSubmitBtn.textContent = state.loginMode === "up" ? t("loginSubmitUp") : t("loginSubmitIn");
-  loginModeToggle.textContent = state.loginMode === "up" ? t("loginToggleToIn") : t("loginToggleToUp");
-  loginEmailInput.placeholder = t("loginEmailPh");
-  loginPasswordInput.placeholder = t("loginPasswordPh");
+  loginBtn.textContent = state.loggedIn ? "✓ " + (state.loginPhone || "") : t("loginBtn");
+  document.getElementById("loginPanelTitle").textContent = t("loginTitle");
+  document.getElementById("loginSendOtpBtn").textContent = t("loginSendOtp");
+  document.getElementById("loginVerifyBtn").textContent = t("loginVerify");
   document.getElementById("loginSignOutBtn").textContent = t("loginSignOut");
+  document.getElementById("loginPhoneInput").placeholder = t("loginPhonePh");
+  document.getElementById("loginOtpInput").placeholder = t("loginOtpPh");
 }
 renderLoginButton();
-
-if (supabaseClient){
-  supabaseClient.auth.getSession().then(function(result){
-    var session = result.data && result.data.session;
-    if (session && session.user) onAuthSuccess(session.user, session);
-  });
-}
 
 function renderAccessibilityLabels(){
   var labels = state.lang === "hi"
@@ -2212,6 +2114,84 @@ document.querySelector('.lang-switch button[data-lang="en"]').classList.add("act
 renderAccessibilityLabels();
 renderTracker();
 renderScreen();
- </script>
+
+/* ============ SAHAYOG AI CHATBOT ============ */
+(function(){
+  var toggle = document.getElementById('aiChatToggle');
+  var chat = document.getElementById('aiChat');
+  var close = document.getElementById('aiChatClose');
+  var win = document.getElementById('aiChatWindow');
+  var form = document.getElementById('aiChatForm');
+  var input = document.getElementById('aiUserMessage');
+  if(!toggle || !chat || !win || !form) return;
+
+  function addMessage(text, who){
+    var div=document.createElement('div');
+    div.className='ai-msg '+who;
+    div.textContent=text;
+    win.appendChild(div);
+    win.scrollTop=win.scrollHeight;
+  }
+
+  function getLocalReply(message){
+    var q=message.toLowerCase();
+    var p=state.profile||{};
+    var top=state.matches&&state.matches[0] ? state.matches[0].scheme : null;
+    if(q.includes('scheme') || q.includes('योजना') || q.includes('best') || q.includes('सर्वश्रेष्ठ')){
+      if(top) return state.lang==='hi'
+        ? 'आपकी वर्तमान प्रोफ़ाइल के आधार पर सबसे मजबूत मैच है: '+top.name.hi+' ('+state.matches[0].pct+'% मैच)। आवेदन से पहले आधिकारिक पात्रता जरूर सत्यापित करें।'
+        : 'Based on your current profile, your strongest match is '+top.name.en+' ('+state.matches[0].pct+'% match). Please verify official eligibility before applying.';
+      return state.lang==='hi' ? 'पहले AI Assessment पूरा करें, फिर मैं आपकी योजनाओं का मिलान समझा सकती हूँ।' : 'Complete the AI Assessment first, then I can explain your scheme matches.';
+    }
+    if(q.includes('document') || q.includes('दस्तावेज')){
+      if(top) return state.lang==='hi' ? 'इस योजना के लिए संभावित दस्तावेज़: '+top.docs.hi.join(', ')+'.' : 'Potential documents for this scheme: '+top.docs.en.join(', ')+'.';
+      return state.lang==='hi' ? 'पहले कोई योजना चुनें, फिर मैं उसके दस्तावेज़ बता सकती हूँ।' : 'Select a scheme first and I can list its required documents.';
+    }
+    if(q.includes('score') || q.includes('match') || q.includes('मेल')){
+      if(state.matches && state.matches.length) return state.lang==='hi'
+        ? 'आपका शीर्ष मैच '+state.matches[0].pct+'% है। स्कोर व्यापार प्रकार, स्थान, चरण, सहायता की जरूरत और पात्रता जैसे कारकों से बनता है।'
+        : 'Your top match is '+state.matches[0].pct+'%. The score combines business type, location, stage, support need and eligibility factors.';
+    }
+    if(q.includes('budget') || q.includes('बजट')) return state.lang==='hi'
+      ? 'Investment Planner में अपना बजट डालें। Sahayog एक illustrative allocation दिखाएगा जिसे आप बदल सकते हैं।'
+      : 'Enter your budget in the Investment Planner. Sahayog will show an illustrative allocation that you can adjust.';
+    if(q.includes('hello') || q.includes('hi') || q.includes('नमस्ते')) return state.lang==='hi'
+      ? 'नमस्ते! मैं Sahayog AI हूँ। मैं आपकी योजना matching, eligibility और business planning में मदद कर सकती हूँ।'
+      : 'Hello! I am Sahayog AI. I can help with scheme matching, eligibility and business planning.';
+    return state.lang==='hi'
+      ? 'मैं आपकी योजना matching, eligibility, documents, budget और business planning के बारे में मदद कर सकती हूँ।'
+      : 'I can help with scheme matching, eligibility, documents, budget and business planning.';
+  }
+
+  async function askAI(message){
+    var clean=message.trim();
+    if(!clean) return;
+    addMessage(clean,'user');
+    input.value='';
+    var typing=document.createElement('div');
+    typing.className='ai-msg bot'; typing.textContent=state.lang==='hi'?'सोच रही हूँ…':'Thinking…';
+    win.appendChild(typing); win.scrollTop=win.scrollHeight;
+    try{
+      var response=await fetch('/api/chat',{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({message:clean, language:state.lang, profile:state.profile, matches:(state.matches||[]).slice(0,4).map(function(m){return {name:m.scheme.name,match:m.pct};})})
+      });
+      if(!response.ok) throw new Error('API '+response.status);
+      var data=await response.json();
+      typing.remove();
+      addMessage(data.reply || data.message || getLocalReply(clean),'bot');
+    }catch(err){
+      typing.remove();
+      addMessage(getLocalReply(clean),'bot');
+    }
+  }
+
+  toggle.addEventListener('click',function(){chat.classList.toggle('open');if(chat.classList.contains('open')&&win.children.length===0)addMessage(state.lang==='hi'?'नमस्ते! मैं Sahayog AI हूँ। आप क्या जानना चाहते हैं?':'Hi! I am Sahayog AI. What would you like to know?','bot');if(chat.classList.contains('open'))input.focus();});
+  close.addEventListener('click',function(){chat.classList.remove('open');});
+  form.addEventListener('submit',function(e){e.preventDefault();askAI(input.value);});
+  document.querySelectorAll('[data-aiq]').forEach(function(b){b.addEventListener('click',function(){askAI(b.getAttribute('data-aiq'));});});
+})();
+
+</script>
 </body>
 </html>

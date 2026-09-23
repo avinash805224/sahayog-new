@@ -854,7 +854,7 @@
 </style>
 </head>
 <body>
-<div class="site-nav"><span class="brand">🌱 Sahayog</span><a href="index.html">Overview</a><a href="landing.html" class="current">Landing</a><a href="app.html">App Flow</a><a href="admin.html">Admin</a></div>
+<div class="site-nav"><span class="brand">🌱 Sahayog</span><a href="index.html">Overview</a><a href="landing.html" class="current">Home</a><a href="app.html">App Flow</a><a href="admin.html">Admin</a></div>
 
 
   <div class="topbar">
@@ -1904,22 +1904,7 @@
 
     chatFab.addEventListener("click", openChat);
     var ctaTalkBtn = document.getElementById("ctaTalkBtn");
-    if (ctaTalkBtn) {
-      ctaTalkBtn.addEventListener("click", function () {
-        // Open the Sahayog chat and immediately start voice input.
-        // Calling startListening() directly from the click handler helps
-        // the browser treat this as a user-initiated microphone request.
-        openChat();
-        if (!startListening()) {
-          addMsg(
-            currentLang === "hi"
-              ? "इस डिवाइस पर आवाज़ से इनपुट उपलब्ध नहीं है।"
-              : "Voice input isn't supported on this device.",
-            "bot"
-          );
-        }
-      });
-    }
+    if (ctaTalkBtn) ctaTalkBtn.addEventListener("click", openChat);
     chatCloseBtn.addEventListener("click", closeChat);
 
     function handleSend() {
